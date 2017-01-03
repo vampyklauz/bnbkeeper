@@ -1,9 +1,13 @@
 /* Margin in left */
 .h-space{margin-left: 6px;}.h-space-2{margin-left: 2px;}.h-space-4{margin-left: 4px;}.h-space-6{margin-left: 6px;}.h-space-8{margin-left: 8px;}.h-space-10{margin-left: 10px;}.h-space-12{margin-left: 12px;}.h-space-14{margin-left: 14px;}.h-space-16{margin-left: 16px;}.h-space-18{margin-left: 18px;}.h-space-20{margin-left: 20px;}.h-space-22{margin-left: 22px;}.h-space-24{margin-left: 24px;}.h-space-26{margin-left: 26px;}.h-space-28{margin-left: 28px;}.h-space-30{margin-left: 30px;}.h-space-32{margin-left: 32px;}
-
 .no-padding-lr{padding-left: 0px; padding-right: 0px;}.padding-lr{padding-left: 12px !important; padding-right: 12px !important;}.padding-lr-2{padding-left: 2px; padding-right: 2px;}.padding-lr-4{padding-left: 4px; padding-right: 4px;}.padding-lr-6{padding-left: 6px; padding-right: 6px;}.padding-lr-8{padding-left: 8px; padding-right: 8px;}.padding-lr-10{padding-left: 10px; padding-right: 10px;}.padding-lr-12{padding-left: 12px; padding-right: 12px;}.padding-lr-14{padding-left: 14px; padding-right: 14px;}.padding-lr-15{padding-left: 15px; padding-right: 15px;}.padding-lr-16{padding-left: 16px; padding-right: 16px;}.padding-lr-18{padding-left: 18px; padding-right: 18px;}.padding-lr-20{padding-left: 20px; padding-right: 20px;}.padding-lr-22{padding-left: 22px; padding-right: 22px;}.padding-lr-24{padding-left: 24px; padding-right: 24px;}.padding-lr-26{padding-left: 26px; padding-right: 26px;}.padding-lr-28{padding-left: 28px; padding-right: 28px;}.padding-lr-30{padding-left: 30px; padding-right: 30px;}.padding-lr-30{padding-left: 32px; padding-right: 32px;}
-
 .margin-top{margin-top: 12px}.margin-top-2{margin-top: 2px}.margin-top-4{margin-top: 4px}.margin-top-6{margin-top: 6px}.margin-top-8{margin-top: 8px}.margin-top-10{margin-top: 10px}.margin-top-12{margin-top: 12px}.margin-top-14{margin-top: 14px}.margin-top-16{margin-top: 16px}.margin-top-18{margin-top: 18px}.margin-top-20{margin-top: 20px}.margin-top-22{margin-top: 22px}
+.margin-bottom-10{ margin-bottom: 10px; }
+.padding-top-20{ padding-top: 20px; }
+.pos-l-n5{ position: relative; left: -5px; }
+.pos-t-5{ position: relative; top: 5px; }
+
+
 
 .bg-primary{background-color: #307ecc !important; color: white !important;}
 .bg-warning{background-color: #ffb752 !important; color: white !important;}
@@ -12,6 +16,12 @@
 
 .lighter{
   font-weight: lighter;
+}
+
+
+.important:after{
+  content: ' *';
+  color: #d15b47;
 }
 
 .with-search small{
@@ -259,7 +269,7 @@ form.compress .form-group{
 }
 
 .input-group{
-  padding-right: 10px !important;
+  padding-right: 10px;
 }
 
 .has-addon{

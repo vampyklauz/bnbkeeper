@@ -19,9 +19,10 @@
 		<div class="navbar-header pull-left">
 			<!-- #section:basics/navbar.layout.brand -->
 			<a href="#" class="navbar-brand">
+				<i class="fa fa-key"></i>
 				<small>
-					<i class="fa fa-leaf"></i>
-					BNB Keeper
+					<strong>BNB</strong>
+					<span class="lighter pos-l-n5">Keeper</span>
 				</small>
 			</a>
 

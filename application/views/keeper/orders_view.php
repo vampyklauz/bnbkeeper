@@ -67,7 +67,7 @@
 			toolbarRefresh: true,
 			toolbarView: true,
 			editurl: 'keeper/viewing_order/actions',
-			caption: 'Employee',
+			caption: 'Orders',
 			height: "100%",
 			ondblClickRow: function(rowid){
 				console.log(this);
