@@ -25,6 +25,7 @@
   font-size: 500%;
 }
 
+.capitalize{ text-transform: capitalize; }
 
 .important:after{
   content: ' *';
@@ -439,6 +440,8 @@ if( has 5 ){
   padding: 2px;
 }
 
+.profile-info-name{ width: 150px; }
+
 .order-wrap .wizard-actions { text-align: center; }
 .widget-box.active .bg-dark{ background-color: #666; }
 .widget-box.active .bg-orange{ background-color: #ffd974; }
@@ -446,6 +449,7 @@ if( has 5 ){
 .widget-box.active .bg-green{ background-color: #9ccd94; }
 .widget-box.active .price,
 .widget-box.active i{ color: #fff !important; }
+.widget-key-set{ padding-bottom: 60px; }
 
 
 .keeper.active,

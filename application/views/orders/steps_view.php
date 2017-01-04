@@ -87,6 +87,26 @@
 								</div>
 							</div>
 						</div>
+
+						<div class="form-group">
+							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="email">Password</label>
+
+							<div class="col-xs-12 col-sm-9">
+								<div class="clearfix">
+									<input type="password" name="password" id="password" class="col-xs-12 col-sm-6" />
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="email">Confirm Password</label>
+
+							<div class="col-xs-12 col-sm-9">
+								<div class="clearfix">
+									<input type="password" name="r_password" id="r_password" class="col-xs-12 col-sm-6" />
+								</div>
+							</div>
+						</div>
 						<div class="hr hr-dotted"></div>
 						<div class="form-group">
 							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="property_size">Size of the property</label>
@@ -94,12 +114,13 @@
 							<div class="col-xs-12 col-sm-9">
 								<div class="clearfix">
 									<select class="input-medium" id="property_size" name="property_size">
-										<option value="">------------------</option>
-										<option value="linux">Linux</option>
-										<option value="windows">Windows</option>
-										<option value="mac">Mac OS</option>
-										<option value="ios">iOS</option>
-										<option value="android">Android</option>
+										<option value="1">< 20m2</option>
+										<option value="2">21-40m2</option>
+										<option value="3">41-70m2</option>
+										<option value="4">71-100m2</option>
+										<option value="5">101-150m2</option>
+										<option value="6">151-200m2</option>
+										<option value="7">> 201m2</option>
 									</select>
 								</div>
 							</div>
@@ -152,19 +173,19 @@
 							<div class="col-xs-12 col-sm-1">
 								<div class="clearfix">
 									<label>
-										<input name="wifi" class="ace ace-switch ace-switch-5 pos-t-5" type="checkbox" />
+										<input id="wifi" name="wifi" class="ace ace-switch ace-switch-5 pos-t-5" type="checkbox" />
 										<span class="lbl"></span>
 									</label>
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-2">
 								<div class="clearfix">
-									<input type="text" name="wifi_name" id="wifi_name" class="col-xs-12" placeholder="Network Name" />
+									<input type="text" name="wifi_name" id="wifi_name" class="col-xs-12" placeholder="Network Name" disabled="disabled" />
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-2">
 								<div class="clearfix">
-									<input type="text" name="wifi_password" id="wifi_password" class="col-xs-12" placeholder="Password" />
+									<input type="text" name="wifi_password" id="wifi_password" class="col-xs-12" placeholder="Password" disabled="disabled" />
 								</div>
 							</div>
 						</div>
@@ -175,14 +196,14 @@
 							<div class="col-xs-12 col-sm-1">
 								<div class="clearfix">
 									<label>
-										<input name="garbage_chute" class="ace ace-switch ace-switch-5 pos-t-5" type="checkbox" />
+										<input id="garbage_chute" name="garbage_chute" class="ace ace-switch ace-switch-5 pos-t-5" type="checkbox" />
 										<span class="lbl"></span>
 									</label>
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-4">
 								<div class="clearfix">
-									<input type="text" name="garbage_chute_location" id="garbage_chute_location" class="col-xs-12" placeholder="Location of garbage chute" />
+									<input type="text" name="garbage_chute_location" id="garbage_chute_location" class="col-xs-12" placeholder="Location of garbage chute" disabled="disabled" />
 								</div>
 							</div>
 						</div>
@@ -194,81 +215,81 @@
 							<div class="col-xs-6">
 								<div class="checkbox col-xs-12 col-sm-6">
 									<label class="display-block">
-										<input name="amenities" value="Rooftop" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Rooftop" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Rooftop</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="BBQ" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="BBQ" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> BBQ</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Washing machine" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Washing machine" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Washing machine</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Dryer" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Dryer" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Dryer</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Dish washer" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Dish washer" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Dish washer</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Coffee machine" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Coffee machine" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Coffee machine</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Hairdryer" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Hairdryer" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Hairdryer</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Iron" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Iron" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Iron</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Air conditioning" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Air conditioning" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Air conditioning</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Heater" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Heater" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Heater</span>
 									</label>
 								</div>
 								<div class="checkbox col-xs-12 col-sm-6">
 									<label class="display-block">
-										<input name="amenities" value="Parking" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Parking" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Parking</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Gym" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Gym" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Gym</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Lift" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Lift" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Lift</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Smoke detector" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Smoke detector" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Smoke detector</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="First aid kit" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="First aid kit" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> First aid kit</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Fire extinguisher" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Fire extinguisher" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Fire extinguisher</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Smoking allowed" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Smoking allowed" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Smoking allowed</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Pets allowed" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Pets allowed" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Pets allowed</span>
 									</label>
 									<label class="display-block">
-										<input name="amenities" value="Wheelchair accessible" class="ace ace-checkbox-2" type="checkbox" />
+										<input name="amenities[]" value="Wheelchair accessible" class="ace ace-checkbox-2" type="checkbox" />
 										<span class="lbl"> Wheelchair accessible</span>
 									</label>
 								</div>
@@ -302,7 +323,7 @@
 				<div class="col-xs-12 col-sm-8 col-sm-offset-2">
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-dark">
-							<input type="checkbox" name="services" id="check_in" value="check_in" class="hide">
+							<input type="checkbox" name="services[]" id="check_in" value="check_in" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -326,7 +347,7 @@
 					</div>
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-orange">
-							<input type="checkbox" name="services" id="check_out" value="check_out" class="hide">
+							<input type="checkbox" name="services[]" id="check_out" value="check_out" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -350,7 +371,7 @@
 					</div>
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-blue">
-							<input type="checkbox" name="services" id="cleaning" value="cleaning" class="hide">
+							<input type="checkbox" name="services[]" id="cleaning" value="cleaning" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -374,7 +395,7 @@
 					</div>
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-green">
-							<input type="checkbox" name="services" id="loundry" value="loundry" class="hide">
+							<input type="checkbox" name="services[]" id="loundry" value="loundry" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -405,7 +426,8 @@
 				<h3 class="text-center orange"> Select your keeper </h3>
 				<p class="text-center col-sm-6 col-sm-offset-3">It is time to choose the right keeper. We picked a few profiles. Rest assured: they all know what hospitality is about</p>
 				<div class="col-xs-12 col-sm-8 col-sm-offset-2">
-					<div data-keeper="1" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+					<div data-id="keeper-8" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+						<input class="hide" type="radio" name="keeper_id" id="keeper-8" value="8">
 						<span class="profile-picture">
 							<img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="assets/avatars/profile-pic.jpg" />
 						</span>
@@ -418,7 +440,8 @@
 							</div>
 						</div>
 					</div>
-					<div data-keeper="1" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+					<div data-id="keeper-1" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+						<input class="hide" type="radio" name="keeper_id" id="keeper-1" value="1">
 						<span class="profile-picture">
 							<img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="assets/avatars/profile-pic.jpg" />
 						</span>
@@ -426,12 +449,13 @@
 						<div class="width-90 label label-info label-xlg arrowed-in arrowed-in-right">
 							<div class="inline position-relative">
 								<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
-									<span class="white">Alex M. Doe</span>
+									<span class="white">James Colen</span>
 								</a>
 							</div>
 						</div>
 					</div>
-					<div data-keeper="2" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+					<div data-id="keeper-2" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+						<input class="hide" type="radio" name="keeper_id" id="keeper-2" value="2">
 						<span class="profile-picture">
 							<img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="assets/avatars/profile-pic.jpg" />
 						</span>
@@ -439,12 +463,13 @@
 						<div class="width-90 label label-info label-xlg arrowed-in arrowed-in-right">
 							<div class="inline position-relative">
 								<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
-									<span class="white">Alex M. Doe</span>
+									<span class="white">John Doe</span>
 								</a>
 							</div>
 						</div>
 					</div>
-					<div data-keeper="3" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+					<div data-id="keeper-3" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+						<input class="hide" type="radio" name="keeper_id" id="keeper-3" value="3">
 						<span class="profile-picture">
 							<img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="assets/avatars/profile-pic.jpg" />
 						</span>
@@ -452,12 +477,13 @@
 						<div class="width-90 label label-info label-xlg arrowed-in arrowed-in-right">
 							<div class="inline position-relative">
 								<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
-									<span class="white">Alex M. Doe</span>
+									<span class="white">Rex Tex</span>
 								</a>
 							</div>
 						</div>
 					</div>
-					<div data-keeper="4" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+					<div data-id="keeper-4" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+						<input class="hide" type="radio" name="keeper_id" id="keeper-4" value="4">
 						<span class="profile-picture">
 							<img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="assets/avatars/profile-pic.jpg" />
 						</span>
@@ -465,12 +491,13 @@
 						<div class="width-90 label label-info label-xlg arrowed-in arrowed-in-right">
 							<div class="inline position-relative">
 								<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
-									<span class="white">Alex M. Doe</span>
+									<span class="white">Drake Aldren</span>
 								</a>
 							</div>
 						</div>
 					</div>
-					<div data-keeper="5" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+					<div data-id="keeper-5" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+						<input class="hide" type="radio" name="keeper_id" id="keeper-5" value="5">
 						<span class="profile-picture">
 							<img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="assets/avatars/profile-pic.jpg" />
 						</span>
@@ -478,12 +505,13 @@
 						<div class="width-90 label label-info label-xlg arrowed-in arrowed-in-right">
 							<div class="inline position-relative">
 								<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
-									<span class="white">Alex M. Doe</span>
+									<span class="white">Klaus Andrew</span>
 								</a>
 							</div>
 						</div>
 					</div>
-					<div data-keeper="6" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+					<div data-id="keeper-6" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+						<input class="hide" type="radio" name="keeper_id" id="keeper-6" value="6">
 						<span class="profile-picture">
 							<img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="assets/avatars/profile-pic.jpg" />
 						</span>
@@ -491,12 +519,13 @@
 						<div class="width-90 label label-info label-xlg arrowed-in arrowed-in-right">
 							<div class="inline position-relative">
 								<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
-									<span class="white">Alex M. Doe</span>
+									<span class="white">De Mags</span>
 								</a>
 							</div>
 						</div>
 					</div>
-					<div data-keeper="6" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+					<div data-id="keeper-7" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
+						<input class="hide" type="radio" name="keeper_id" id="keeper-7" value="7">
 						<span class="profile-picture">
 							<img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="assets/avatars/profile-pic.jpg" />
 						</span>
@@ -504,7 +533,7 @@
 						<div class="width-90 label label-info label-xlg arrowed-in arrowed-in-right">
 							<div class="inline position-relative">
 								<a href="#" class="user-title-label dropdown-toggle" data-toggle="dropdown">
-									<span class="white">Alex M. Doe</span>
+									<span class="white">Rods Ran</span>
 								</a>
 							</div>
 						</div>
@@ -612,25 +641,24 @@
 			<div class="step-pane active" data-step="5">
 			<form class="form-horizontal" id="key_set-form" method="get">
 				<h3 class="text-center blue"> Key Set </h3>
-				<p class="text-center col-sm-6 col-sm-offset-3">Choose the service(s) requested</p>
+				<p class="text-center col-sm-6 col-sm-offset-3">Let's move to picking the right service: we designed for you à-la-carte services tailored to your accommodation. </p>
 				
 				<div class="clearfix"></div>
 				<div class="space"></div>
 				<div class="col-xs-12 col-sm-8 col-sm-offset-2">
 					<div class="col-xs-6 col-sm-3 col-sm-offset-3 pricing-box">
 						<div class="widget-box widget-color-blue">
-
+							<input type="radio" name="key_set" id="pick_up" value="pick_up" class="hide">
 							<div class="widget-body text-center">
-								<div class="widget-main">
+								<div class="widget-key-set widget-main bg-blue">
 									<i class="ace-icon fa fa-briefcase bigger-500 blue"></i>
 									<hr />
 									<div class="price">
 										Pick up at home/office
 									</div>
 								</div>
-								<div class="space"></div>
 								<div>
-									<a href="#" class="btn btn-block btn-primary">
+									<a href="#pick_up" class="btn_key_set btn btn-block btn-primary">
 										<h5>1st PICK-UP is PREE</h5>
 									</a>
 								</div>
@@ -640,18 +668,17 @@
 					</div>
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-blue">
-
+							<input type="radio" name="key_set" id="drop_off" value="drop_off" class="hide">
 							<div class="widget-body text-center">
-								<div class="widget-main">
+								<div class="widget-key-set widget-main bg-blue">
 									<i class="ace-icon fa fa-list-ul bigger-500 blue"></i>
 									<hr />
 									<div class="price">
 										Drop off at our office in Darlinghurst
 									</div>
 								</div>
-								<div class="space"></div>
 								<div>
-									<a href="#" class="btn btn-block btn-primary">
+									<a href="#drop_off" class="btn_key_set btn btn-block btn-primary">
 										<h5>FREE</h5>
 									</a>
 								</div>
@@ -703,7 +730,11 @@
 		$(".select2").css('width','200px').select2({allowClear:true})
 		.on('change', function(){
 			$(this).closest('form').validate().element($(this));
-		}); 
+		});
+
+		/*$('#email').on('change', function(){
+			console.log('debug');
+		});*/
 
 		$('#number_of_beds').ace_spinner({value:0,min:0,max:8,step:1, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
 		.closest('.ace-spinner')
@@ -731,24 +762,53 @@
 			//buttons: '.wizard-actions:eq(0)'
 		})
 		.on('actionclicked.fu.wizard' , function(e, info){
-			if(info.step == 1) {
+
+			/*$.post('order/steps/addOrder',$('#personal_info-form').serialize())
+			.done(function(data) {
+				console.log(data);
+			},'json');*/
+
+			if(info.step == 1 && info.direction == 'next') {
 				if(!$('#personal_info-form').valid()) e.preventDefault();
-			}else if(info.step == 2){
+			}else if(info.step == 2 && info.direction == 'next'){
 				if(!$('#services-form').valid()) e.preventDefault();
-			}else if(info.step == 4){
+			}else if(info.step == 4 && info.direction == 'next'){
 				if(!$('#more_info-form').valid()) e.preventDefault();
 			}
 		})
 		.on('finished.fu.wizard', function(e) {
-			bootbox.dialog({
-				message: "Thank you! Your information was successfully saved!", 
-				buttons: {
-					"success" : {
-						"label" : "OK",
-						"className" : "btn-sm btn-primary"
-					}
+			var $personal_info = $('#personal_info-form').serialize(),
+				$services = $('#services-form').serialize(),
+				$keeper = $('#keeper-form').serialize(),
+				$more_info = $('#more_info-form').serialize(),
+				$key_set = $('#key_set-form').serialize(),
+				form = $personal_info+'&'+$services+'&'+$keeper+'&'+$more_info+'&'+$key_set;
+
+			$.post('order/steps/addOrder',form)
+			.done(function(data) {
+				if( data == 'success' ){
+					bootbox.dialog({
+						message: "Thank you! Your information was successfully saved!", 
+						buttons: {
+							"success" : {
+								"label" : "OK",
+								"className" : "btn-sm btn-primary"
+							}
+						}
+					});
+					setTimeout(function(){ window.location.href = "login"; }, 2000);
+				}else{
+					bootbox.dialog({
+						message: data, 
+						buttons: {
+							"success" : {
+								"label" : "OK",
+								"className" : "btn-sm btn-primary"
+							}
+						}
+					});
 				}
-			});
+			},'json');
 		}).on('stepclick.fu.wizard', function(e){
 			//e.preventDefault();//this will prevent clicking and selecting steps
 		});
@@ -768,6 +828,15 @@
 
 		//documentation : http://docs.jquery.com/Plugins/Validation/validate
 
+		$('.keeper').click(function(e){
+			var id = $(this).data('id');
+			var keeper_box = $(this).closest('.keeper');
+			var checkBoxes = $('#'+id);
+			checkBoxes.prop("checked", true);
+
+			$('.keeper').removeClass('active');
+			keeper_box.addClass('active');
+		});
 
 		$.mask.definitions['~']='[+-]';
 		$('#phone, #guest_phone').mask('(999) 999-9999');
@@ -788,6 +857,23 @@
 			$('[class*=select2]').remove();
 		});
 
+		//STEP 1
+		$('#wifi').click(function(e){
+			if( $(this).is(":checked") ){
+				$('#wifi_name, #wifi_password').prop('disabled',false);
+			}else{
+				$('#wifi_name, #wifi_password').prop('disabled',true);
+			}
+		});
+
+		$('#garbage_chute').click(function(e){
+			if( $(this).is(":checked") ){
+				$('#garbage_chute_location').prop('disabled',false);
+			}else{
+				$('#garbage_chute_location').prop('disabled',true);
+			}
+		});
+
 		$('#personal_info-form').validate({
 			errorElement: 'div',
 			errorClass: 'help-block',
@@ -797,12 +883,22 @@
 				first_name: {
 					required: true
 				},
-				/*surname: {
-					required: true
+				password: {
+					required: true,
+					minlength: 5
+				},
+				r_password: {
+					required: true,
+					minlength: 5,
+					equalTo: "#password"
 				},
 				email: {
 					required: true,
-					email:true
+					email:true,
+					remote: {url: "order/steps/checkEmail", type : "post"}
+				},
+				/*surname: {
+					required: true
 				},
 				phone: {
 					required: true,
@@ -825,7 +921,8 @@
 			messages: {
 				email: {
 					required: "Please provide a valid email.",
-					email: "Please provide a valid email."
+					email: "Please provide a valid email.",
+					remote: "Email already in use!"
 				},
 				password: {
 					required: "Please specify a password.",
@@ -865,6 +962,7 @@
 			submitHandler: function (form) {
 			},
 			invalidHandler: function (form) {
+
 			}
 		});
 
@@ -962,7 +1060,7 @@
 				guest_first_name: {
 					required: true
 				},
-				guest_surname: {
+				/*guest_surname: {
 					required: true
 				},
 				guest_email: {
@@ -983,7 +1081,7 @@
 				},
 				guest_info: {
 					required: true
-				},
+				},*/
 			},
 
 			messages: {
@@ -1029,6 +1127,86 @@
 			submitHandler: function (form) {
 			},
 			invalidHandler: function (form) {
+			}
+		});
+
+		// STEP 5
+		
+		$('.btn_key_set').click(function(e){
+			e.preventDefault();
+			var id = $(this).attr('href');
+			var key_set_box = $(this).closest('.widget-box');
+			var checkBoxes = $(id);
+			checkBoxes.prop("checked", true);
+
+			$('.widget-box').removeClass('active');
+			key_set_box.addClass('active');
+
+		});
+
+		$('#key_set-form').validate({
+			errorElement: 'div',
+			errorClass: 'help-block',
+			focusInvalid: false,
+			ignore: "",
+			rules: {
+				key_set: {
+					required: true
+				},
+			},
+
+			messages: {
+				email: {
+					required: "Please provide a valid email.",
+					email: "Please provide a valid email."
+				},
+				password: {
+					required: "Please specify a password.",
+					minlength: "Please specify a secure password."
+				},
+				state: "Please choose state",
+				subscription: "Please choose at least one option",
+				gender: "Please choose gender",
+				agree: "Please accept our policy"
+			},
+
+
+			highlight: function (e) {
+				$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+			},
+
+			success: function (e) {
+				$(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+				$(e).remove();
+			},
+
+			errorPlacement: function (error, element) {
+				if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+					var controls = element.closest('div[class*="col-"]');
+					if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+					else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+				}
+				else if(element.is('.select2')) {
+					error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+				}
+				else if(element.is('.chosen-select')) {
+					error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+				}
+				else error.insertAfter(element.parent());
+			},
+
+			submitHandler: function (form) {
+			},
+			invalidHandler: function (form) {
+				bootbox.dialog({
+					message: "Pleas select atleast 1 of the services", 
+					buttons: {
+						"success" : {
+							"label" : "OK",
+							"className" : "btn-sm btn-primary"
+						}
+					}
+				});
 			}
 		});
 	})

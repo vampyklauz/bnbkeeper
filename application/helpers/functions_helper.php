@@ -49,11 +49,15 @@ function normalizeFormArray($data,$separator='|'){
 	    $data_array = array();
 	    foreach ($data as $key => $val) {
 	        if(is_array($val)){
-	            foreach ($val as $res => $value) {
-	                if($res!=0){
-	                    @$data_array[$key] .= $separator.$value;
-	                }else @$data_array[$key] .= $value;
-	            }
+	        	if( $separator == 'array' ){
+		            $data_array[$key] = json_encode($val);
+		        }else{
+		        	foreach ($val as $res => $value) {
+		                if($res!=0){
+		                    @$data_array[$key] .= $separator.$value;
+		                }else @$data_array[$key] .= $value;
+		            }
+		        }
 	        }else $data_array[$key] = $val;
 	    }
 	    return $data_array;
