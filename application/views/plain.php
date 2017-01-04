@@ -1,7 +1,7 @@
 <?php
 	//Check if user still have session if not redirect to login.
-	if( $this->session->userdata('user_id') == '' )
-		redirect('login','refresh');
+/*	if( $this->session->userdata('user_id') == '' )
+		redirect('login','refresh');*/
 ?>
 
 
