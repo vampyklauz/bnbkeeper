@@ -11,9 +11,11 @@ class JqGrid_model extends CI_Model {
 
 		switch ($module) {
 			case 'viewing_order':
-				$this->db->select( 'order_id, services, keeper_id keeper, order_id actions' );
+				$this->db->select( 'to.order_id, to.services, to.order_id actions, keeper.user_fname k_fname, keeper.user_lname k_lname, host.user_fname h_fname, host.user_lname h_lname ' );
+				$this->db->join( 'tbl_users keeper','keeper.user_id = to.keeper_id','left' );
+				$this->db->join( 'tbl_users host','host.user_id = to.user_id','left' );
 				$this->db->where( 'status', 0 );
-				$sql = $this->db->get('tbl_orders');
+				$sql = $this->db->get('tbl_orders to');
 				break;
 		}
 		

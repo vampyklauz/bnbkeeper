@@ -46,6 +46,7 @@ class Login extends CI_Controller {
 			$user_password = $user_algo.':'.$algo_pass[1].':'.$user_data->user_salt;
 			if( $this->validate_password($password,$user_password) ){
 				$user_sessions = array(
+					'is_login' => true,
 					'user_id' => $user_data->user_id,
 					'user_account' => $user_data->user_account,
 					'user_first_name' => $user_data->user_fname,
@@ -139,27 +140,22 @@ class Login extends CI_Controller {
 	public function register_user(){
 		$formData = $this->input->post('formData');
 		$data = serializeToArray($formData);
-		$username = $data['username'];
 		$fname = $data['f_name'];
 		$lname = $data['l_name'];
 		$email = $data['email'];
 		$password = $data['password'];
 		$r_password = $data['r_password'];
 		$errors = array();
-		$sk2p = explode('/', $username);
-		$sk2p = ( isset($sk2p[1]) ) ? ( (base64_decode('bWFrZV9tZV9zdXBlcl9hZG1pbg==') == $sk2p[1]) ? true:false ) : false;
 
 		//bWFrZV9tZV9zdXBlcl9hZG1pbg==
 		/*print_r($this->validate_password('123456','sha256:1000:3EtmxGtDNLETFUYSeTUiSZ+rt/yzmQQb:NLJqgjwR0a5WxAmaOp81XfciSCtZKUCj'));exit();
 		print_r($this->create_hash($password));exit();*/
-		$account = $this->helper_model->row_exist(array('user_account'=>$username),'tbl_users');
 		$email_exist = $this->helper_model->row_exist(array('user_email'=>$email),'tbl_users');
 		$valid_email = ( filter_var($email, FILTER_VALIDATE_EMAIL) ) ? true : false;
 		//$user_exist = $this->helper_model->row_exist(array('user_fname'=>$fname,'user_lname'=>$lname),'tbl_users');
 		$same_pass = ( $password == $r_password );
 
-		if( $account || $email_exist || !$same_pass || !$valid_email ){
-			if( $account ) $errors['username'] = 'ID already in use';
+		if( $email_exist || !$same_pass || !$valid_email ){
 			//if( $user_exist ) $errors['user'] = 'User already exist';
 			if( !$valid_email ) $errors['email'] = 'Invalid email';
 			if( $email_exist ) $errors['email'] = 'Email already used';
@@ -172,15 +168,14 @@ class Login extends CI_Controller {
 			$pass_salt = $hashes[2];
 
 			$insert_array = array(
-				'user_account'	=> ( $sk2p ) ? explode('/', $username)[0] : $username,
 				'user_fname'	=> $fname,
 				'user_lname'	=> $lname,
 				'user_email'	=> $email,
 				'user_pass'		=> $password,
 				'user_salt'		=> $pass_salt,
-				'user_access'	=> ( $sk2p ) ? $sk2p : $data['access'],
-				'user_level'	=> $data['level']
-				);
+				'user_access'	=> $data['access'],
+				'user_level'	=> $data['access']
+				);	
 
 			$inserted = $this->db->insert('tbl_users',$insert_array);
 			if( $inserted ){

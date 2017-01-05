@@ -1,7 +1,7 @@
 <div class="page-content">
 	<div class="page-header">
 		<h1>
-			User Profile
+			Keeper Profile
 		</h1>
 	</div>
 	<div class="row">

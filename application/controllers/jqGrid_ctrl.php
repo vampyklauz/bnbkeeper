@@ -46,11 +46,17 @@ class JqGrid_ctrl extends CI_Controller {
 		foreach($query as $row){
 			$cell = array();
 			switch($module){
-				case 'patient_list':
+				case 'viewing_order':
 					foreach ( $fields as $val ) {
 						switch($val){
-							case 'contact_info':
-								$cell[$val] = ( $row->$val ) ? $row->$val : $row->email;
+							case 'host':
+								$cell[$val] = $row->h_fname.' '.$row->h_lname;
+							break;
+							case 'keeper':
+								$cell[$val] = $row->k_fname.' '.$row->k_lname;
+							break;
+							case 'services':
+								$cell[$val] = arrayToList($row->$val,' ,',true);
 							break;
 							default: $cell[$val] = $row->$val; break;
 						}

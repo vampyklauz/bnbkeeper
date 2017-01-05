@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-sm-6 col-sm-offset-3">
 		<div class="space"></div>
-		<form id="application-form" class="form-horizontal big-input padding" method="POST" role="form">
+		<form id="application-form" class="form-horizontal big-input vertical" method="POST" role="form">
 			<div class="form-group">
 				<div class="col-xs-12">
 					<label class="col-xs-12 control-label no-padding-left no-padding-right align-left bigger important">What is your name?</label>

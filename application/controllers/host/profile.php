@@ -11,18 +11,7 @@ class Profile extends CI_Controller {
 		$data['style'][] = 'assets/css/bootstrap-editable.css';
 		
 		$data['users'] = $this->getUserInfo();
-
-		switch ($data['users']['info']->user_access) {
-			case 3:
-				$content = 'keeper/profile_view';
-				break;
-
-			case 4:
-				$content = 'host/profile_view';
-				break;
-		}
-
-		$data['content'] = $content;
+		$data['content'] = 'host/profile_view';
 		$this->load->view('base',$data);
 	}
 

@@ -453,3 +453,13 @@ function arrayToList($array,$type='list',$json=false){
 
 	return $res;
 }
+
+function checkAvatar($link){
+	$locaiont = 'assets/uploads/';
+
+	if( file_exists($link) ){
+		return $link;
+	}else{
+		return $locaiont.'default-avatar.jpg';
+	}
+}

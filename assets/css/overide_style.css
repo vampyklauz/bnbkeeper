@@ -11,7 +11,7 @@
 .pos-l-n5{ position: relative; left: -5px; }
 .pos-t-5{ position: relative; top: 5px; }
 
-
+.user-info{ max-width: 200px; top: 13px; }
 
 .bg-primary{background-color: #307ecc !important; color: white !important;}
 .bg-warning{background-color: #ffb752 !important; color: white !important;}
@@ -448,13 +448,14 @@ label.bigger{
   font-weight: bold;
 }
 
-form input,
-form select,
-form textarea{
+
+form.vertical input,
+form.vertical select,
+form.vertical textarea{
   margin-bottom: 10px;
 }
 
-form.padding{
+form.vertical{
   padding-right: 15px;
   padding-left: 15px;
 }

@@ -16,8 +16,15 @@ class Steps extends CI_Controller {
 	public function index()
 	{
 		$data['style'][] = 'assets/css/select2.css';
-		$data['content'] = 'orders/steps_view';
+		$data['style'][] = 'assets/css/bootstrap-datetimepicker.css';
+		$data['keepers'] = $this->getKeepers();
+		$data['content'] = 'orders/steps_user_view';
 		$this->load->view('plain',$data);
+	}
+
+	public function getKeepers(){
+		$join = ' LEFT JOIN tbl_user_infos ON tbl_user_infos.user_id = tbl_users.user_id';
+		return $this->helper_model->query_table('*','tbl_users',array('user_access'=>3),'',$join);
 	}
 
 	public function addOrder(){
@@ -25,6 +32,8 @@ class Steps extends CI_Controller {
 		$res_msg = '';
 		$formData = normalizeFormArray($this->input->post(),'array');
 
+		// Modify and filter inputs
+		$formData['pick_up_date'] = date('Y-m-d H:i:s',strtotime($formData['pick_up_date'])); // Convert string time to date time
 		// Insert Personal info in tbl_users
 		$personal['fname'] = $formData['first_name'];
 		$personal['lname'] = $formData['surname'];

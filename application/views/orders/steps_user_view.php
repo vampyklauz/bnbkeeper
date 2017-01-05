@@ -5,26 +5,21 @@
 			<ul class="steps">
 				<li data-step="1" class="active">
 					<span class="step">1</span>
-					<span class="title">Personal Info</span>
+					<span class="title">Services</span>
 				</li>
 
 				<li data-step="2">
 					<span class="step">2</span>
-					<span class="title">Services</span>
+					<span class="title">Select your keeper</span>
 				</li>
 
 				<li data-step="3">
 					<span class="step">3</span>
-					<span class="title">Select your keeper</span>
+					<span class="title">More info</span>
 				</li>
 
 				<li data-step="4">
 					<span class="step">4</span>
-					<span class="title">More info</span>
-				</li>
-
-				<li data-step="5">
-					<span class="step">5</span>
 					<span class="title">Key Set</span>
 				</li>
 			</ul>
@@ -35,286 +30,7 @@
 		<hr />
 
 		<div class="step-content pos-rel">
-			
 			<div class="step-pane active" data-step="1">
-			<form class="form-horizontal" id="personal_info-form" method="get">
-				<h3 class="text-center green">Give us more information regarding your place</h3>
-				<p class="text-center col-sm-6 col-sm-offset-3">To best serve you, you need to tell us the size of your accommodation. Please provide the actual surface and not the one calculated according to housing laws.</p>
-				
-				<div class="clearfix"></div>
-				<div class="space"></div>
-				<div class="col-xs-12 col-sm-8 col-sm-offset-2">
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="first_name">First Name</label>
-
-							<div class="col-xs-12 col-sm-9">
-								<div class="clearfix">
-									<input type="text" name="first_name" id="first_name" class="col-xs-12 col-sm-6" />
-								</div>
-								
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="surname">Surname</label>
-
-							<div class="col-xs-12 col-sm-9">
-								<div class="clearfix">
-									<input type="text" name="surname" id="surname" class="col-xs-12 col-sm-6" />
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="phone">Phone Number</label>
-
-							<div class="col-xs-12 col-sm-9">
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="ace-icon fa fa-phone"></i>
-									</span>
-
-									<input type="tel" id="phone" name="phone" />
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="email">Email Address</label>
-
-							<div class="col-xs-12 col-sm-9">
-								<div class="clearfix">
-									<input type="email" name="email" id="email" class="col-xs-12 col-sm-6" />
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="email">Password</label>
-
-							<div class="col-xs-12 col-sm-9">
-								<div class="clearfix">
-									<input type="password" name="password" id="password" class="col-xs-12 col-sm-6" />
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="email">Confirm Password</label>
-
-							<div class="col-xs-12 col-sm-9">
-								<div class="clearfix">
-									<input type="password" name="r_password" id="r_password" class="col-xs-12 col-sm-6" />
-								</div>
-							</div>
-						</div>
-						<div class="hr hr-dotted"></div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="property_size">Size of the property</label>
-
-							<div class="col-xs-12 col-sm-9">
-								<div class="clearfix">
-									<select class="input-medium" id="property_size" name="property_size">
-										<option value="1">< 20m2</option>
-										<option value="2">21-40m2</option>
-										<option value="3">41-70m2</option>
-										<option value="4">71-100m2</option>
-										<option value="5">101-150m2</option>
-										<option value="6">151-200m2</option>
-										<option value="7">> 201m2</option>
-									</select>
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="number_of_beds">Number of beds</label>
-
-							<div class="col-xs-12 col-sm-9">
-								<div class="clearfix">
-									<input type="text" name="number_of_beds" id="number_of_beds" class="col-xs-12 col-sm-6" />
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="number_of_bathrooms">Number of bathrooms</label>
-
-							<div class="col-xs-12 col-sm-9">
-								<div class="clearfix">
-									<input type="text" name="number_of_bathrooms" id="number_of_bathrooms" class="col-xs-12 col-sm-6" />
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="unit_number">Unit number / floor</label>
-
-							<div class="col-xs-12 col-sm-3">
-								<div class="clearfix">
-									<input type="text" name="unit_number" id="unit_number" class="col-xs-12 col-sm-6" />
-								</div>
-							</div>
-						</div>
-						
-						<div class="hr hr-dotted"></div>
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="digit_code">Digit code</label>
-
-							<div class="col-xs-12 col-sm-5">
-								<div class="clearfix">
-									<input type="text" name="digit_code" id="digit_code" class="col-xs-12 col-sm-6" />
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="Wifi">Wifi</label>
-
-							<div class="col-xs-12 col-sm-1">
-								<div class="clearfix">
-									<label>
-										<input id="wifi" name="wifi" class="ace ace-switch ace-switch-5 pos-t-5" type="checkbox" />
-										<span class="lbl"></span>
-									</label>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-2">
-								<div class="clearfix">
-									<input type="text" name="wifi_name" id="wifi_name" class="col-xs-12" placeholder="Network Name" disabled="disabled" />
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-2">
-								<div class="clearfix">
-									<input type="text" name="wifi_password" id="wifi_password" class="col-xs-12" placeholder="Password" disabled="disabled" />
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="garbage_chute">Garbage chute </label>
-
-							<div class="col-xs-12 col-sm-1">
-								<div class="clearfix">
-									<label>
-										<input id="garbage_chute" name="garbage_chute" class="ace ace-switch ace-switch-5 pos-t-5" type="checkbox" />
-										<span class="lbl"></span>
-									</label>
-								</div>
-							</div>
-							<div class="col-xs-12 col-sm-4">
-								<div class="clearfix">
-									<input type="text" name="garbage_chute_location" id="garbage_chute_location" class="col-xs-12" placeholder="Location of garbage chute" disabled="disabled" />
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="first_name">Amenities</label>
-							
-							<div class="row">
-							<div class="col-xs-6">
-								<div class="checkbox col-xs-12 col-sm-6">
-									<label class="display-block">
-										<input name="amenities[]" value="Rooftop" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Rooftop</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="BBQ" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> BBQ</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Washing machine" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Washing machine</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Dryer" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Dryer</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Dish washer" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Dish washer</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Coffee machine" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Coffee machine</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Hairdryer" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Hairdryer</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Iron" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Iron</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Air conditioning" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Air conditioning</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Heater" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Heater</span>
-									</label>
-								</div>
-								<div class="checkbox col-xs-12 col-sm-6">
-									<label class="display-block">
-										<input name="amenities[]" value="Parking" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Parking</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Gym" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Gym</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Lift" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Lift</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Smoke detector" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Smoke detector</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="First aid kit" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> First aid kit</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Fire extinguisher" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Fire extinguisher</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Smoking allowed" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Smoking allowed</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Pets allowed" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Pets allowed</span>
-									</label>
-									<label class="display-block">
-										<input name="amenities[]" value="Wheelchair accessible" class="ace ace-checkbox-2" type="checkbox" />
-										<span class="lbl"> Wheelchair accessible</span>
-									</label>
-								</div>
-							</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="control-label col-xs-12 col-sm-3 no-padding-right" for="first_name">Specific instructions</label>
-
-							<div class="col-xs-12 col-sm-6">
-								<div class="clearfix">
-									<textarea id="instructions" name="instructions" class="form-control" placeholder="Instruction here..."></textarea>
-								</div>
-							</div>
-						</div>
-
-
-
-					
-				</div>
-			</form>
-			</div>
-			<div class="step-pane active" data-step="2">
 			<form class="form-horizontal" id="services-form" method="get">
 				<h3 class="text-center blue">Make a booking </h3>
 				<p class="text-center col-sm-6 col-sm-offset-3">Choose the service(s) requested</p>
@@ -422,7 +138,7 @@
 			</form>
 			</div>
 
-			<div class="step-pane active" data-step="3">
+			<div class="step-pane active" data-step="2">
 			<form class="form-horizontal" id="keeper-form" method="get">
 				<h3 class="text-center orange"> Select your keeper </h3>
 				<p class="text-center col-sm-6 col-sm-offset-3">It is time to choose the right keeper. We picked a few profiles. Rest assured: they all know what hospitality is about</p>
@@ -448,7 +164,7 @@
 			</form>
 			</div>
 
-			<div class="step-pane active" data-step="4">
+			<div class="step-pane active" data-step="3">
 			<form class="form-horizontal" id="more_info-form" method="get">
 				<h3 class="text-center purple">More information about your guests </h3>
 				
@@ -544,7 +260,7 @@
 			</form>
 			</div>
 
-			<div class="step-pane active" data-step="5">
+			<div class="step-pane active" data-step="4">
 			<form class="form-horizontal" id="key_set-form" method="get">
 				<h3 class="text-center blue"> Key Set </h3>
 				<p class="text-center col-sm-6 col-sm-offset-3">Let's move to picking the right service: we designed for you à-la-carte services tailored to your accommodation. </p>
@@ -692,13 +408,11 @@
 			.done(function(data) {
 				console.log(data);
 			},'json');*/
-			if(info.step == 1 && info.direction == 'next') {				
-				if(!$('#personal_info-form').valid()) e.preventDefault();
-			}else if(info.step == 2 && info.direction == 'next'){
+			if(info.step == 1 && info.direction == 'next'){
 				if(!$('#services-form').valid()) e.preventDefault();
-			}else if(info.step == 3 && info.direction == 'next'){
+			}else if(info.step == 2 && info.direction == 'next'){
 				if(!$('#keeper-form').valid()) e.preventDefault();
-			}else if(info.step == 4 && info.direction == 'next'){
+			}else if(info.step == 3 && info.direction == 'next'){
 				if(!$('#more_info-form').valid()) e.preventDefault();
 			}
 		})
@@ -787,115 +501,7 @@
 			$('[class*=select2]').remove();
 		});
 
-		//STEP 1
-		$('#wifi').click(function(e){
-			if( $(this).is(":checked") ){
-				$('#wifi_name, #wifi_password').prop('disabled',false);
-			}else{
-				$('#wifi_name, #wifi_password').prop('disabled',true);
-			}
-		});
-
-		$('#garbage_chute').click(function(e){
-			if( $(this).is(":checked") ){
-				$('#garbage_chute_location').prop('disabled',false);
-			}else{
-				$('#garbage_chute_location').prop('disabled',true);
-			}
-		});
-
-		$('#personal_info-form').validate({
-			errorElement: 'div',
-			errorClass: 'help-block',
-			focusInvalid: false,
-			ignore: "",
-			rules: {
-				first_name: {
-					required: true
-				},
-				/*password: {
-					required: true,
-					minlength: 5
-				},
-				r_password: {
-					required: true,
-					minlength: 5,
-					equalTo: "#password"
-				},
-				email: {
-					required: true,
-					email:true,
-					remote: {url: "order/steps/checkEmail", type : "post"}
-				},
-				surname: {
-					required: true
-				},
-				phone: {
-					required: true,
-					phone: 'required'
-				},
-				property_size: {
-					required: true,
-				},
-				number_of_beds: {
-					required: true,
-				},
-				number_of_bathrooms: {
-					required: true,
-				},
-				amenities: {
-					required: true
-				}*/
-			},
-
-			messages: {
-				email: {
-					required: "Please provide a valid email.",
-					email: "Please provide a valid email.",
-					remote: "Email already in use!"
-				},
-				password: {
-					required: "Please specify a password.",
-					minlength: "Please specify a secure password."
-				},
-				state: "Please choose state",
-				subscription: "Please choose at least one option",
-				gender: "Please choose gender",
-				agree: "Please accept our policy"
-			},
-
-
-			highlight: function (e) {
-				$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
-			},
-
-			success: function (e) {
-				$(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
-				$(e).remove();
-			},
-
-			errorPlacement: function (error, element) {
-				if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
-					var controls = element.closest('div[class*="col-"]');
-					if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
-					else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
-				}
-				else if(element.is('.select2')) {
-					error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
-				}
-				else if(element.is('.chosen-select')) {
-					error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
-				}
-				else error.insertAfter(element.parent());
-			},
-
-			submitHandler: function (form) {
-			},
-			invalidHandler: function (form) {
-
-			}
-		});
-
+		
 
 		// STEP 2
 		$('.btn_services').click(function(e){
@@ -1016,8 +622,6 @@
 				});
 			}
 		});
-
-		
 
 		// STEP 4
 		$('#more_info-form').validate({
