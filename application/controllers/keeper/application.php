@@ -11,49 +11,42 @@ define("HASH_ITERATION_INDEX", 1);
 define("HASH_SALT_INDEX", 2);
 define("HASH_PBKDF2_INDEX", 3);
 
-class Steps extends CI_Controller {
+class Application extends CI_Controller {
 
 	public function index()
 	{
-		$data['style'][] = 'assets/css/select2.css';
-		$data['content'] = 'orders/steps_view';
+		$data['content'] = 'keeper/application_view';
 		$this->load->view('plain',$data);
 	}
 
-	public function addOrder(){
+	public function process(){
 		$flag = true;
 		$res_msg = '';
 		$formData = normalizeFormArray($this->input->post(),'array');
 
 		// Insert Personal info in tbl_users
-		$personal['fname'] = $formData['first_name'];
-		$personal['lname'] = $formData['surname'];
+		$personal['fname'] = $formData['user_fname'];
+		$personal['lname'] = $formData['user_lname'];
 		$personal['email'] = $formData['email'];
-		$personal['password'] = $formData['password'];
-		$personal['r_password'] = $formData['r_password'];
+		$personal['password'] = 'password';
+		$personal['r_password'] = 'password';
 		$personal_res = $this->register_user($personal);
 
-		// Insert User info in tbl_user_info
-		$last_id = $this->db->insert_id();
-		$info['phone'] = $formData['phone'];
-		$info['id'] = $last_id;
-		$info_res = $this->updateUserInfo($info);
-
-		//Set user ID
-		$formData['user_id'] = $last_id;
-
 		// Unset already used data from different table
-		unset($formData['first_name']);
-		unset($formData['surname']);
+		unset($formData['user_fname']);
+		unset($formData['user_lname']);
 		unset($formData['email']);
-		unset($formData['phone']);
-		unset($formData['password']);
-		unset($formData['r_password']);
+
+		unset($formData['question_1']);
+		unset($formData['question_2']);
+		unset($formData['question_3']);
+		unset($formData['question_4']);
+		unset($formData['question_5']);
 
 		$flag = ( $personal_res == 'success' ) ? true : false;
-
 		if( $flag ){
-			if( $this->db->insert('tbl_orders',$formData) ){
+			$formData['user_id'] = $this->db->insert_id();
+			if( $this->db->insert('tbl_user_infos',$formData) ){
 				$res_msg = 'success';
 			}else{
 				$res_msg = 'Something went wrong! Please try again';
@@ -61,19 +54,8 @@ class Steps extends CI_Controller {
 		}else{
 			$res_msg = $personal_res;
 		}
-
+		
 		echo $res_msg;
-	}
-
-	public function updateUserInfo($data){
-		$user_exist = $this->helper_model->row_exist(array('user_id'=>$data['id']),'tbl_user_infos');
-		$info = array('contact'=>$data['phone'],'user_id'=>$data['id']);
-		if( $user_exist ){
-			$res = $this->db->update('tbl_user_infos',$info,array('user_id'=>$data['id']));
-		}else{
-			$res = $this->db->insert('tbl_user_infos',$info);
-		}
-		return $res;
 	}
 
 	public function register_user($data){
@@ -116,8 +98,8 @@ class Steps extends CI_Controller {
 				'user_email'	=> $email,
 				'user_pass'		=> $password,
 				'user_salt'		=> $pass_salt,
-				'user_access'	=> 4,
-				'user_level'	=> 4
+				'user_access'	=> 3,
+				'user_level'	=> 3
 				);
 
 			$inserted = $this->db->insert('tbl_users',$insert_array);
@@ -133,7 +115,7 @@ class Steps extends CI_Controller {
 		return $errors;
 	}
 
-	function create_hash($password)
+		function create_hash($password)
 	{
 	    // format: algorithm:iterations:salt:hash
 	    $salt = base64_encode(mcrypt_create_iv(PBKDF2_SALT_BYTE_SIZE, MCRYPT_DEV_URANDOM));
@@ -184,17 +166,5 @@ class Steps extends CI_Controller {
 	        return substr($output, 0, $key_length);
 	    else
 	        return bin2hex(substr($output, 0, $key_length));
-	}
-
-	public function checkEmail(){
-		$email = $this->input->post('email');
-
-		$email_exist = $this->helper_model->row_exist(array('user_email'=>$email),'tbl_users');
-
-		if( $email_exist ){
-			echo 'false';
-		}else{
-			echo 'true';
-		}
 	}
 }

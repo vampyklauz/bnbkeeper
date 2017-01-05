@@ -431,3 +431,25 @@ function active_child( $child,$page_link ){
 	}
 	return false;
 }
+
+function arrayToList($array,$type='list',$json=false){
+	if( $json ){
+		$array = json_decode($array);
+	}
+	if( ! is_array($array) ){
+		return 'Parameter 1 must be an array.';
+	}
+
+	$res = '';
+	if( $type == 'list' ){
+		
+		foreach ($array as $value) {
+			$res .= '<li>'.$value.'</li>';
+		}		
+	}elseif ( $type == ', ' || $type == ' ,' || $type == ',' ) {
+		$res = implode($type, $array);
+	}
+
+
+	return $res;
+}

@@ -5,6 +5,7 @@
 .margin-bottom-10{ margin-bottom: 10px; }
 .margin-bottom-40{ margin-bottom: 40px; }
 .margin-top-40{ padding-top: 40px; }
+.padding-left-20{ padding-left: 20px; }
 .padding-top-20{ padding-top: 20px; }
 .padding-10{ padding: 10px; }
 .pos-l-n5{ position: relative; left: -5px; }
@@ -20,6 +21,8 @@
 .lighter{
   font-weight: lighter;
 }
+
+.no-style{ text-decoration: none; list-style: none; border: none; }
 
 .bigger-500{
   font-size: 500%;
@@ -438,6 +441,22 @@ if( has 5 ){
 
 .has-addon .chosen-single > span{
   padding: 2px;
+}
+
+label.bigger{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+form input,
+form select,
+form textarea{
+  margin-bottom: 10px;
+}
+
+form.padding{
+  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .profile-info-name{ width: 150px; }

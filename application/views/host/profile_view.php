@@ -1,7 +1,7 @@
 <div class="page-content">
 	<div class="page-header">
 		<h1>
-			User Profile
+			HOST
 		</h1>
 	</div>
 	<div class="row">
@@ -130,30 +130,6 @@
 
 											<div class="profile-info-value padding-left-20">
 												<span id="about"><?php echo ( isset($users['personal']->about) && $users['personal']->about != '' ) ? arrayToList($users['personal']->about,'list',true): 'Say something'; ?></span>
-											</div>
-										</div>
-
-										<div class="profile-info-row">
-											<div class="profile-info-name"> Travel </div>
-
-											<div class="profile-info-value padding-left-20">
-												<span id="about"><?php echo ( isset($users['personal']->way_of_travel) ) ? arrayToList($users['personal']->way_of_travel,'list',true): ''; ?></span>
-											</div>
-										</div>
-
-										<div class="profile-info-row">
-											<div class="profile-info-name"> Visa situation </div>
-
-											<div class="profile-info-value">
-												<span id="email"><?php echo isset($users['personal']->visa_situation) ? $users['personal']->visa_situation: ''; ?></span>
-											</div>
-										</div>
-
-										<div class="profile-info-row">
-											<div class="profile-info-name"> Introduction </div>
-
-											<div class="profile-info-value">
-												<span id="email"><?php echo isset($users['personal']->introduction) ? $users['personal']->introduction: ''; ?></span>
 											</div>
 										</div>
 									</div>
