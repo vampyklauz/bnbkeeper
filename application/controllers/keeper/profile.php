@@ -19,11 +19,16 @@ class Profile extends CI_Controller {
 		$pk = $this->input->post('pk');
 		$value = $this->input->post('value');
 		$user_id = $this->session->userdata('user_id');
+		$type = $this->input->post('type');
 
 
 		$table = ( $pk == 'tu' ) ? 'tbl_users' : 'tbl_user_infos';
 
 		$row_exist = $this->helper_model->row_exist(array('user_id'=>$user_id),$table);
+
+		if( is_array($value) ){
+			$value = json_encode( $value );
+		}		
 
 		$data = array($name=>$value);
 

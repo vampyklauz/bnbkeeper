@@ -75,9 +75,9 @@
 
 											<div class="profile-info-value">
 												<i class="fa fa-map-marker light-orange bigger-110"></i>
-												<span id="location"><?php echo isset($users['personal']->state) ? $users['personal']->state: ''; ?></span>
+												<span id="state"><?php echo isset($users['personal']->state) ? $users['personal']->state: ''; ?></span>
 												<span id="location"><?php echo isset($users['personal']->location) ? $users['personal']->location: ''; ?></span>
-												<span id="location"><?php echo isset($users['personal']->zip) ? $users['personal']->zip: ''; ?></span>
+												<span id="zip"><?php echo isset($users['personal']->zip) ? $users['personal']->zip: ''; ?></span>
 											</div>
 										</div>
 
@@ -109,7 +109,7 @@
 											<div class="profile-info-name"> Availability </div>
 
 											<div class="profile-info-value">
-												<span><?php echo isset($users['personal']->availability) ? $users['personal']->availability: ''; ?></span>
+												<span id="availability"><?php echo isset($users['personal']->availability) ? $users['personal']->availability: ''; ?></span>
 											</div>
 										</div>
 									</div>
@@ -129,7 +129,7 @@
 											<div class="profile-info-name"> About me </div>
 
 											<div class="profile-info-value padding-left-20">
-												<span id="about"><?php echo ( isset($users['personal']->about) && $users['personal']->about != '' ) ? arrayToList($users['personal']->about,'list',true): 'Say something'; ?></span>
+												<span><?php echo ( isset($users['personal']->about) && $users['personal']->about != '' ) ? arrayToList($users['personal']->about,'list',true): ''; ?></span>
 											</div>
 										</div>
 
@@ -137,7 +137,7 @@
 											<div class="profile-info-name"> Travel </div>
 
 											<div class="profile-info-value padding-left-20">
-												<span id="about"><?php echo ( isset($users['personal']->way_of_travel) ) ? arrayToList($users['personal']->way_of_travel,'list',true): ''; ?></span>
+												<span id="travel"><?php echo ( isset($users['personal']->way_of_travel) ) ? arrayToList($users['personal']->way_of_travel,', ',true): ''; ?></span>
 											</div>
 										</div>
 
@@ -145,7 +145,7 @@
 											<div class="profile-info-name"> Visa situation </div>
 
 											<div class="profile-info-value">
-												<span id="email"><?php echo isset($users['personal']->visa_situation) ? $users['personal']->visa_situation: ''; ?></span>
+												<span id="visa"><?php echo isset($users['personal']->visa_situation) ? $users['personal']->visa_situation: ''; ?></span>
 											</div>
 										</div>
 
@@ -153,7 +153,7 @@
 											<div class="profile-info-name"> Introduction </div>
 
 											<div class="profile-info-value">
-												<span id="email"><?php echo isset($users['personal']->introduction) ? $users['personal']->introduction: ''; ?></span>
+												<span id="introduction"><?php echo isset($users['personal']->introduction) ? $users['personal']->introduction: ''; ?></span>
 											</div>
 										</div>
 									</div>
@@ -427,6 +427,7 @@
 	</div><!-- /.row -->
 </div><!-- /.page-content -->
 
+<script src="assets/js/jquery.validate.js"></script>
 <script src="assets/js/jquery-ui.custom.js"></script>
 <script src="assets/js/jquery.ui.touch-punch.js"></script>
 <script src="assets/js/jquery.gritter.js"></script>
@@ -507,6 +508,23 @@
 	        }
 	    });
 
+	    $('#state')
+		.editable({
+			type: 'text',
+			name: 'state',
+			pk: 'tui',
+			url: 'keeper/profile/update',
+			success: function(response, newValue) {
+				console.log(response);
+			},
+			error: function(response, newValue) {
+	            if(response.status === 500) {
+	                return 'Service unavailable. Please try later.';
+	            }
+	        }
+			
+	    });
+
 	    $('#location')
 		.editable({
 			type: 'text',
@@ -524,9 +542,26 @@
 			
 	    });
 
-	    $('#contact')
+	    $('#zip')
 		.editable({
 			type: 'text',
+			name: 'zip',
+			pk: 'tui',
+			url: 'keeper/profile/update',
+			success: function(response, newValue) {
+				console.log(response);
+			},
+			error: function(response, newValue) {
+	            if(response.status === 500) {
+	                return 'Service unavailable. Please try later.';
+	            }
+	        }
+			
+	    });
+
+	    $('#contact')
+		.editable({
+			type: 'tel',
 			name: 'contact',
 			pk: 'tui',
 			url: 'keeper/profile/update',
@@ -540,10 +575,21 @@
 	        }
 	    });
 
-	    $('#language')
+	     var languages = [];
+	    $.each({ "English":"English", "French":"French", "Italian":"Italian", "Spanish":"Spanish", "Russian":"Russian", "Mandarin":"Mandarin", "Cantonese":"Cantonese", "Japanese":"Japanese", "Hindi":"Hindi", "Arabic":"Arabic", "Bengali":"Bengali" }, function(k, v) {
+	        languages.push({id: k, text: v});
+	    });
+
+	    $('#languages')
 		.editable({
-			type: 'text',
+			type: 'select2',
+			value: 'English',
 			name: 'languages',
+			source: languages,
+			select2: {
+				'multiple': true,
+				'width': 200
+			},
 			pk: 'tui',
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
@@ -572,10 +618,93 @@
 	        }
 	    });
 
+	    var availability = [];
+	    $.each({ "Less than 15 hours": "Less than 15 hours", "Between 15 and 25 hours": "Between 15 and 25 hours", "More than 25 hours": "More than 25 hours", }, function(k, v) {
+	        availability.push({id: k, text: v});
+	    });
+
+	    $('#availability')
+		.editable({
+			type: 'select2',
+			name: 'availability',
+			pk: 'tui',
+			source: availability,
+			select2: {
+				'width': 200
+			},		
+			url: 'keeper/profile/update',
+			success: function(response, newValue) {
+				console.log(response);
+			},
+			error: function(response, newValue) {
+	            if(response.status === 500) {
+	                return 'Service unavailable. Please try later.';
+	            }
+	        }
+	    });
+
+	    var travel = [];
+	    $.each({ "Walk":"Walk", "Bike":"Bike", "Bus":"Bus", "Train":"Train", "Ferry":"Ferry", "Other":"Other" }, function(k, v) {
+	        travel.push({id: k, text: v});
+	    });
+
+	    $('#travel')
+		.editable({
+			type: 'select2',
+			name: 'way_of_travel',
+			pk: 'tui',
+			source: travel,
+			select2: {
+				multiple: true,
+				'width': 200
+			},		
+			url: 'keeper/profile/update',
+			success: function(response, newValue) {
+				console.log(response);
+			},
+			error: function(response, newValue) {
+	            if(response.status === 500) {
+	                return 'Service unavailable. Please try later.';
+	            }
+	        }
+	    });
+
 	    $('#website')
 		.editable({
 			type: 'text',
 			name: 'website',
+			pk: 'tui',
+			url: 'keeper/profile/update',
+			success: function(response, newValue) {
+				console.log(response);
+			},
+			error: function(response, newValue) {
+	            if(response.status === 500) {
+	                return 'Service unavailable. Please try later.';
+	            }
+	        }
+	    });
+
+	    $('#visa')
+		.editable({
+			type: 'text',
+			name: 'visa_situation',
+			pk: 'tui',
+			url: 'keeper/profile/update',
+			success: function(response, newValue) {
+				console.log(response);
+			},
+			error: function(response, newValue) {
+	            if(response.status === 500) {
+	                return 'Service unavailable. Please try later.';
+	            }
+	        }
+	    });
+
+	    $('#introduction')
+		.editable({
+			type: 'text',
+			name: 'introduction',
 			pk: 'tui',
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {

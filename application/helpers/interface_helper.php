@@ -433,12 +433,9 @@ function active_child( $child,$page_link ){
 }
 
 function arrayToList($array,$type='list',$json=false){
-	if( $json ){
-		$array = json_decode($array);
-	}
-	if( ! is_array($array) ){
-		return 'Parameter 1 must be an array.';
-	}
+	if( empty($array) ) return '';
+	if( $json ) $array = json_decode($array);
+	if( ! is_array($array) ) return 'Parameter 1 must be an array.';
 
 	$res = '';
 	if( $type == 'list' ){

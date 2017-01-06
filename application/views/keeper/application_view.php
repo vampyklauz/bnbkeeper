@@ -221,13 +221,7 @@
 								<input name="languages[]" value="Bengali" type="checkbox" class="ace" />
 								<span class="lbl"> Bengali</span>
 							</label>
-						</div>
-						<div class="checkbox">
-							<label>
-								<input name="languages[]" value="Japanese" type="checkbox" class="ace" />
-								<span class="lbl"> Japanese</span>
-							</label>
-						</div>						
+						</div>					
 
 					</div>
 				</div>

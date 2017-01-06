@@ -18,7 +18,11 @@ class Steps extends CI_Controller {
 		$data['style'][] = 'assets/css/select2.css';
 		$data['style'][] = 'assets/css/bootstrap-datetimepicker.css';
 		$data['keepers'] = $this->getKeepers();
-		$data['content'] = 'orders/steps_user_view';
+		if( $this->session->userdata('is_login') == true ){
+			$data['content'] = 'orders/steps_user_view';
+		}else{
+			$data['content'] = 'orders/steps_view';
+		}
 		$this->load->view('plain',$data);
 	}
 
@@ -34,19 +38,27 @@ class Steps extends CI_Controller {
 
 		// Modify and filter inputs
 		$formData['pick_up_date'] = date('Y-m-d H:i:s',strtotime($formData['pick_up_date'])); // Convert string time to date time
-		// Insert Personal info in tbl_users
-		$personal['fname'] = $formData['first_name'];
-		$personal['lname'] = $formData['surname'];
-		$personal['email'] = $formData['email'];
-		$personal['password'] = $formData['password'];
-		$personal['r_password'] = $formData['r_password'];
-		$personal_res = $this->register_user($personal);
+		
+		$personal_res = 'success';
+		if( ! $this->session->userdata('is_login') ){
+			// Insert Personal info in tbl_users
+			$personal['fname'] = $formData['first_name'];
+			$personal['lname'] = $formData['surname'];
+			$personal['email'] = $formData['email'];
+			$personal['password'] = $formData['password'];
+			$personal['r_password'] = $formData['r_password'];
+			$personal_res = $this->register_user($personal);
 
-		// Insert User info in tbl_user_info
-		$last_id = $this->db->insert_id();
-		$info['phone'] = $formData['phone'];
-		$info['id'] = $last_id;
-		$info_res = $this->updateUserInfo($info);
+			// Insert User info in tbl_user_info
+			$last_id = $this->db->insert_id();
+			$info['phone'] = $formData['phone'];
+			$info['id'] = $last_id;
+			$info_res = $this->updateUserInfo($info);
+		}else{
+			$last_id = $this->session->userdata('user_id');
+		}
+
+		
 
 		//Set user ID
 		$formData['user_id'] = $last_id;
