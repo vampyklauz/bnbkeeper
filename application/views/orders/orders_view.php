@@ -10,8 +10,9 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12">
-			<div id="grid-name" class="grid-wrap col-xs-12">
-				<table id="grid-table"></table>
+			<div id="grid-name2" class="grid-wrap col-xs-12">
+				<table id="grid-table2"></table>
+				<div id="grid-pager2"></div>
 			</div>
 		</div>
 	</div>
@@ -25,7 +26,7 @@
 <script type="text/javascript">
 	$('.nav-user-photo').click(function(e){
 		e.preventDefault();
-		console.log($('#grid-table').wd_jqGrid());
+		console.log($('#grid-table2').wd_jqGrid());
 		
 		//$('#grid-table').wd_jqGrid('afterSubmit','xxxx','fff');
 		//$('#grid-table').jqGrid('navGrid','#grid-pager',{edit:true});
@@ -33,7 +34,7 @@
 	
 	jQuery(function($) {
 
-		$('#grid-table').wd_jqGrid({
+		$('#grid-table2').wd_jqGrid({
 			url: 'jqGrid_ctrl/load_data',
 			module: 'viewing_order',
 			module_data: {ops:'l_name',status:0},
@@ -55,15 +56,7 @@
 						},
 					],
 			sortname: 'order_id',
-			toolbarEdit: true,
-			toolbarAdd: true,
-			toolbarDel: true,
-			toolbarSearch: true,
-			toolbarRefresh: true,
-			toolbarView: true,
 			editurl: 'actions',
-			caption: 'Orders',
-			height: "100%",
 			ondblClickRow: function(rowid){
 				console.log(this);
 			},

@@ -3,8 +3,13 @@
 
 class Dropdown_menus extends CI_Controller {
 
-    function __construct() {
+    public function __construct() {
         parent::__construct();
+        $this->load->driver('cache');
+
+        $access = $this->session->userdata('user_access');
+        if( ! hasAccess($access,[1,2]) )
+            $this->load->view('base',array('content'=>'no_access_view'));
     }
 
     public function index()

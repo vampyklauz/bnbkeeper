@@ -19,52 +19,14 @@ class Home extends CI_Controller {
 	 */
 	public function index()
 	{
-		$data = array('content'=>'patient_queues_view');
-		$data['style'][] = 'assets/css/ui.jqgrid.css';
-		$this->load->view('base',$data);
-	}
-
-	public function actions(){
-		$oper = $this->input->post('oper');
-		$id = $this->input->post('id');
-		$old_data = serializeToArray($this->input->post('old_data'));
-
-		$data = array();
-		switch ($oper) {
-			case 'add':
-				$this->add_action();
-				break;
-			case 'del':
-				$this->delete_action();
-				break;
-			case 'edit':
-				$data = array(
-					'f_name' => $this->input->post('f_name'),
-					'l_name' => $this->input->post('l_name'),
-					'status' => $this->input->post('status')
-				);
-				
-				$deff = array_diff_assoc($data,$old_data);
-				if( ! empty($deff) ){ // check if has difference.
-					// Update database
-					$this->db->trans_start();
-					$this->db->update('sample_employee',$data,array('employee_id'=>$id));
-					//$this->db->update('tbl_patients',);
-					$this->db->trans_complete();
-
-					if ( $this->db->trans_status() ){ // check if transaction is successfull.
-						// create trail data elements.
-						$trail_data = array(
-							'name' => 'sample_employee',
-							'data_id' => $id, // ID of data modified.
-							'data' => $data,
-							'old_data' => $old_data,
-							'method' => $oper // action or method use of this transaction.
-						);
-						audit_trail($trail_data);
-					}
-				}
-				break;
+		if( $this->session->userdata('is_login') ){
+			if( $this->session->userdata('main_menu') ){
+				redirect($this->session->userdata('main_menu'), 'refresh');
+			}else{
+				redirect('No_access','refresh');
+			}
+		}else{
+			redirect('site','refresh');
 		}
 	}
 }

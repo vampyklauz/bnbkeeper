@@ -18,7 +18,7 @@
 		<!-- /section:basics/sidebar.mobile.toggle -->
 		<div class="navbar-header pull-left">
 			<!-- #section:basics/navbar.layout.brand -->
-			<a href="#" class="navbar-brand">
+			<a href="home" class="navbar-brand">
 				<i class="fa fa-key"></i>
 				<small>
 					<strong>BNB</strong>
@@ -48,21 +48,6 @@
 					</a>
 
 					<ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-						<li>
-							<a href="#">
-								<i class="ace-icon fa fa-cog"></i>
-								Settings
-							</a>
-						</li>
-
-						<li>
-							<a href="profile.html">
-								<i class="ace-icon fa fa-user"></i>
-								Profile
-							</a>
-						</li>
-
-						<li class="divider"></li>
 
 						<li>
 							<a href="<?php echo ($this->session->userdata('is_login')) ? 'login/logout' : 'login' ?>">

@@ -3,10 +3,10 @@
 
 class Modals extends CI_Controller {
 
-    function __construct() {
+	function __construct() {
         parent::__construct();
     }
-
+    
     public function index()
     {
         $data = array(

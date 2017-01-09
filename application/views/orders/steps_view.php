@@ -115,13 +115,13 @@
 							<div class="col-xs-12 col-sm-9">
 								<div class="clearfix">
 									<select class="input-medium" id="property_size" name="property_size">
-										<option value="1">< 20m2</option>
-										<option value="2">21-40m2</option>
-										<option value="3">41-70m2</option>
-										<option value="4">71-100m2</option>
-										<option value="5">101-150m2</option>
-										<option value="6">151-200m2</option>
-										<option value="7">> 201m2</option>
+										<option value="< 20m2">< 20m2</option>
+										<option value="21-40m2">21-40m2</option>
+										<option value="41-70m2">41-70m2</option>
+										<option value="71-100m2">71-100m2</option>
+										<option value="101-150m2">101-150m2</option>
+										<option value="151-200m2">151-200m2</option>
+										<option value="> 201m2">> 201m2</option>
 									</select>
 								</div>
 							</div>
@@ -557,7 +557,7 @@
 						<div class="col-xs-12 col-sm-4 col-sm-offset-4 text-center">
 							<h3>Pick up date</h3>
 							<div class="input-group">
-								<input id="date-timepicker1" name="pick_up_date" type="text" class="form-control" />
+								<input id="pick_up_date" name="pick_up_date" type="text" class="form-control" />
 								<span class="input-group-addon">
 									<i class="fa fa-clock-o bigger-110"></i>
 								</span>
@@ -567,7 +567,7 @@
 					<div class="space"></div>
 					<div class="col-xs-6 col-sm-3 col-sm-offset-3 pricing-box">
 						<div class="widget-box widget-color-blue">
-							<input type="radio" name="key_set" id="pick_up" value="pick_up" class="hide">
+							<input type="radio" name="key_set" value="pick_up" class="hide">
 							<div class="widget-body text-center">
 								<div class="widget-key-set widget-main bg-blue">
 									<i class="ace-icon fa fa-briefcase bigger-500 blue"></i>
@@ -577,7 +577,7 @@
 									</div>
 								</div>
 								<div>
-									<a href="#pick_up" class="btn_key_set btn btn-block btn-primary">
+									<a href="#pick_up" id="key_pick_up" class="btn_key_set btn btn-block btn-primary">
 										<h5>1st PICK-UP is PREE</h5>
 									</a>
 								</div>
@@ -587,7 +587,7 @@
 					</div>
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-blue">
-							<input type="radio" name="key_set" id="drop_off" value="drop_off" class="hide">
+							<input type="radio" name="key_set" value="drop_off" class="hide">
 							<div class="widget-body text-center">
 								<div class="widget-key-set widget-main bg-blue">
 									<i class="ace-icon fa fa-list-ul bigger-500 blue"></i>
@@ -597,7 +597,7 @@
 									</div>
 								</div>
 								<div>
-									<a href="#drop_off" class="btn_key_set btn btn-block btn-primary">
+									<a href="#drop_off" id="key_drop_off" class="btn_key_set btn btn-block btn-primary">
 										<h5>FREE</h5>
 									</a>
 								</div>
@@ -627,6 +627,62 @@
 	</div>
 </div>
 
+<div id="drop_off_modal" class="hide">
+	<h2 class="text-center">Select your drop-off time at our office</h2>
+	<p class="text-center">71/220 Goulburn St, DARLINGHURST NSW 2010</p>
+	<p class="text-center">Monday to Friday, from 8am to 6pm</p>
+	<hr>
+	
+	<form id="key_drop_off-form" data-id="key_drop_off">
+		<div class="row">
+			<div class="col-xs-12">
+				<label for="id-date-range-picker-1">Drop off time</label>
+				<div class="input-group no-padding-right">
+					<input id="key_drop_off_date" name="key_drop_off_date" type="text" class="form-control" />
+					<span class="input-group-addon">
+						<i class="fa fa-clock-o bigger-110"></i>
+					</span>
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<label>Address</label>
+				<textarea id="key_drop_off_details" name="key_drop_off_date_details" class="form-control" placeholder="Details here..."></textarea>
+			</div>
+		</div>
+	</form>
+</div>
+
+<div id="pick_up_modal" class="hide">
+	<h2 class="text-center">Where will you leave your keys?</h2>
+	<p class="text-center">Make sure to write down all the details to help your Keeper</p>
+	<hr>
+	
+	<form id="key_pick_up-form" data-id="key_pick_up" >
+		<div class="row">
+			<label class="col-xs-12" for="id-date-range-picker-1">Date Range</label>
+			<div class="col-sm-6">
+				<div class="input-group">
+					<input id="key_pick_up_from" name="key_pick_up_from" type="text" class="form-control" />
+					<span class="input-group-addon">
+						<i class="fa fa-calendar bigger-110"></i>
+					</span>					
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="input-group">
+					<input id="key_pick_up_to" name="key_pick_up_to" type="text" class="form-control" />
+					<span class="input-group-addon">
+						<i class="fa fa-calendar bigger-110"></i>
+					</span>
+				</div>
+			</div>
+			<div class="col-xs-12 margin-top-10">
+				<textarea id="key_pick_up_details" name="key_pick_up_details" class="form-control" placeholder="Details here..."></textarea>
+			</div>
+		</div>
+	</form>
+</div>
+
 
 
 
@@ -640,13 +696,30 @@
 <script src="assets/js/ace/elements.spinner.js"></script>
 <script src="assets/js/date-time/moment.js"></script>
 <script src="assets/js/date-time/bootstrap-datetimepicker.js"></script>
+<script src="assets/js/date-time/daterangepicker.js"></script>
+<script src="public/front_end/inc/cookiejs/js.cookie.js"></script>
 
 <script src="assets/js/ace/elements.wizard.js"></script>
 
 <script type="text/javascript">
 	jQuery(function($) {
+		if( ! Cookies.getJSON('address') ){
+			window.location = 'site';
+		}
 
-		$('#date-timepicker1').datetimepicker().next().on(ace.click_event, function(){
+		$('#pick_up_date').datetimepicker().next().on(ace.click_event, function(){
+			$(this).prev().focus();
+		});
+
+		$('#key_drop_off_date').datetimepicker().next().on(ace.click_event, function(){
+			$(this).prev().focus();
+		});
+
+		$('#key_pick_up_from').datetimepicker().next().on(ace.click_event, function(){
+			$(this).prev().focus();
+		});
+
+		$('#key_pick_up_to').datetimepicker().next().on(ace.click_event, function(){
 			$(this).prev().focus();
 		});
 
@@ -703,7 +776,7 @@
 			}
 		})
 		.on('finished.fu.wizard', function(e) {
-			if(!$('#key_set-form').valid()){
+			if(!$('#key_set-form').valid() && $('#pick_up_date').val() ){
 				e.preventDefault();
 			}else{
 				var $personal_info = $('#personal_info-form').serialize(),
@@ -711,8 +784,13 @@
 					$keeper = $('#keeper-form').serialize(),
 					$more_info = $('#more_info-form').serialize(),
 					$key_set = $('#key_set-form').serialize(),
-					form = $personal_info+'&'+$services+'&'+$keeper+'&'+$more_info+'&'+$key_set;
+					$key_set_val = $('input[name=key_set]:checked').val(),
+					$address = JSON.stringify( Cookies.getJSON('address') );
 
+				
+
+				$key_set_date = $('#key_'+$key_set_val+'-form').serialize();
+				var form = $personal_info+'&'+$services+'&'+$keeper+'&'+$more_info+'&'+$key_set+'&'+$key_set_date+'&address='+$address;
 				$.post('order/steps/addOrder',form)
 				.done(function(data) {
 					if( data == 'success' ){
@@ -725,7 +803,8 @@
 								}
 							}
 						});
-						//setTimeout(function(){ window.location.href = "login"; }, 2000);
+						Cookies.remove('address')
+						setTimeout(function(){ window.location.href = "site/#login"; }, 2000);
 					}else{
 						bootbox.dialog({
 							message: data, 
@@ -813,7 +892,7 @@
 				first_name: {
 					required: true
 				},
-				/*password: {
+				password: {
 					required: true,
 					minlength: 5
 				},
@@ -843,9 +922,9 @@
 				number_of_bathrooms: {
 					required: true,
 				},
-				amenities: {
+				'amenities[]': {
 					required: true
-				}*/
+				}
 			},
 
 			messages: {
@@ -1029,7 +1108,7 @@
 				guest_first_name: {
 					required: true
 				},
-				/*guest_surname: {
+				guest_surname: {
 					required: true
 				},
 				guest_email: {
@@ -1050,7 +1129,7 @@
 				},
 				guest_info: {
 					required: true
-				},*/
+				},
 			},
 
 			messages: {
@@ -1105,11 +1184,49 @@
 			e.preventDefault();
 			var id = $(this).attr('href');
 			var key_set_box = $(this).closest('.widget-box');
-			var checkBoxes = $(id);
-			checkBoxes.prop("checked", true);
-
-			$('.widget-box').removeClass('active');
-			key_set_box.addClass('active');
+			var checkBoxes = key_set_box.find('input[name=key_set]');
+			var form_id = $(this).attr('id');
+			$( id+'_modal' ).modalBox({
+				width: 500,
+				title: "<div class='widget-header widget-header-small'><h4 class='smaller'><i class='ace-icon fa fa-cog'></i> Key Set</h4></div>",
+				buttons: [ 
+							{
+								text: "Cancel",
+								"class" : "btn btn-minier",
+								click: function() {
+									$( this ).dialog( "close" ); 
+								} 
+							},
+							{
+								text: "OK",
+								"class" : "btn btn-primary btn-minier",
+								click: function() {									
+									var form = $('#'+form_id+'-form').closest('form');
+									
+										if( form_id == 'key_pick_up' ){
+											if( $('#'+form_id+'_from').val() && $('#'+form_id+'_to').val() && $('#'+form_id+'_details').val() ){
+												$( this ).dialog( "close" );
+												checkBoxes.prop("checked", true);
+												$('.widget-box').removeClass('active');
+												key_set_box.addClass('active');
+											}else{
+												alert("Please fill all fields");
+											}
+										}else{
+											if( $('#'+form_id+'_date').val() ){
+												$( this ).dialog( "close" );
+												checkBoxes.prop("checked", true);
+												$('.widget-box').removeClass('active');
+												key_set_box.addClass('active');
+											}else{
+												alert("Please input dated");
+											}
+										}
+									//$( this ).dialog( "close" ); 
+								} 
+							}
+						]
+			});
 
 		});
 
@@ -1121,10 +1238,7 @@
 			rules: {
 				key_set: {
 					required: true
-				},
-				pick_up_date: {
-					required: true
-				},
+				}
 			},
 
 			messages: {
@@ -1171,7 +1285,7 @@
 			},
 			invalidHandler: function (form) {
 				bootbox.dialog({
-					message: "Please select atleast 1 of the services", 
+					message: "Please Fill required fields", 
 					buttons: {
 						"success" : {
 							"label" : "OK",

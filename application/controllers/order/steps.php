@@ -15,8 +15,10 @@ class Steps extends CI_Controller {
 
 	public function index()
 	{
+		$postData = $this->input->post();
 		$data['style'][] = 'assets/css/select2.css';
 		$data['style'][] = 'assets/css/bootstrap-datetimepicker.css';
+		$data['style'][] = 'assets/css/daterangepicker.css';	
 		$data['keepers'] = $this->getKeepers();
 		if( $this->session->userdata('is_login') == true ){
 			$data['content'] = 'orders/steps_user_view';
@@ -57,8 +59,21 @@ class Steps extends CI_Controller {
 		}else{
 			$last_id = $this->session->userdata('user_id');
 		}
-
 		
+		if( isset($formData['key_pick_up_from']) ){
+			$formData['key_pick_up_from'] = date('Y-m-d H:i:s',strtotime($formData['key_pick_up_from']));
+		}
+
+		if( isset($formData['key_pick_up_to']) ){
+			$formData['key_pick_up_to'] = date('Y-m-d H:i:s',strtotime($formData['key_pick_up_to']));
+		}
+
+		if( isset($formData['key_drop_off_dat']) ){
+			$formData['key_drop_off_dat'] = date('Y-m-d H:i:s',strtotime($formData['key_drop_off_dat']));
+		}
+
+		$address = (array)json_decode($formData['address']);
+		$formData = array_merge($formData,$address);
 
 		//Set user ID
 		$formData['user_id'] = $last_id;
@@ -70,6 +85,7 @@ class Steps extends CI_Controller {
 		unset($formData['phone']);
 		unset($formData['password']);
 		unset($formData['r_password']);
+		unset($formData['address']);
 
 		$flag = ( $personal_res == 'success' ) ? true : false;
 

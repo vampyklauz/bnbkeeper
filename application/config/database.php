@@ -64,10 +64,10 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
-	'database' => 'bnbkeepers',
+	'hostname' => 'localhost',//'118.127.47.249',
+	'username' => 'root',//'designto_bnb',
+	'password' => '',//'8;m!Kq#XqET(!~@d',
+	'database' => 'bnbkeepers',//'designto_bnb',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

@@ -3,8 +3,9 @@
 
 class jQgrid extends CI_Controller {
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct();
+		$this->load->driver('cache');
 		$this->load->model( 'developers/sample_modal_query_model', 'smqm' );
 	}
 

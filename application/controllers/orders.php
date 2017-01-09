@@ -14,6 +14,9 @@ class Orders extends CI_Controller {
 	public function info($id){
 		$data['content'] = 'orders/orders_info_view';
 		$data['orders'] = $this->getOrders($id);
+		if( ! $data['orders'] ){
+			$data['content'] = 'errors/error_500';
+		}
 		$this->load->view('base',$data);
 	}
 

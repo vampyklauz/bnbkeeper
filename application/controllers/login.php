@@ -15,9 +15,7 @@ class Login extends CI_Controller {
 
 	function __construct() {
 		parent::__construct();
-		$this->load->library('form_validation');
-
-		
+		$this->load->library('form_validation');	
 
 	}
 
@@ -27,6 +25,58 @@ class Login extends CI_Controller {
 			redirect('home','refresh');
 		
 		$this->load->view('login_view');		
+	}
+
+	public function validate_ajax(){
+		$username = $this->input->post('username');
+		$password = $this->input->post('password');
+		$errors = '';
+
+		if( is_numeric($username) ){
+			$user_data = $this->helper_model->query_table('*','tbl_users','WHERE user_id = "'.$username.'" OR user_account = "'.$username.'" ','row');
+		}else{
+			$user_data = $this->helper_model->query_table('*','tbl_users','WHERE user_account = "'.$username.'" OR user_email = "'.$username.'"','row');
+		}
+
+		if( ! empty($user_data) ){
+			$algo_pass = explode('::', $user_data->user_pass);
+			$user_algo = base64_decode($algo_pass[0]);
+			$user_password = $user_algo.':'.$algo_pass[1].':'.$user_data->user_salt;
+			if( $this->validate_password($password,$user_password) ){
+				$user_sessions = array(
+					'is_login' => true,
+					'user_id' => $user_data->user_id,
+					'user_account' => $user_data->user_account,
+					'user_first_name' => $user_data->user_fname,
+					'user_last_name' => $user_data->user_lname,
+					'user_full_name' => $user_data->user_fname.' '.$user_data->user_lname,
+					'user_full_name_b' => $user_data->user_lname.', '.$user_data->user_fname,
+					'user_access' => explode(',', $user_data->user_access),
+					'user_level' => explode(',', $user_data->user_level)
+					);
+				
+
+				// Set Main menu
+				$user_access_id = $user_sessions['user_access'];
+				
+				if( isset($user_access_id[0]) ){
+					$mainMenu = $this->getMainMenu($user_access_id[0]);
+				}else{
+					$mainMenu = '/';
+				}
+
+				$user_sessions['main_menu'] = $mainMenu;
+
+				$this->session->set_userdata($user_sessions);
+				$errors['success'] = true;
+				$errors['link'] = $mainMenu;
+			}else{
+				$errors = 'Invalid Username or Password.';
+			}
+		}else{
+			$errors = 'User does not exist.';
+		}
+		echo json_encode($errors);
 	}
 
 	public function validate(){
@@ -63,6 +113,8 @@ class Login extends CI_Controller {
 				
 				if( isset($user_access_id[0]) ){
 					$mainMenu = $this->getMainMenu($user_access_id[0]);
+					$user_sessions['main_menu'] = $mainMenu;
+					$this->session->set_userdata($user_sessions);
 					redirect($mainMenu,'refresh');
 				}else{
 					redirect('/','refresh');
@@ -79,13 +131,17 @@ class Login extends CI_Controller {
 
 	function logout(){
 		$this->session->sess_destroy();
-		redirect('login', 'refresh');
+		redirect('site', 'refresh');
 	}
 
 	public function registration(){
 		$formData = $this->input->post('formData');
-		$data = serializeToArray($formData);
-		$user_id = $data['user_id'];
+		if( $formData ){
+			$data = serializeToArray($formData);
+		}else{
+			$data = $this->input->post();
+		}
+		//$user_id = $data['user_id'];
 		$fname = $data['fname'];
 		$lname = $data['lname'];
 		$email = $data['email'];
@@ -95,14 +151,14 @@ class Login extends CI_Controller {
 
 		/*print_r($this->validate_password('123456','sha256:1000:3EtmxGtDNLETFUYSeTUiSZ+rt/yzmQQb:NLJqgjwR0a5WxAmaOp81XfciSCtZKUCj'));exit();
 		print_r($this->create_hash($password));exit();*/
-		$id_exist = $this->helper_model->row_exist(array('user_id'=>$user_id),'tbl_users');
+		//$id_exist = $this->helper_model->row_exist(array('user_id'=>$user_id),'tbl_users');
 		$email_exist = $this->helper_model->row_exist(array('user_email'=>$email),'tbl_users');
-		$user_exist = $this->helper_model->row_exist(array('user_fname'=>$fname,'user_lname'=>$lname),'tbl_users');
+		//$user_exist = $this->helper_model->row_exist(array('user_fname'=>$fname,'user_lname'=>$lname),'tbl_users');
 		$same_pass = ( $password == $r_password );
 
-		if( $id_exist || $user_exist || $email_exist || ! $same_pass ){
-			if( $id_exist ) $errors['user_id'] = 'ID already in use';
-			if( $user_exist ) $errors['user'] = 'User already exist';
+		if( $email_exist || ! $same_pass ){
+			//if( $id_exist ) $errors['user_id'] = 'ID already in use';
+			//if( $user_exist ) $errors['user'] = 'User already exist';
 			if( $email_exist ) $errors['email'] = 'Email already used';
 			if( ! $same_pass ) $errors['pass'] = 'Password does not match';
 		}else{
@@ -112,16 +168,16 @@ class Login extends CI_Controller {
 			$pass_salt = $hashes[2];
 
 			$insert_array = array(
-				'user_id'		=> $user_id,
-				'user_account'	=> $this->create_account($fname,$lname),
+				//'user_id'		=> $user_id,
+				//'user_account'	=> $this->create_account($fname,$lname),
 				'user_fname'	=> $fname,
 				'user_lname'	=> $lname,
 				'user_email'	=> $email,
 				'user_pass'		=> $password,
 				'user_salt'		=> $pass_salt,
-				'user_access'	=> 2,
-				'user_level'	=> 3,
-				'created_at'	=> date('Y-m-d H:i:s')
+				'user_access'	=> 4,
+				'user_level'	=> 4,
+				'created_date'	=> date('Y-m-d H:i:s')
 				);
 
 			$inserted = $this->db->insert('tbl_users',$insert_array);

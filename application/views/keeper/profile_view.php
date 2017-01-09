@@ -427,6 +427,7 @@
 	</div><!-- /.row -->
 </div><!-- /.page-content -->
 
+
 <script src="assets/js/jquery.validate.js"></script>
 <script src="assets/js/jquery-ui.custom.js"></script>
 <script src="assets/js/jquery.ui.touch-punch.js"></script>
@@ -475,6 +476,8 @@
 		
 		//editables 
 		
+		var canEdit = <?php echo json_encode($can_edit); ?>;
+		if( canEdit ){
 		//text editable
 	    $('#firstname')
 		.editable({
@@ -583,7 +586,6 @@
 	    $('#languages')
 		.editable({
 			type: 'select2',
-			value: 'English',
 			name: 'languages',
 			source: languages,
 			select2: {
@@ -735,6 +737,8 @@
 	            }
 	        }
 		});
+
+		}
 		
 		
 		

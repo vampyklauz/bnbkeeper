@@ -23,14 +23,14 @@ class JqGrid_ctrl extends CI_Controller {
 		$start = $limit*$page - $limit; 
 	    $start = ($start<0)?0:$start; 
 		$filters = $this->input->post('filters'); // get filters
-		$where = $this->get_filter($filters);
 
+		$where = get_filter($filters); // call from function helper
 		$query = $this->jm->getAllData($start,NULL,$sidx,$sord,$where,$module,$module_data);
-		
 		    $count = count($query); 
 		    if( $count > 0 ) 
 		        $total_pages = ceil($count/$limit);
-
+		    else
+		    	$total_pages = 0;
 		    if ($page > $total_pages) 
 		        $page=$total_pages;
 		if( $loadonce != 'true' ){
@@ -43,18 +43,18 @@ class JqGrid_ctrl extends CI_Controller {
 		$responce->records = $count;
 	    $i=0; 
 	    $flag = true;
+	    //print_r($this->db->last_query());exit();
 		foreach($query as $row){
 			$cell = array();
 			switch($module){
-				case 'tbl_request':
+				case 'list_keeper':
 					foreach ( $fields as $val ) {
 						switch($val){
-							case 'start_date':
-								$cell[$val] = 'xxx';
+							case 'full_name':
+								$cell[$val] = $row->user_fname.' '.$row->user_lname;
 							break;
 							default: $cell[$val] = $row->$val; break;
 						}
-						$cell['training_request_name'] = 'zx';
 					}
 					
 					$responce->rows[$i]['id']=$row->$sortname;
@@ -62,6 +62,7 @@ class JqGrid_ctrl extends CI_Controller {
 				break;
 				default:
 					foreach ( $fields as $val ) {
+
 						switch($val){
 							default: $cell[$val] = $row->$val; break;
 						}
@@ -76,55 +77,6 @@ class JqGrid_ctrl extends CI_Controller {
 	
 	}
 
-	function get_filter($filters){
-		$where = $group = "";
-		if($filters) {
-			$fil = json_decode($filters,true); 
-			if($fil["rules"]!=null) { 
-
-				foreach ( $fil["rules"] as $rule_key => $rule) {
-					$searchField = $rule["field"];
-					$searchOper = $rule["op"];
-					$searchString = $rule["data"];
-					if($rule_key != 0) $groupOp = $fil["groupOp"];
-					
-					if ($_POST['_search'] == 'true') {
-				        $ops = array(
-				        'eq'=>'=', 
-				        'ne'=>'<>',
-				        'lt'=>'<', 
-				        'le'=>'<=',
-				        'gt'=>'>', 
-				        'ge'=>'>=',
-				        'bw'=>'LIKE',
-				        'bn'=>'NOT LIKE',
-				        'in'=>'LIKE', 
-				        'ni'=>'NOT LIKE', 
-				        'ew'=>'LIKE', 
-				        'en'=>'NOT LIKE', 
-				        'cn'=>'LIKE', 
-				        'nc'=>'NOT LIKE' 
-				        );
-				        foreach ($ops as $key=>$value){
-				            if ($searchOper==$key) {
-				                $ops = $value;
-				            }
-				        }
-				        if($searchOper == 'eq' ) $searchString = $searchString;
-				        if($searchOper == 'bw' || $searchOper == 'bn') $searchString .= '%';
-				        if($searchOper == 'ew' || $searchOper == 'en' ) $searchString = '%'.$searchString;
-				        if($searchOper == 'cn' || $searchOper == 'nc' || $searchOper == 'in' || $searchOper == 'ni') $searchString = '%'.$searchString.'%';
-
-				        $where .= $groupOp;
-						
-				        //$where .= "$searchField $ops '$searchString'"; 
-						$where .= " $searchField $ops '".$searchString."' "; 
-
-				    }
-				}
-			} 
-		}
-		return $where;
-	}
+	
 	
 }

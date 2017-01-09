@@ -2,15 +2,19 @@
 
 class Home extends CI_Controller {
 
+	public function __construct() {
+		parent::__construct();
+		$this->load->driver('cache');
+
+		$access = $this->session->userdata('user_access');
+		if( ! hasAccess($access,[1,2]) )
+			redirect('No_access','refresh');
+	}
+
 	public function index()
 	{
-		if( $this->session->userdata('access') <= 2 ){
-			$data = array('content'=>'admin_tools/admin_tools_view');
-			$this->load->view('base',$data);
-		}else{
-			$data = array('content'=>'no_access_view');
-			$this->load->view('base',$data);
-		}
+		$data = array('content'=>'admin_tools/admin_tools_view');
+		$this->load->view('base',$data);
 	}
 }
 

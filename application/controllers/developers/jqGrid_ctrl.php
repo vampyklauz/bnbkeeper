@@ -1,13 +1,12 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class JqGrid_ctrl extends CI_Controller {
-	
+
 	public function __construct()
         {
 		parent::__construct();
 		$this->load->model('developers/jqGrid_model','jm');
 	}
-        
         
 
 	public function load_data(){

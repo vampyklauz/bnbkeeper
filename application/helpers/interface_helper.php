@@ -38,6 +38,14 @@ function get_view($location) {
    	}
 }
 
+function get_view_html($location) {  
+	if (file_exists(APPPATH.'views/'.$location)){
+   		that()->load->view($location);
+   	}else{
+   		echo 'ERROR: '.$location.' not found.';
+   	}
+}
+
 function print_pre($var){
 	echo '<pre>';
 	print_r($var);

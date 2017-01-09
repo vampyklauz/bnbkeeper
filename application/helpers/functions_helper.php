@@ -42,6 +42,26 @@ function serializeToArray($ser,$separator='|'){
 	}else return false;
 }
 
+function hasAccess($needle, $haystack){
+	
+	if( is_array($needle) ){
+		if( !is_array($haystack) ) return '2nd parameter must be also an array';
+		
+		$access = array_intersect($needle,$haystack);
+		if( empty($access) )
+			return false;
+			return true;
+	}else{
+		if( !is_array($haystack) ) return '2nd parameter must be an array';
+
+		if( in_array($needle, $haystack) )
+			return true;
+			return false;
+	}
+
+	
+}
+
 	//normalize data of FORM Submit with array values to string value
 	//For database Format
 function normalizeFormArray($data,$separator='|'){

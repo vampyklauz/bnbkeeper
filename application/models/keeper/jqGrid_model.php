@@ -9,12 +9,15 @@ class JqGrid_model extends CI_Model {
 	        $this->db->where($where,NULL,FALSE);
 	    $this->db->order_by($sidx,$sord);
 
-
 		switch ($module) {
-			case 'viewing_order':
-				$this->db->select( 'order_id, order_name, order_type, order_id actions' );
-				$this->db->where( 'status', 0 );
-				$sql = $this->db->get('tbl_orders');
+			case 'list_keeper':
+				$this->db->select( 'tu.user_id keeper_id, tu.user_id actions, tu.user_fname, tu.user_lname, tu.user_email email, info.contact, info.website' );
+				$this->db->join( 'tbl_user_infos info','info.user_id = tu.user_id','left' );
+				$this->db->where( "FIND_IN_SET(3,tu.user_level) >", 0);
+				$this->db->where( "FIND_IN_SET(1,tu.user_level) !=", 1);
+				$this->db->where( "FIND_IN_SET(2,tu.user_level) !=", 1);
+				$this->db->where( 'tu.user_status', 0 );
+				$sql = $this->db->get('tbl_users tu');
 				break;
 		}
 		

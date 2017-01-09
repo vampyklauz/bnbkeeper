@@ -3,16 +3,20 @@
 
 class Dashboard_settings extends CI_Controller {
 
-	function __construct() {
+	public function __construct() {
 		parent::__construct();
 		$this->load->driver('cache');
+
+		$access = $this->session->userdata('user_access');
+		if( ! hasAccess($access,[1,2]) )
+			$this->load->view('base',array('content'=>'no_access_view'));
 	}
 
 	public function index()
 	{
 		$menu_name =  $this->input->get('menu_name');
 		$data = array(
-			'content'=>'developers/Dashboard_settings_view',
+			'content'=>'developers/dashboard_settings_view',
 			'menu' => $this->display_listWidget($this->get_menu($menu_name)),
 			//'menu_list' => $this->helper_model->dropDown('sample_employee')
 			);
