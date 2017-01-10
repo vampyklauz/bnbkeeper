@@ -35,17 +35,17 @@
 								<hr>
 								<form id="menu_item">
 									<div class="well well-sm has_alert">
-										<p>
+										<p class="input-group no-padding-right">
 											<label>Name</label>
-											<input name="name" class="pull-right input-sm important" type="text" placeholder="link name">
+											<input name="name" class="pull-right input-sm col-xs-8 important" type="text" placeholder="link name">
 										</p>
-										<p>
+										<p class="input-group no-padding-right">
 											<label>Link</label>
-											<input name="link" class="pull-right input-sm important" type="text" placeholder="location">
+											<input name="link" class="pull-right input-sm col-xs-8 important" type="text" placeholder="location">
 										</p>
-										<p>
+										<p class="input-group no-padding-right">
 											<label>Icon</label>
-											<input name="icon" class="pull-right input-sm" type="text" placeholder="fa-check">
+											<input name="icon" class="pull-right input-sm col-xs-8" type="text" placeholder="fa-check">
 										</p>
 										<div class="space-6"></div>
 										<p class="align-right">

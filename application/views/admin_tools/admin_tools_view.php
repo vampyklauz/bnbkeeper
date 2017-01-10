@@ -49,6 +49,12 @@
 							<?php dropDown( 'access','','',array( 'filter'=>'1' ) ); ?>								
 						</select>
 					</div>
+					<div class="col-sm-3 no-padding-left">
+						<select class="form-control" id="franchise" name="franchise" validate="true" >
+							<option class="center" value="">-- Franchise --</option>
+							<?php dropDown( 'Franchise','','' ); ?>								
+						</select>
+					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-sm-6 no-padding-left">

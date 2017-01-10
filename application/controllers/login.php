@@ -199,6 +199,7 @@ class Login extends CI_Controller {
 		$fname = $data['f_name'];
 		$lname = $data['l_name'];
 		$email = $data['email'];
+		$franchise = $data['franchise'];
 		$password = $data['password'];
 		$r_password = $data['r_password'];
 		$errors = array();
@@ -229,6 +230,7 @@ class Login extends CI_Controller {
 				'user_email'	=> $email,
 				'user_pass'		=> $password,
 				'user_salt'		=> $pass_salt,
+				'user_franchise'=> $franchise,
 				'user_access'	=> $data['access'],
 				'user_level'	=> $data['access']
 				);	

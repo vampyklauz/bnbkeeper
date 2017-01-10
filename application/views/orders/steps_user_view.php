@@ -421,7 +421,6 @@
 
 <script type="text/javascript">
 	jQuery(function($) {
-
 		if( ! Cookies.getJSON('address') ){
 			window.location = 'site';
 		}

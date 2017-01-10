@@ -8,7 +8,7 @@ class Dropdown_menus extends CI_Controller {
         $this->load->driver('cache');
 
         $access = $this->session->userdata('user_access');
-        if( ! hasAccess($access,[1,2]) )
+        if( ! hasAccess($access,[1]) )
             $this->load->view('base',array('content'=>'no_access_view'));
     }
 
