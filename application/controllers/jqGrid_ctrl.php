@@ -50,13 +50,13 @@ class JqGrid_ctrl extends CI_Controller {
 					foreach ( $fields as $val ) {
 						switch($val){
 							case 'host':
-								$cell[$val] = $row->h_fname.' '.$row->h_lname;
+								$cell[$val] = '<a href="host/profile/index/'.$row->host_id.'">'. $row->h_fname.' '.$row->h_lname.'</a>';
 							break;
 							case 'keeper':
-								$cell[$val] = $row->k_fname.' '.$row->k_lname;
+								$cell[$val] = '<a href="host/profile/index/'.$row->keeper_id.'">'.$row->k_fname.' '.$row->k_lname.'</a>';
 							break;
 							case 'services':
-								$cell[$val] = arrayToList($row->$val,' ,',true);
+								$cell[$val] = $this->getService($row->$val);
 							break;
 							default: $cell[$val] = $row->$val; break;
 						}
@@ -82,6 +82,14 @@ class JqGrid_ctrl extends CI_Controller {
 	
 	}
 
-	
+	public function getService($services){
+		$ids = implode(',', json_decode($services) );
+		$result = $this->helper_model->query_table('*','req_services',"WHERE service_id IN($ids)");
+		$res = array();
+		foreach ($result as $service) {
+			$res[] = $service->service_name;
+		}
+		return implode(', ', $res);
+	}	
 	
 }

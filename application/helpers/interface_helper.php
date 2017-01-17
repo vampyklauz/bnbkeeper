@@ -193,6 +193,24 @@ function custom_dropDown( $menu_list, $name=null, $selected=null, $output='optio
 
 }
 
+function user_info($id,$output=''){
+	$user = that()->helper_model->query_table( "*","tbl_users","WHERE tbl_users.user_id = $id","row","JOIN tbl_user_infos ON tbl_user_infos.user_id = tbl_users.user_id" );
+	if( $user ){
+		switch ($output) {
+			case 'full-name':
+				$res = $user->user_fname.' '.$user->user_lname;
+				break;
+			default:
+				$res = $user;
+				break;
+		}
+	}else{
+		$res = 'No info';
+	}
+	return $res;
+}
+
+
 function table_dropDown( $menu_list, $name, $selected, $output='option', $options ){
 	$filter = ( isset($options['filter']) ) ? $options['filter'] : null; // separated with comma
 	$default = ( isset($options['default']) ) ? $options['default'] : ''; // type null or NULL if no default or first option in list
@@ -389,6 +407,7 @@ function get_sidebar_menu( $menu,$depth,$active_link=null ){
 	$page_link = ( $active_link ) ? $active_link : that()->uri->uri_string();
 	$data = '';
 	foreach ($menu as $key => $value) {
+
 		$id = ( isset($value['id']) ) ? $value['id'] : '';
 		$name = ( isset($value['name']) ) ? $value['name'] : '';
 		$link = ( isset($value['link']) ) ? $value['link'] : '';
@@ -397,6 +416,9 @@ function get_sidebar_menu( $menu,$depth,$active_link=null ){
 		$arrow = ( $child ) ? '<b class="arrow fa fa-angle-down"></b>' : '';
 		$new_link = '<a href="'.$link.'">';
 		$arrow = '';
+		if( $name == 'Devlopers' && that()->input->get('admin') != 'developer' ){
+			
+		}else{
 
 		$active = ( $link == $page_link ) ? 'active' : '';
 		if( $child ){
@@ -423,6 +445,7 @@ function get_sidebar_menu( $menu,$depth,$active_link=null ){
 		if( $child ) :
 			$data .= '<ul class="submenu">'.get_sidebar_menu($child,$depth+1,$active_link).'</ul>';
 		endif;
+	}
 	}
 
 	return $data.'</li>';

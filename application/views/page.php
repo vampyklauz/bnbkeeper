@@ -1,4 +1,4 @@
-country: au<br><!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
@@ -12,8 +12,7 @@ country: au<br><!DOCTYPE html>
 		<base href="<?php echo base_url(); ?>" />
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<title>
-			BNB KEEPERS - No Worries...		</title>
+		<title>BNB KEEPERS - No Worries...</title>
 					<meta name="description" content="My Heading">
 					
 		<!-- Mobile Specific Metas
@@ -93,6 +92,7 @@ country: au<br><!DOCTYPE html>
 			
 		</head>
 		<body>
+			<input type="hidden" id="franchise_id" value="1" data-code="au" data-franchise="Sydney">
 			<div class="wrapper">
 				<div class="wrapper-container">
 <nav id="nav-main">

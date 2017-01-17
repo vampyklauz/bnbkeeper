@@ -6,7 +6,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-12">
-			<div id="user-profile-2" class="user-profile">
+			<!-- <div id="user-profile-2" class="user-profile">
 				<div class="tabbable">
 					<ul class="nav nav-tabs padding-18">
 						<li class="active">
@@ -15,14 +15,14 @@
 								Profile
 							</a>
 						</li>
-
+			
 						<li>
 							<a data-toggle="tab" href="#feed">
 								<i class="orange ace-icon fa fa-rss bigger-120"></i>
 								Activity Feed
 							</a>
 						</li>
-					</ul>
+					</ul> -->
 
 					<div class="tab-content no-border padding-24">
 						<div id="home" class="tab-pane in active">
@@ -398,7 +398,7 @@
 						</div><!-- /#feed -->
 					</div>
 				</div>
-			</div>
+			<!-- </div> --> <!-- End Tabbable -->
 		</div><!-- /.col -->
 	</div><!-- /.row -->
 </div><!-- /.page-content -->

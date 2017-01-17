@@ -1,3 +1,4 @@
+
 <div class="page-content">
 	<div class="page-header">
 		<h1>
@@ -21,7 +22,7 @@
 			<div class="profile-info-name"> Host </div>
 
 			<div class="profile-info-value">
-				<a href="#">Host Name</a>
+				<a href="Host/profile/index/<?php echo $orders->user_id ?>"><?php echo user_info($orders->user_id,'full-name'); ?></a>
 			</div>
 		</div>
 
@@ -29,7 +30,7 @@
 			<div class="profile-info-name"> Keeper </div>
 
 			<div class="profile-info-value">
-				<a href="#"><?php echo $orders->keeper_id; ?></a>
+				<a href="keeper/profile/index/<?php echo $orders->keeper_id ?>"><?php echo user_info($orders->keeper_id,'full-name'); ?></a>
 			</div>
 		</div>
 
@@ -42,81 +43,58 @@
 		</div>
 
 		<div class="profile-info-row">
-			<div class="profile-info-name"> Key Pickup Date </div>
+			<div class="profile-info-name"> Key Set </div>
 
 			<div class="profile-info-value">
-				<span class="editable" id="signup">2010/06/20</span>
+				<span class="editable" id="signup"><?php echo $orders->key_set ?></span>
 			</div>
 		</div>
+		<?php 
+			if( $orders->key_set == 'pick_up' ){
+				$key_name = 'Key Pickup Date';
+				$key_date = date('M. d H:i a',strtotime($orders->key_pick_up_from)).' - '.date('M. d H:i a',strtotime($orders->key_pick_up_to));
+			}else{
+				$key_name = 'Key Dropoff Date';
+				$key_date = date('M. d H:i a',strtotime($orders->key_drop_off_date));
+			}
+		?>
+		<div class="profile-info-row">
+			<div class="profile-info-name"> <?php echo $key_name; ?> </div>
+
+			<div class="profile-info-value">
+				<span class="editable" id="signup"> <?php echo $key_date; ?></span>
+			</div>
+		</div>
+		<?php if( $orders->key_set ) { ?>
+		<div class="profile-info-row">
+			<div class="profile-info-name"> Key Set Details </div>
+
+			<div class="profile-info-value">
+				<span class="editable" id="signup"> <?php echo $orders->key_drop_off_details; ?></span>
+			</div>
+		</div>
+		<?php } ?>
 	</div>
 
 	<h3 class="header smaller lighter blue"> Service Name </h3>
 
 	<div class="profile-user-info profile-user-info-striped">
+		<?php foreach ($services as $service) { ?>
 		<div class="profile-info-row">
-			<div class="profile-info-name"> Check-In </div>
+			<div class="profile-info-name"> <?php echo $service->service_name; ?> </div>
 
 			<div class="profile-info-value">
-				<span class="editable" id="order_id">$39.99 </span>
+				<span class="editable" id="order_id"> $<?php echo $service->service_price; ?> </span>
 			</div>
 		</div>
-
+		<?php } ?>
 		<div class="profile-info-row">
-			<div class="profile-info-name"> Checkout </div>
+			<div class="profile-info-name"> Total </div>
 
 			<div class="profile-info-value">
-				<span class="editable" id="order_id"> $19.99  </span>
+				<span class="editable" id="order_id"> $<?php echo $total; ?> </span>
 			</div>
 		</div>
-
-		<div class="profile-info-row">
-			<div class="profile-info-name"> Cleaning </div>
-
-			<div class="profile-info-value">
-				<span class="editable" id="order_id"> $120  </span>
-			</div>
-		</div>
-
-		<div class="profile-info-row">
-			<div class="profile-info-name">  Cleaning + Laundry  </div>
-
-			<div class="profile-info-value">
-				<span class="editable" id="order_id">  $19.99  </span>
-			</div>
-		</div>
-
-		<div class="profile-info-row">
-			<div class="profile-info-name">  Last Minute Booking  </div>
-
-			<div class="profile-info-value">
-				<span class="editable" id="order_id">  $20  </span>
-			</div>
-		</div>
-
-		<div class="profile-info-row">
-			<div class="profile-info-name">  Night Booking  </div>
-
-			<div class="profile-info-value">
-				<span class="editable" id="order_id">  $10  </span>
-			</div>
-		</div>
-
-		<div class="profile-info-row">
-			<div class="profile-info-name">  Public Holiday  </div>
-
-			<div class="profile-info-value">
-				<span class="editable" id="order_id">  $79.99  </span>
-			</div>
-		</div>
-
-		<div class="profile-info-row">
-			<div class="profile-info-name">  Total  </div>
-
-			<div class="profile-info-value">
-				<span class="editable" id="order_id">  $309.96  </span>
-			</div>
-		</div>
-		
 	</div>
 
 	<h3 class="header smaller lighter purple"> Guest Details  </h3>
@@ -187,7 +165,7 @@
 			<div class="profile-info-name">House Email Address</div>
 
 			<div class="profile-info-value">
-				<span class="editable" id="order_id">ddddddd</span>
+				<span class="editable" id="order_id"><?php 	echo user_info($orders->user_id)->user_email; ?></span>
 			</div>
 		</div>
 		<div class="profile-info-row">
@@ -222,13 +200,13 @@
 			<div class="profile-info-name">House Wifi</div>
 
 			<div class="profile-info-value">
-				<span class="editable" id="order_id"><?php echo $orders->wifi; ?></span>
+				<span class="editable" id="order_id"><?php echo ($orders->wifi == 'on') ? 'Yes':'No'; ?></span>
 			</div>
 		</div>		<div class="profile-info-row">
 			<div class="profile-info-name">House Garbage</div>
 
 			<div class="profile-info-value">
-				<span class="editable" id="order_id"><?php echo $orders->garbage_chute; ?></span>
+				<span class="editable" id="order_id"><?php echo ($orders->garbage_chute == 'on') ? 'Yes':'No'; ?></span>
 			</div>
 		</div>
 		<div class="profile-info-row">
@@ -242,21 +220,21 @@
 			<div class="profile-info-name">House City</div>
 
 			<div class="profile-info-value">
-				<span class="editable" id="order_id">ddddddd</span>
+				<span class="editable" id="order_id"><?php 	echo user_info($orders->user_id)->location; ?></span>
 			</div>
 		</div>
 		<div class="profile-info-row">
 			<div class="profile-info-name">House State</div>
 
 			<div class="profile-info-value">
-				<span class="editable" id="order_id">ddddddd</span>
+				<span class="editable" id="order_id"><?php 	echo user_info($orders->user_id)->state; ?></span>
 			</div>
 		</div>
 		<div class="profile-info-row">
 			<div class="profile-info-name">House Zipcode</div>
 
 			<div class="profile-info-value">
-				<span class="editable" id="order_id">ddddddd</span>
+				<span class="editable" id="order_id"><?php 	echo user_info($orders->user_id)->zip; ?></span>
 			</div>
 		</div>
 		<div class="profile-info-row">

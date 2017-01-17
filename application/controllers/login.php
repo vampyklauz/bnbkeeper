@@ -196,10 +196,19 @@ class Login extends CI_Controller {
 	public function register_user(){
 		$formData = $this->input->post('formData');
 		$data = serializeToArray($formData);
+
+		// check if user is not Super Admin
+		if( hasAccess($this->session->userdata('user_level'),[1]) ) {
+			$franchise = $data['franchise'];
+		}else{
+			$user_id = $this->session->userdata('user_id');
+			$res = $this->helper_model->query_table('user_franchise','tbl_users',array('user_id'=>$user_id),'row');
+			$franchise = $res->user_franchise;
+		}
+
 		$fname = $data['f_name'];
 		$lname = $data['l_name'];
 		$email = $data['email'];
-		$franchise = $data['franchise'];
 		$password = $data['password'];
 		$r_password = $data['r_password'];
 		$errors = array();

@@ -20,13 +20,78 @@ class Profile extends CI_Controller {
 		$data['style'][] = 'assets/css/bootstrap-editable.css';
 		$data['content'] = 'keeper/profile_view';
 		$data['can_edit'] = $this->canEdit([1,2,4,3]);
-
+		$data['rating'] = $this->getRating($id);
+		$data['rating_update'] = $this->getCanUpdate($id);
 		$data['users'] = $this->getUserInfo($id);
 		if( ! $data['users'] ){
 			$data['content'] = 'errors/error_500';
 		}
 		
 		$this->load->view('base',$data);
+	}
+
+	public function getRating($id)
+	{
+		$id = ($id) ? $id : $this->session->userdata('user_id');
+		$rating = $this->helper_model->query_table('*','tbl_ratings',array('user_id'=>$id),'row');
+		if( $rating ){
+			$res_a = ( $rating->rate_1*1 ) + ( $rating->rate_2*2 ) + ( $rating->rate_3*3 ) + ( $rating->rate_4*4 ) + ( $rating->rate_5*5 );
+			$res_b = $rating->rate_1 + $rating->rate_2 + $rating->rate_3 + $rating->rate_4 + $rating->rate_5;
+			return $res_a/$res_b;
+		}else{
+			return false;
+		}
+
+	}
+
+	public function getCanUpdate($id)
+	{
+		if( ! $id ){
+			return true;
+		}else{
+			$user_id = $this->session->userdata('user_id');
+			$rated_by = $this->helper_model->query_table('rated_by','tbl_ratings',array('user_id'=>$id),'single');
+
+			if( $rated_by ){
+				return ( in_array($user_id, json_decode($rated_by)) ) ? true : false;
+			}else{
+			
+				return false;
+			}
+		}
+	}
+
+	public function updateRating()
+	{
+		$score = $this->input->post('score');
+		$id = $this->session->userdata('user_id');
+		$keeper_id = $this->input->post('id');
+		$msg = 'error';
+
+		$rating = $this->helper_model->query_table('*','tbl_ratings',array('user_id'=>$keeper_id),'row');
+		$data['user_id'] = $keeper_id;
+		$column = 'rate_'.$score;
+		if( empty($rating) ){			
+			$data[$column] = 1;
+			$data['rated_by'] = json_encode(array($id));
+			$this->db->insert('tbl_ratings',$data);
+			$msg = 'success';
+		}else{
+			$rated_by = json_decode($rating->rated_by);
+			$done = ( in_array($id, $rated_by) ) ? true : false;
+
+			if( $done ){
+				$msg = 'done';
+			}else{
+				array_push($rated_by, $id);
+				$data['rated_by'] = json_encode($rated_by);
+				$new_score = $rating->$column+1;
+				$data[$column] = $new_score;
+				$this->db->update('tbl_ratings',$data,array('user_id'=>$keeper_id));
+				$msg = 'success';
+			}
+		}
+		echo $msg;
 	}
 
 	public function update(){

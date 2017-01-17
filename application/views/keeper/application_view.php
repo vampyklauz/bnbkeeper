@@ -2,6 +2,7 @@
 	<div class="col-sm-6 col-sm-offset-3">
 		<div class="space"></div>
 		<form id="application-form" class="form-horizontal big-input vertical" method="POST" role="form">
+			<input type="hidden" name="franchise" value="1" data-code="au" data-franchise="Sydney">
 			<div class="form-group">
 				<div class="col-xs-12">
 					<label class="col-xs-12 control-label no-padding-left no-padding-right align-left bigger important">What is your name?</label>
@@ -69,84 +70,9 @@
 					<label class="col-xs-12 control-label no-padding-left no-padding-right align-left bigger important">In which city do you want to become a concierge (keeper)?</label>
 					<label class="col-xs-12 control-label no-padding-left no-padding-right align-left lighter">You can only choose one answer </label>
 					<div class="col-xs-12 no-padding">
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Sydney" type="radio" class="ace" />
-								<span class="lbl"> Sydney</span>
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Newcastle" type="radio" class="ace" />
-								<span class="lbl"> Newcastle</span>
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Melbourne" type="radio" class="ace" />
-								<span class="lbl"> Melbourne</span>
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Brisbane" type="radio" class="ace" />
-								<span class="lbl"> Brisbane</span>
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Cairns" type="radio" class="ace" />
-								<span class="lbl"> Cairns</span>
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Adelaide" type="radio" class="ace" />
-								<span class="lbl"> Adelaide</span>
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Perth" type="radio" class="ace" />
-								<span class="lbl"> Perth</span>
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Hobart" type="radio" class="ace" />
-								<span class="lbl"> Hobart</span>
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Auckland" type="radio" class="ace" />
-								<span class="lbl"> Auckland</span>
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Queenstown" type="radio" class="ace" />
-								<span class="lbl"> Queenstown</span>
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Christchurch" type="radio" class="ace" />
-								<span class="lbl"> Christchurch</span>
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Wellington" type="radio" class="ace" />
-								<span class="lbl"> Wellington</span>
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input name="keeper_location" value="Other" type="radio" class="ace" />
-								<span class="lbl"> Other</span>
-							</label>
-						</div>
+						<select class="chosen-select form-control" id="keeper_location" name="keeper_location" data-placeholder="Select suburb">
+							<?php dropDown('suburbs'); ?>
+						</select>
 					</div>
 				</div>
 			</div>
@@ -668,11 +594,14 @@
 <script src="assets/js/select2.js"></script>
 <script src="assets/js/fuelux/fuelux.spinner.js"></script>
 <script src="assets/js/ace/elements.spinner.js"></script>
+<script src="assets/js/chosen.jquery.js"></script>
 
 <script src="assets/js/ace/elements.wizard.js"></script>
 
 <script>
 	jQuery(function($) {
+
+		$('.chosen-select').chosen();
 
 		$('#application-form').validate({
 			errorElement: 'div',
@@ -681,14 +610,26 @@
 			focusInvalid: false,
 			ignore: "",
 			rules: {
-				user_fname: {
-					required: true,
-				},
+				user_fname: {required: true, },
+				user_lname: {required: true, },
 				email: {
 					required: true,
 					email:true,
 					remote: {url: "order/steps/checkEmail", type : "post"}
 				},
+				location: {required: true, },
+				state: {required: true, },
+				locality: {required: true, },
+				certify: {required: true, },
+				keeper_location: {required: true, },
+				'languages[]': {required: true, },
+				'way_of_travel[]': {required: true, },
+				member_rental_website: {required: true, },
+				availability: {required: true, },
+				'about[]': {required: true, },
+				visa_situation: {required: true, },
+				introduction: {required: true, },
+				source: {required: true, },
 			},
 
 			messages: {
@@ -702,6 +643,10 @@
 					minlength: "Please specify a secure password."
 				},
 				user_fname: "&nbsp;",
+				user_lname: "&nbsp;",
+				location: "&nbsp;",
+				state: "&nbsp;",
+				locality: "&nbsp;",
 				subscription: "Please choose at least one option",
 				gender: "Please choose gender",
 				agree: "Please accept our policy"
@@ -741,31 +686,33 @@
 		$('#btn-submit').click(function(e){
 			e.preventDefault();
 			var form = $('#application-form');
-			$.post('keeper/application/process',form.serialize())
-			.done(function(data) {
-				if( data == 'success' ){
-					bootbox.dialog({
-						message: "Thank you! Your information was successfully saved!", 
-						buttons: {
-							"success" : {
-								"label" : "OK",
-								"className" : "btn-sm btn-primary"
+			if( form.valid() ){
+				$.post('keeper/application/process',form.serialize())
+				.done(function(data) {
+					if( data == 'success' ){
+						bootbox.dialog({
+							message: "Thank you! Your information was successfully saved!", 
+							buttons: {
+								"success" : {
+									"label" : "OK",
+									"className" : "btn-sm btn-primary"
+								}
 							}
-						}
-					});
-					setTimeout(function(){ window.location.href = "login"; }, 2000);
-				}else{
-					bootbox.dialog({
-						message: data, 
-						buttons: {
-							"success" : {
-								"label" : "OK",
-								"className" : "btn-sm btn-primary"
+						});
+						setTimeout(function(){ window.location.href = "login"; }, 2000);
+					}else{
+						bootbox.dialog({
+							message: data, 
+							buttons: {
+								"success" : {
+									"label" : "OK",
+									"className" : "btn-sm btn-primary"
+								}
 							}
-						}
-					});
-				}
-			},'json');
+						});
+					}
+				},'json');
+			}
 		});
 	});
 </script>

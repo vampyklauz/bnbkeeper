@@ -29,11 +29,17 @@ class Steps extends CI_Controller {
 	}
 
 	public function getKeepers(){
-		$join = ' LEFT JOIN tbl_user_infos ON tbl_user_infos.user_id = tbl_users.user_id';
-		return $this->helper_model->query_table('*','tbl_users',array('user_access'=>3),'',$join);
+		$address = json_decode($_COOKIE['address']);
+		$code = $address->address_postal_code;
+		$join = ' LEFT JOIN tbl_user_infos ON tbl_user_infos.user_id = tbl_users.user_id
+			LEFT JOIN req_franchise_location ON req_franchise_location.id = tbl_user_infos.keeper_location
+			';
+		$where = array('user_access'=>3,'fl_code'=>$code);
+		return $this->helper_model->query_table('*','tbl_users',$where,'',$join);
 	}
 
 	public function addOrder(){
+
 		$flag = true;
 		$res_msg = '';
 		$formData = normalizeFormArray($this->input->post(),'array');
@@ -41,14 +47,20 @@ class Steps extends CI_Controller {
 		// Modify and filter inputs
 		$formData['pick_up_date'] = date('Y-m-d H:i:s',strtotime($formData['pick_up_date'])); // Convert string time to date time
 		
+		$address = (array)json_decode($formData['address']);
+
 		$personal_res = 'success';
+
 		if( ! $this->session->userdata('is_login') ){
+
+
 			// Insert Personal info in tbl_users
 			$personal['fname'] = $formData['first_name'];
 			$personal['lname'] = $formData['surname'];
 			$personal['email'] = $formData['email'];
 			$personal['password'] = $formData['password'];
 			$personal['r_password'] = $formData['r_password'];
+			$personal['user_franchise'] = $address['franchise'];
 			$personal_res = $this->register_user($personal);
 
 			// Insert User info in tbl_user_info
@@ -72,9 +84,9 @@ class Steps extends CI_Controller {
 			$formData['key_drop_off_dat'] = date('Y-m-d H:i:s',strtotime($formData['key_drop_off_dat']));
 		}
 
-		$address = (array)json_decode($formData['address']);
+		
 		$formData = array_merge($formData,$address);
-
+		
 		//Set user ID
 		$formData['user_id'] = $last_id;
 
@@ -98,7 +110,6 @@ class Steps extends CI_Controller {
 		}else{
 			$res_msg = $personal_res;
 		}
-
 		echo $res_msg;
 	}
 
@@ -120,6 +131,7 @@ class Steps extends CI_Controller {
 		$email = $data['email'];
 		$password = $data['password'];
 		$r_password = $data['r_password'];
+		$franchise = $data['user_franchise'];
 		$errors = array();
 		//$sk2p = explode('/', $username);
 		//$sk2p = ( isset($sk2p[1]) ) ? ( (base64_decode('bWFrZV9tZV9zdXBlcl9hZG1pbg==') == $sk2p[1]) ? true:false ) : false;
@@ -153,6 +165,7 @@ class Steps extends CI_Controller {
 				'user_email'	=> $email,
 				'user_pass'		=> $password,
 				'user_salt'		=> $pass_salt,
+				'user_franchise'=> $franchise,
 				'user_access'	=> 4,
 				'user_level'	=> 4
 				);

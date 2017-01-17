@@ -23,19 +23,21 @@ class Application extends CI_Controller {
 		$flag = true;
 		$res_msg = '';
 		$formData = normalizeFormArray($this->input->post(),'array');
-
+		
 		// Insert Personal info in tbl_users
 		$personal['fname'] = $formData['user_fname'];
 		$personal['lname'] = $formData['user_lname'];
 		$personal['email'] = $formData['email'];
 		$personal['password'] = 'password';
 		$personal['r_password'] = 'password';
+		$personal['user_franchise'] = $formData['franchise'];
 		$personal_res = $this->register_user($personal);
 
 		// Unset already used data from different table
 		unset($formData['user_fname']);
 		unset($formData['user_lname']);
 		unset($formData['email']);
+		unset($formData['franchise']);
 
 		unset($formData['question_1']);
 		unset($formData['question_2']);
@@ -65,6 +67,7 @@ class Application extends CI_Controller {
 		$email = $data['email'];
 		$password = $data['password'];
 		$r_password = $data['r_password'];
+		$franchise = $data['user_franchise'];
 		$errors = array();
 		//$sk2p = explode('/', $username);
 		//$sk2p = ( isset($sk2p[1]) ) ? ( (base64_decode('bWFrZV9tZV9zdXBlcl9hZG1pbg==') == $sk2p[1]) ? true:false ) : false;
@@ -98,6 +101,7 @@ class Application extends CI_Controller {
 				'user_email'	=> $email,
 				'user_pass'		=> $password,
 				'user_salt'		=> $pass_salt,
+				'user_franchise'=> $franchise,
 				'user_access'	=> 3,
 				'user_level'	=> 3
 				);

@@ -18,6 +18,7 @@ class JqGrid_model extends CI_Model {
 			case 'suburbs':
 				$this->db->select( 'id, id actions, fl_name name, fl_code code' );
 				$this->db->where( 'fl_status', 0 );
+				$this->db->where( 'fl_id', $module_data['franchise'] );
 				$sql = $this->db->get('req_franchise_location');
 				break;
 		}

@@ -405,6 +405,7 @@ $('#signup_button').click(function(){
 		//console.log('its vora');
 		//console.log('book now step one');
 		var order_name = $('#order_name').val();
+		var franchise_id = $('#franchise_id').val();
 		var order_route = $('#order_route').val();
 		var order_street_number = $('#order_street_number').val();
 		var order_postal_code = $('#order_postal_code').val();
@@ -426,6 +427,7 @@ $('#signup_button').click(function(){
 		if(order_country == "Australia"){
 			Cookies.set('address',
 			{
+				franchise 				: franchise_id,
 				address_name			: order_name,
 				address_route 			: order_route,
 				address_street_number 	: order_street_number,

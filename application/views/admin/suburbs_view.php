@@ -33,12 +33,11 @@
 	})
 	
 	jQuery(function($) {
-		$franchise = <?php echo json_encode($franchise); ?>;
-		console.log($franchise);
+		franchise = <?php echo json_encode($franchise); ?>;
 		$('#grid-table2').wd_jqGrid({
 			url: 'admin/jqGrid_ctrl/load_data',
 			module: 'suburbs',
-			module_data: {ops:'l_name',status:0},
+			module_data: {franchise:franchise},
 			colNames: ['ID','Suburbs Name','Suburbs Code','Actions'],
 			colModel: [	{name:'id',index:'id', width:30, sorttype:"int"},
 						{name:'name',index:'name', width:150, editable: true},
@@ -54,7 +53,7 @@
 						},
 					],
 			sortname: 'id',
-			editurl: 'admin/suburbs/actions?franchise='+$franchise,
+			editurl: 'admin/suburbs/actions?franchise='+franchise,
 			toolbarAdd: true,
 			ondblClickRow: function(rowid){
 				console.log(this);

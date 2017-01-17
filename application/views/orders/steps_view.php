@@ -324,7 +324,7 @@
 				<div class="col-xs-12 col-sm-8 col-sm-offset-2">
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-dark">
-							<input type="checkbox" name="services[]" id="check_in" value="check_in" class="hide">
+							<input type="checkbox" name="services[]" id="check_in" value="1" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -348,7 +348,7 @@
 					</div>
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-orange">
-							<input type="checkbox" name="services[]" id="check_out" value="check_out" class="hide">
+							<input type="checkbox" name="services[]" id="check_out" value="2" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -372,7 +372,7 @@
 					</div>
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-blue">
-							<input type="checkbox" name="services[]" id="cleaning" value="cleaning" class="hide">
+							<input type="checkbox" name="services[]" id="cleaning" value="3" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -396,7 +396,7 @@
 					</div>
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-green">
-							<input type="checkbox" name="services[]" id="loundry" value="loundry" class="hide">
+							<input type="checkbox" name="services[]" id="loundry" value="4" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -428,7 +428,12 @@
 				<p class="text-center col-sm-6 col-sm-offset-3">It is time to choose the right keeper. We picked a few profiles. Rest assured: they all know what hospitality is about</p>
 				<div class="space"></div>
 				<div class="col-xs-12 col-sm-8 col-sm-offset-2">
-					<?php  foreach ($keepers as $key => $value) {?>
+					<?php  
+					if( empty($keepers) ) {
+						echo '<div class="col-xs-12 text-center text-danger bigger-120">No Keepers Available right Now! <br> <a href="site#contact-us" class="btn btn-primary">Contact us</a></div>';
+					}
+
+					foreach ($keepers as $key => $value) {?>
 					<div data-id="keeper-<?php echo $value->user_id ?>" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
 						<input class="hide" type="radio" name="keeper_id" id="keeper-<?php echo $value->user_id ?>" value="<?php echo $value->user_id ?>">
 						<span class="profile-picture">
@@ -646,7 +651,7 @@
 			</div>
 			<div class="col-xs-12">
 				<label>Address</label>
-				<textarea id="key_drop_off_details" name="key_drop_off_date_details" class="form-control" placeholder="Details here..."></textarea>
+				<textarea id="key_drop_off_details" name="key_drop_off_details" class="form-control" placeholder="Details here..."></textarea>
 			</div>
 		</div>
 	</form>
@@ -703,6 +708,7 @@
 
 <script type="text/javascript">
 	jQuery(function($) {
+		console.log(Cookies.getJSON('address'));
 		if( ! Cookies.getJSON('address') ){
 			window.location = 'site';
 		}

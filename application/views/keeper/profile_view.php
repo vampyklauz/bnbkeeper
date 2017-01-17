@@ -3,11 +3,14 @@
 		<h1>
 			Keeper Profile
 		</h1>
-	</div>
+		<div class="rating-wrap">
+			<div class="rating inline"></div>
+		</div>
+	</div>	
 	<div class="row">
 		<div class="col-xs-12">
 			<div id="user-profile-2" class="user-profile">
-				<div class="tabbable">
+				<!-- <div class="tabbable">
 					<ul class="nav nav-tabs padding-18">
 						<li class="active">
 							<a data-toggle="tab" href="#home">
@@ -15,14 +18,14 @@
 								Profile
 							</a>
 						</li>
-
+				
 						<li>
 							<a data-toggle="tab" href="#feed">
 								<i class="orange ace-icon fa fa-rss bigger-120"></i>
 								Activity Feed
 							</a>
 						</li>
-					</ul>
+					</ul> -->
 
 					<div class="tab-content no-border padding-24">
 						<div id="home" class="tab-pane in active">
@@ -421,7 +424,7 @@
 							</div>
 						</div><!-- /#feed -->
 					</div>
-				</div>
+				<!-- </div> --> <!-- End Tabbable -->
 			</div>
 		</div><!-- /.col -->
 	</div><!-- /.row -->
@@ -464,9 +467,74 @@
 <script src="assets/js/ace/ace.settings-skin.js"></script>
 <script src="assets/js/ace/ace.widget-on-reload.js"></script>
 <script src="assets/js/ace/ace.searchbox-autocomplete.js"></script>
+<script src="assets/js/jquery.raty.js"></script>
 
 <script type="text/javascript">
 	jQuery(function($) {
+		keeper_id = <?php echo json_encode($users['info']->user_id); ?>;
+		rating = <?php echo json_encode($rating); ?>;
+		rating_update = <?php echo json_encode($rating_update); ?>;
+		console.log(rating_update);
+		$('.rating').raty({
+			cancel : false,
+			half: false,
+			starType : 'i',
+			readOnly: rating_update,
+			score: rating,
+			hints: ['bad', 'poor', 'regular', 'good', 'excellent'],
+			'click': function(score) {
+				$.post('keeper/profile/updateRating',{score:score,id:keeper_id})
+					.done(function(res){
+						if( res == 'success' ){
+							rating_sticky();
+							 $(this).find('img').unbind();
+						}else if(res == 'done'){
+							rating_sticky_done();
+							 $(this).find('img').unbind();
+						}else{
+							error_sticky();
+						}
+					});
+			},
+			/**,
+			'mouseover': function() {
+				setRatingColors.call(this);
+			},
+			'mouseout': function() {
+				setRatingColors.call(this);
+			}*/
+		})//.find('i:not(.star-raty)').addClass('grey');
+
+
+		function rating_sticky(){
+			$.gritter.add({
+				// (string | mandatory) the heading of the notification
+				title: 'Successful',
+				// (string | mandatory) the text inside the notification
+				text: 'Great! thanks for rating me.',
+				class_name: 'gritter-success'
+			});
+		}
+
+		function rating_sticky_done(){
+			$.gritter.add({
+				// (string | mandatory) the heading of the notification
+				title: 'Opps!',
+				// (string | mandatory) the text inside the notification
+				text: 'Thanks, But it seems that you already have rated me.',
+				class_name: 'gritter-warning'
+			});
+		}
+
+		function error_sticky(){
+			$.gritter.add({
+				// (string | mandatory) the heading of the notification
+				title: 'Error!',
+				// (string | mandatory) the text inside the notification
+				text: 'Service is unavailable. Please try again.',
+				class_name: 'gritter-danger'
+			});
+		}
 	
 		//editables on first profile page
 		/*$.fn.editable.defaults.mode = 'inline';

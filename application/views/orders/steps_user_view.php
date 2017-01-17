@@ -362,7 +362,7 @@
 			</div>
 			<div class="col-xs-12">
 				<label>Address</label>
-				<textarea id="key_drop_off_details" name="key_drop_off_date_details" class="form-control" placeholder="Details here..."></textarea>
+				<textarea id="key_drop_off_details" name="key_drop_off_details" class="form-control" placeholder="Details here..."></textarea>
 			</div>
 		</div>
 	</form>
@@ -715,7 +715,7 @@
 				guest_first_name: {
 					required: true
 				},
-				/*guest_surname: {
+				guest_surname: {
 					required: true
 				},
 				guest_email: {
@@ -736,7 +736,7 @@
 				},
 				guest_info: {
 					required: true
-				},*/
+				},
 			},
 
 			messages: {

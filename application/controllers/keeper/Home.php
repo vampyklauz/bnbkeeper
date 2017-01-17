@@ -5,7 +5,7 @@ class Home extends CI_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->load->driver('cache');
-		$access = $this->session->userdata('user_access');
+		$access = $this->session->userdata('user_level');
 		if( ! hasAccess($access,[1,2,4]) )
 			redirect('No_access','refresh');
 	}

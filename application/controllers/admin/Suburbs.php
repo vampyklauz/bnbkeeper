@@ -15,9 +15,22 @@ class Suburbs extends CI_Controller {
 		$data['style'][] = 'assets/css/datepicker.css';
 		$data['franchise'] = $id;
 		$data['content'] = 'admin/suburbs_view';
-		if( empty($id) )
+		
+		if( empty($id) ){
 			$data['content'] = 'errors/error_500';
+		}
+
+		if( hasAccess($this->session->userdata('user_level'),[2]) ){
+			$data['franchise'] = $this->getFranchiseId($this->session->userdata('user_id'));
+			$data['content'] = 'admin/suburbs_view';
+		}
+
 		$this->load->view('base',$data);
+	}
+
+	public function getFranchiseId($id)
+	{
+		return $this->helper_model->query_table('user_franchise','tbl_users',array('user_id'=>$id),'single');
 	}
 
 	public function actions(){
