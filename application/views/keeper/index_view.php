@@ -23,6 +23,8 @@
 <script src="assets/js/jqGrid/jquery.jqGrid.preset.js"></script>
 <script src="assets/js/jqGrid/i18n/grid.locale-en.js"></script>
 
+
+
 <script type="text/javascript">
 	$('.nav-user-photo').click(function(e){
 		e.preventDefault();
@@ -30,20 +32,21 @@
 		
 		//$('#grid-table').wd_jqGrid('afterSubmit','xxxx','fff');
 		//$('#grid-table').jqGrid('navGrid','#grid-pager',{edit:true});
-	})
-	
+	});
+
+	var access = <?php echo json_encode(hasAccess($access = $this->session->userdata('user_level'),[3,4])); ?>;
 	jQuery(function($) {
 
 		$('#grid-table').wd_jqGrid({
 			url: 'keeper/jqGrid_ctrl/load_data',
 			module: 'list_keeper',
 			module_data: {ops:'l_name',status:0},
-			colNames: ['Keeper ID','Full Name','Email','Contact','Address','Actions'],
+			colNames: ['Keeper ID','Full Name','Email','Contact','Status','Actions'],
 			colModel: [	{name:'keeper_id',index:'keeper_id', width:30, sorttype:"int"},
 						{name:'full_name',index:'full_name', width:150, editable: true},
 						{name:'email',index:'email', width:90, editable: true},
 						{name:'contact',index:'contact',width:60, editable:true},
-						{name:'website',index:'website',width:90, editable:true},
+						{name:'status',index:'status',width:50, editable:true, align:'center', hidden: access},
 						{name:'actions',index:'actions', width:80, fixed:true, sortable:false, resize:false,
 							formatter:'actions', 
 							formatoptions:{ 

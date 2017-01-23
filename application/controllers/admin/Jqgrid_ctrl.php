@@ -60,6 +60,19 @@ class JqGrid_ctrl extends CI_Controller {
 					$responce->rows[$i]['id']=$row->$sortname;
 					$responce->rows[$i++]['cell']=$cell;
 				break;
+				case 'cleaning':
+					foreach ( $fields as $val ) {
+						switch($val){
+							case 'value':
+								$cell[$val] = '$ '.$row->$val;
+							break;
+							default: $cell[$val] = $row->$val; break;
+						}
+					}
+					
+					$responce->rows[$i]['id']=$row->$sortname;
+					$responce->rows[$i++]['cell']=$cell;
+				break;
 				default:
 					foreach ( $fields as $val ) {
 

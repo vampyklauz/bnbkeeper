@@ -30,6 +30,20 @@
 
 			<div class="form-group">
 				<div class="col-xs-12">
+					<label class="col-xs-12 control-label no-padding-left no-padding-right align-left bigger important">Please provide a password for your account</label>
+					<div class="row">
+						<div class="col-sm-12">
+							<input type="password" name="password" id="password" class="col-md-6" placeholder="Password" />
+						</div>
+						<div class="col-sm-12">
+							<input type="password" name="c_password" class="col-md-6" placeholder="Confirm Password" />
+						</div>
+					</div>	
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-xs-12">
 					<label class="col-xs-12 control-label no-padding-left no-padding-right align-left bigger important">What is your complete address?</label>
 					<label class="col-xs-12 control-label no-padding-left no-padding-right align-left lighter">Give us the one where you live</label>
 					<div class="row multi ">
@@ -617,6 +631,15 @@
 					email:true,
 					remote: {url: "order/steps/checkEmail", type : "post"}
 				},
+				password: {
+					required: true,
+					minlength: 5
+				},
+				c_password: {
+					required: true,
+					minlength: 5,
+					equalTo: "#password"
+				},
 				location: {required: true, },
 				state: {required: true, },
 				locality: {required: true, },
@@ -712,6 +735,8 @@
 						});
 					}
 				},'json');
+			}else{
+				bootbox.alert('Please Fill all required fields.')
 			}
 		});
 	});

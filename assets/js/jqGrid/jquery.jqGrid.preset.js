@@ -1,7 +1,8 @@
 ;(function ( $, window, document, undefined ) {
 
-  $.searchOnGrid = function(url,table,gridData){
-    $('#'+table).jqGrid('setGridParam',{postData:gridData,datatype:'json',url:url+"/load_data"}).trigger("reloadGrid");
+  $.searchOnGrid = function(url,table,gridData,edit_url){
+    console.log(table);
+    $('#'+table).jqGrid('setGridParam',{postData:gridData,datatype:'json',url:url+"/load_data",editurl:edit_url}).trigger("reloadGrid");
   }
 
   $.getColumnIndexByName = function(gr,columnName) {

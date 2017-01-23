@@ -34,10 +34,11 @@ class Profile extends CI_Controller {
 		$name = $this->input->post('name');
 		$pk = $this->input->post('pk');
 		$value = $this->input->post('value');
-		$user_id = $this->session->userdata('user_id');
+		$user_id = $this->input->post('pk');
+		$table = $this->input->post('table');
 
 
-		$table = ( $pk == 'tu' ) ? 'tbl_users' : 'tbl_user_infos';
+		$table = ( $table == 'tu' ) ? 'tbl_users' : 'tbl_user_infos';
 
 		$row_exist = $this->helper_model->row_exist(array('user_id'=>$user_id),$table);
 

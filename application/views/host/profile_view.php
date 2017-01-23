@@ -441,7 +441,7 @@
 
 <script type="text/javascript">
 	jQuery(function($) {
-	
+		host_id = <?php echo json_encode($users['info']->user_id); ?>;
 		//editables on first profile page
 		/*$.fn.editable.defaults.mode = 'inline';
 		$.fn.editableform.loading = "<div class='editableform-loading'><i class='ace-icon fa fa-spinner fa-spin fa-2x light-blue'></i></div>";
@@ -455,7 +455,11 @@
 		.editable({
 			type: 'text',
 			name: 'user_fname',
-			pk: 'tu',
+			pk: host_id,
+			params: function(params) {
+	            params.table = 'tu';
+	            return params;
+	        },
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -471,7 +475,11 @@
 		.editable({
 			type: 'text',
 			name: 'user_lname',
-			pk: 'tu',
+			pk: host_id,
+			params: function(params) {
+	            params.table = 'tu';
+	            return params;
+	        },
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -487,7 +495,7 @@
 		.editable({
 			type: 'text',
 			name: 'state',
-			pk: 'tui',
+			pk: host_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -504,7 +512,7 @@
 		.editable({
 			type: 'text',
 			name: 'location',
-			pk: 'tui',
+			pk: host_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -521,7 +529,7 @@
 		.editable({
 			type: 'text',
 			name: 'zip',
-			pk: 'tui',
+			pk: host_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -538,7 +546,7 @@
 		.editable({
 			type: 'tel',
 			name: 'contact',
-			pk: 'tui',
+			pk: host_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -565,7 +573,7 @@
 				'multiple': true,
 				'width': 200
 			},
-			pk: 'tui',
+			pk: host_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -581,7 +589,11 @@
 		.editable({
 			type: 'text',
 			name: 'user_email',
-			pk: 'tu',
+			pk: host_id,
+			params: function(params) {
+	            params.table = 'tu';
+	            return params;
+	        },
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -602,7 +614,7 @@
 		.editable({
 			type: 'select2',
 			name: 'availability',
-			pk: 'tui',
+			pk: host_id,
 			source: availability,
 			select2: {
 				'width': 200
@@ -627,7 +639,7 @@
 		.editable({
 			type: 'select2',
 			name: 'way_of_travel',
-			pk: 'tui',
+			pk: host_id,
 			source: travel,
 			select2: {
 				multiple: true,
@@ -648,7 +660,7 @@
 		.editable({
 			type: 'text',
 			name: 'website',
-			pk: 'tui',
+			pk: host_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -664,7 +676,7 @@
 		.editable({
 			type: 'text',
 			name: 'visa_situation',
-			pk: 'tui',
+			pk: host_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -680,7 +692,7 @@
 		.editable({
 			type: 'text',
 			name: 'introduction',
-			pk: 'tui',
+			pk: host_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -696,7 +708,7 @@
 			mode: 'inline',
 	        type: 'wysiwyg',
 			name : 'about',
-			pk: 'tui',
+			pk: host_id,
 			url: 'keeper/profile/update',
 			wysiwyg : {
 				//css : {'max-width':'300px'}

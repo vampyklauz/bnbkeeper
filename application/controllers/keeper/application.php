@@ -28,8 +28,8 @@ class Application extends CI_Controller {
 		$personal['fname'] = $formData['user_fname'];
 		$personal['lname'] = $formData['user_lname'];
 		$personal['email'] = $formData['email'];
-		$personal['password'] = 'password';
-		$personal['r_password'] = 'password';
+		$personal['password'] = $formData['password'];
+		$personal['r_password'] = $formData['c_password'];
 		$personal['user_franchise'] = $formData['franchise'];
 		$personal_res = $this->register_user($personal);
 
@@ -38,16 +38,30 @@ class Application extends CI_Controller {
 		unset($formData['user_lname']);
 		unset($formData['email']);
 		unset($formData['franchise']);
+		unset($formData['password']);
+		unset($formData['c_password']);
 
-		unset($formData['question_1']);
-		unset($formData['question_2']);
-		unset($formData['question_3']);
-		unset($formData['question_4']);
-		unset($formData['question_5']);
+		
 
 		$flag = ( $personal_res == 'success' ) ? true : false;
 		if( $flag ){
 			$formData['user_id'] = $this->db->insert_id();
+
+			$answer['user_id'] = $formData['user_id'];
+			$answer['question_1'] = ( isset($formData['question_1']) ) ? $formData['question_1'] : '' ;
+			$answer['question_2'] = ( isset($formData['question_2']) ) ? $formData['question_2'] : '' ;
+			$answer['question_3'] = ( isset($formData['question_3']) ) ? $formData['question_3'] : '' ;
+			$answer['question_4'] = ( isset($formData['question_4']) ) ? $formData['question_4'] : '' ;
+			$answer['question_5'] = ( isset($formData['question_5']) ) ? $formData['question_5'] : '' ;
+			$answer_rer = $this->insertAnswer($answer);
+
+			unset($formData['question_1']);
+			unset($formData['question_2']);
+			unset($formData['question_3']);
+			unset($formData['question_4']);
+			unset($formData['question_5']);
+
+			
 			if( $this->db->insert('tbl_user_infos',$formData) ){
 				$res_msg = 'success';
 			}else{
@@ -58,6 +72,11 @@ class Application extends CI_Controller {
 		}
 		
 		echo $res_msg;
+	}
+
+	public function insertAnswer($data)
+	{
+		$inserted = $this->db->insert('tbl_user_answer',$data);
 	}
 
 	public function register_user($data){
@@ -103,7 +122,8 @@ class Application extends CI_Controller {
 				'user_salt'		=> $pass_salt,
 				'user_franchise'=> $franchise,
 				'user_access'	=> 3,
-				'user_level'	=> 3
+				'user_level'	=> 3,
+				'user_status'	=> 3
 				);
 
 			$inserted = $this->db->insert('tbl_users',$insert_array);

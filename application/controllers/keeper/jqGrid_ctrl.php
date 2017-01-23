@@ -53,6 +53,9 @@ class JqGrid_ctrl extends CI_Controller {
 							case 'full_name':
 								$cell[$val] = $row->user_fname.' '.$row->user_lname;
 							break;
+							case 'status':
+								$cell[$val] = ( $row->status == 3 ) ? '<span class="label label-warning arrowed">pending</span>' : '<span class="label label-success arrowed-in arrowed-in-right">approved</span>';
+							break;
 							default: $cell[$val] = $row->$val; break;
 						}
 					}

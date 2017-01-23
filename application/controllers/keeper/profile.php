@@ -30,6 +30,24 @@ class Profile extends CI_Controller {
 		$this->load->view('base',$data);
 	}
 
+	public function approve()
+	{
+		$msg = '';
+		$approver = $this->session->userdata('user_level');
+		$id = $this->input->post('id');
+		if( hasAccess($approver,[1,2]) ){
+			if( $this->db->update('tbl_users',array('user_status'=>0),array('user_id'=>$id)) ){
+				$msg = 'success';
+			}else{
+				$msg = 'Service unavailable. Please try later.';
+			}
+		}else{
+			$msg = 'You dont have permision to approve this keeper';
+		}
+
+		echo $msg;
+	}
+
 	public function getRating($id)
 	{
 		$id = ($id) ? $id : $this->session->userdata('user_id');
@@ -98,11 +116,12 @@ class Profile extends CI_Controller {
 		$name = $this->input->post('name');
 		$pk = $this->input->post('pk');
 		$value = $this->input->post('value');
-		$user_id = $this->session->userdata('user_id');
+		$user_id = $this->input->post('pk');
 		$type = $this->input->post('type');
+		$table = $this->input->post('table');
 
 
-		$table = ( $pk == 'tu' ) ? 'tbl_users' : 'tbl_user_infos';
+		$table = ( $table == 'tu' ) ? 'tbl_users' : 'tbl_user_infos';
 
 		$row_exist = $this->helper_model->row_exist(array('user_id'=>$user_id),$table);
 
@@ -116,6 +135,7 @@ class Profile extends CI_Controller {
 			$where = array('user_id'=>$user_id);
 			$data['updated_by'] = $user_id;
 			$res = $this->db->update($table,$data,$where );
+			print_r($user_id);exit();
 		}else{
 			$data['user_id'] = $user_id;
 			$data['created_at'] = date('Y-m-d H:i:s');
@@ -153,9 +173,11 @@ class Profile extends CI_Controller {
 
 		}elseif( hasAccess($this->session->userdata('user_level'),[4]) ){
 			$access = explode(',', $info->user_level);
-			if( hasAccess($access,[1,2]) ){
+			if( hasAccess($access,[1,2]) )
 				return false;
-			}
+			if( $info->user_status == 3 )
+				return false;
+
 		}else{
 			if( $this->session->userdata('user_id') != $info->user_id )
 				return false;

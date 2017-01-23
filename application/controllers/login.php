@@ -33,9 +33,9 @@ class Login extends CI_Controller {
 		$errors = '';
 
 		if( is_numeric($username) ){
-			$user_data = $this->helper_model->query_table('*','tbl_users','WHERE user_id = "'.$username.'" OR user_account = "'.$username.'" ','row');
+			$user_data = $this->helper_model->query_table('*','tbl_users','WHERE user_id = "'.$username.'" OR user_account = "'.$username.'" AND user_status = 0','row');
 		}else{
-			$user_data = $this->helper_model->query_table('*','tbl_users','WHERE user_account = "'.$username.'" OR user_email = "'.$username.'"','row');
+			$user_data = $this->helper_model->query_table('*','tbl_users','WHERE user_account = "'.$username.'" OR user_email = "'.$username.'" AND user_status = 0','row');
 		}
 
 		if( ! empty($user_data) ){
@@ -52,7 +52,8 @@ class Login extends CI_Controller {
 					'user_full_name' => $user_data->user_fname.' '.$user_data->user_lname,
 					'user_full_name_b' => $user_data->user_lname.', '.$user_data->user_fname,
 					'user_access' => explode(',', $user_data->user_access),
-					'user_level' => explode(',', $user_data->user_level)
+					'user_level' => explode(',', $user_data->user_level),
+					'user_franchise' => $user_data->user_franchise
 					);
 				
 

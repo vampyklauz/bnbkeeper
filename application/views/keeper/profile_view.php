@@ -58,6 +58,10 @@
 
 										<div class="space-6"></div>
 									</div>
+									<?php if( $users['info']->user_status == 3 ){ ?>
+									<button class="btn btn-white btn-danger" type="button">Reject</button>
+									<button id="approve" class="btn btn-white btn-warning" type="button">Pending approval</button>
+									<?php } ?>
 								</div><!-- /.col -->
 
 								<div class="col-xs-12 col-sm-9">
@@ -474,7 +478,33 @@
 		keeper_id = <?php echo json_encode($users['info']->user_id); ?>;
 		rating = <?php echo json_encode($rating); ?>;
 		rating_update = <?php echo json_encode($rating_update); ?>;
-		console.log(rating_update);
+
+		$('#approve').click(function(){
+			$.post('keeper/profile/approve',{id:keeper_id})
+				.done(function(res){
+					if( res == 'success' ){
+						$.gritter.add({
+							// (string | mandatory) the heading of the notification
+							title: 'Successful',
+							// (string | mandatory) the text inside the notification
+							text: 'Thank you for approving my application.',
+							class_name: 'gritter-success'
+						});
+						$('#approve').remove();
+					}else{
+						$.gritter.add({
+							// (string | mandatory) the heading of the notification
+							title: 'Error!',
+							// (string | mandatory) the text inside the notification
+							text: res,
+							class_name: 'gritter-error'
+						});
+					}
+				});
+		});
+
+
+
 		$('.rating').raty({
 			cancel : false,
 			half: false,
@@ -551,7 +581,11 @@
 		.editable({
 			type: 'text',
 			name: 'user_fname',
-			pk: 'tu',
+			pk: keeper_id,
+			params: function(params) {
+	            params.table = 'tu';
+	            return params;
+	        },
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -567,7 +601,11 @@
 		.editable({
 			type: 'text',
 			name: 'user_lname',
-			pk: 'tu',
+			pk: keeper_id,
+			params: function(params) {
+	            params.table = 'tu';
+	            return params;
+	        },
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -583,7 +621,7 @@
 		.editable({
 			type: 'text',
 			name: 'state',
-			pk: 'tui',
+			pk: keeper_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -600,7 +638,7 @@
 		.editable({
 			type: 'text',
 			name: 'location',
-			pk: 'tui',
+			pk: keeper_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -617,7 +655,7 @@
 		.editable({
 			type: 'text',
 			name: 'zip',
-			pk: 'tui',
+			pk: keeper_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -634,7 +672,7 @@
 		.editable({
 			type: 'tel',
 			name: 'contact',
-			pk: 'tui',
+			pk: keeper_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -660,7 +698,7 @@
 				'multiple': true,
 				'width': 200
 			},
-			pk: 'tui',
+			pk: keeper_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -676,7 +714,11 @@
 		.editable({
 			type: 'text',
 			name: 'user_email',
-			pk: 'tu',
+			pk: keeper_id,
+			params: function(params) {
+	            params.table = 'tu';
+	            return params;
+	        },
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -697,7 +739,7 @@
 		.editable({
 			type: 'select2',
 			name: 'availability',
-			pk: 'tui',
+			pk: keeper_id,
 			source: availability,
 			select2: {
 				'width': 200
@@ -722,7 +764,7 @@
 		.editable({
 			type: 'select2',
 			name: 'way_of_travel',
-			pk: 'tui',
+			pk: keeper_id,
 			source: travel,
 			select2: {
 				multiple: true,
@@ -743,7 +785,7 @@
 		.editable({
 			type: 'text',
 			name: 'website',
-			pk: 'tui',
+			pk: keeper_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -759,7 +801,7 @@
 		.editable({
 			type: 'text',
 			name: 'visa_situation',
-			pk: 'tui',
+			pk: keeper_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -775,7 +817,7 @@
 		.editable({
 			type: 'text',
 			name: 'introduction',
-			pk: 'tui',
+			pk: keeper_id,
 			url: 'keeper/profile/update',
 			success: function(response, newValue) {
 				console.log(response);
@@ -791,7 +833,7 @@
 			mode: 'inline',
 	        type: 'wysiwyg',
 			name : 'about',
-			pk: 'tui',
+			pk: keeper_id,
 			url: 'keeper/profile/update',
 			wysiwyg : {
 				//css : {'max-width':'300px'}
