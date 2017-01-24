@@ -13,6 +13,14 @@ define("HASH_PBKDF2_INDEX", 3);
 
 class Steps extends CI_Controller {
 
+	private $address;
+
+	public function __construct()
+	{
+		parent::__construct();
+		$this->address = json_decode($_COOKIE['address']);
+	}
+
 	public function index()
 	{
 		$postData = $this->input->post();
@@ -20,6 +28,8 @@ class Steps extends CI_Controller {
 		$data['style'][] = 'assets/css/bootstrap-datetimepicker.css';
 		$data['style'][] = 'assets/css/daterangepicker.css';	
 		$data['keepers'] = $this->getKeepers();
+		$data['properties'] = $this->getProperty();
+		$data['services'] = $this->getServices();
 		if( $this->session->userdata('is_login') == true ){
 			$data['content'] = 'orders/steps_user_view';
 		}else{
@@ -28,9 +38,23 @@ class Steps extends CI_Controller {
 		$this->load->view('plain',$data);
 	}
 
+	public function getServices()
+	{
+		$franchise = $this->address->franchise;
+		return $this->helper_model->query_table("service_id,service_name,service_price","req_services","WHERE franchise_id = '$franchise' AND service_status = 0");
+	}
+
+	public function getProperty()
+	{
+		
+		$franchise = $this->address->franchise;
+		$res = $this->helper_model->query_table("id,name,value","req_cleaning","WHERE franchise_id = '$franchise' AND status = 0 ORDER by sorting");
+		return $res;
+	}
+
 	public function getKeepers(){
-		$address = json_decode($_COOKIE['address']);
-		$code = $address->address_postal_code;
+		
+		$code = $this->address->address_postal_code;
 		$join = ' LEFT JOIN tbl_user_infos ON tbl_user_infos.user_id = tbl_users.user_id
 			LEFT JOIN req_franchise_location ON req_franchise_location.id = tbl_user_infos.keeper_location
 			';

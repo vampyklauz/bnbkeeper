@@ -115,14 +115,11 @@
 							<div class="col-xs-12 col-sm-9">
 								<div class="clearfix">
 									<select class="input-medium" id="property_size" name="property_size">
-										<option value="< 20m2">< 20m2</option>
-										<option value="21-40m2">21-40m2</option>
-										<option value="41-70m2">41-70m2</option>
-										<option value="71-100m2">71-100m2</option>
-										<option value="101-150m2">101-150m2</option>
-										<option value="151-200m2">151-200m2</option>
-										<option value="> 201m2">> 201m2</option>
+										<?php foreach ($properties as $property) {?>
+										<option value="<?php echo $property->id ?>"><?php echo $property->name ?></option>
+										<?php } ?>
 									</select>
+									<input type="hidden" id="property_size_value" name="property_size_value" value="">
 								</div>
 							</div>
 						</div>
@@ -324,7 +321,8 @@
 				<div class="col-xs-12 col-sm-8 col-sm-offset-2">
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-dark">
-							<input type="checkbox" name="services[]" id="check_in" value="1" class="hide">
+							<?php $check_in_data = getService('Check In',$services); ?>
+							<input type="checkbox" name="services[]" id="check_in" value="<?php echo $check_in_data->service_id ?>" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -334,13 +332,13 @@
 									<i class="ace-icon fa fa-key bigger-500"></i>
 									<hr />
 									<div class="price">
-										$39.99
+										$ <?php echo $check_in_data->service_price ?>
 									</div>
 								</div>
 
 								<div>
 									<a href="#check_in" class="btn_services btn btn-block btn-inverse">
-										<h3>Check-in</h3>
+										<h3><?php echo $check_in_data->service_name ?></h3>
 									</a>
 								</div>
 							</div>
@@ -348,7 +346,8 @@
 					</div>
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-orange">
-							<input type="checkbox" name="services[]" id="check_out" value="2" class="hide">
+							<?php $check_out_data = getService('Check Out',$services) ?>
+							<input type="checkbox" name="services[]" id="check_out" value="<?php echo $check_out_data->service_id ?>" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -358,13 +357,13 @@
 									<i class="ace-icon fa fa-shopping-cart bigger-500 orange"></i>
 									<hr />
 									<div class="price">
-										$19.99
+										$ <?php echo $check_out_data->service_price ?>
 									</div>
 								</div>
 
 								<div>
 									<a href="#check_out" class="btn_services btn btn-block btn-warning">
-										<h3>Check-Out</h3>
+										<h3><?php echo $check_out_data->service_name ?></h3>
 									</a>
 								</div>
 							</div>
@@ -372,7 +371,8 @@
 					</div>
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-blue">
-							<input type="checkbox" name="services[]" id="cleaning" value="3" class="hide">
+							<?php $cleaning = getService('Cleaning',$services) ?>
+							<input type="checkbox" name="services[]" id="cleaning" value="" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -381,7 +381,7 @@
 								<div class="widget-main bg-blue">
 									<i class="ace-icon fa fa-home bigger-500 blue"></i>
 									<hr />
-									<div class="price">
+									<div id="cleaning_price" class="price">
 										$40
 									</div>
 								</div>
@@ -396,7 +396,8 @@
 					</div>
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-green">
-							<input type="checkbox" name="services[]" id="loundry" value="4" class="hide">
+							<?php $loundry = getService('Loundry',$services) ?>
+							<input type="checkbox" name="services[]" id="loundry" value="<?php echo $loundry->service_id ?>" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -406,13 +407,13 @@
 									<i class="ace-icon fa fa-flask bigger-500 green"></i>
 									<hr />
 									<div class="price">
-										$19.99
+										$ <?php echo $loundry->service_price ?>
 									</div>
 								</div>
 
 								<div>
 									<a href="#loundry" class="btn_services btn btn-block btn-success">
-										<h3>Loundry</h3>
+										<h3><?php echo $loundry->service_name ?></h3>
 									</a>
 								</div>
 							</div>
@@ -688,8 +689,18 @@
 	</form>
 </div>
 
-
-
+<?php 
+	function getService($search,$services){
+		$item = null;
+		foreach($services as $service) {
+		    if ($search == $service->service_name) {
+		        $item = $service;
+		        break;
+		    }
+		}
+		return $item;
+	}
+?>
 
 <script src="assets/js/fuelux/fuelux.wizard.js"></script>
 <script src="assets/js/jquery.validate.js"></script>
@@ -708,9 +719,26 @@
 
 <script type="text/javascript">
 	jQuery(function($) {
-		console.log(Cookies.getJSON('address'));
-		if( ! Cookies.getJSON('address') ){
+		_address = Cookies.getJSON('address');
+		if( ! _address ){
 			window.location = 'site';
+		}
+
+		setPropertyValue($('#property_size').val());
+
+		$('#property_size').change(function(){
+			setPropertyValue($(this).val());
+		});
+		
+		function setPropertyValue(property_val){
+			var properties = <?php echo json_encode($properties); ?>;
+			res = '';
+			$.each(properties,function(i,v){
+				if( property_val == v.id )
+					res = v.value;
+			});
+			$('#cleaning_price').html('$'+res)
+			$('#property_size_value').val(res)
 		}
 
 		$('#pick_up_date').datetimepicker().next().on(ace.click_event, function(){
@@ -895,7 +923,7 @@
 			focusInvalid: false,
 			ignore: "",
 			rules: {
-				first_name: {
+				/*first_name: {
 					required: true
 				},
 				password: {
@@ -930,7 +958,7 @@
 				},
 				'amenities[]': {
 					required: true
-				}
+				}*/
 			},
 
 			messages: {
@@ -1111,7 +1139,7 @@
 			focusInvalid: false,
 			ignore: "",
 			rules: {
-				guest_first_name: {
+				/*guest_first_name: {
 					required: true
 				},
 				guest_surname: {
@@ -1135,7 +1163,7 @@
 				},
 				guest_info: {
 					required: true
-				},
+				},*/
 			},
 
 			messages: {
