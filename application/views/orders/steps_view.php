@@ -27,6 +27,11 @@
 					<span class="step">5</span>
 					<span class="title">Key Set</span>
 				</li>
+
+				<li data-step="6">
+					<span class="step">6</span>
+					<span class="title">Payment</span>
+				</li>
 			</ul>
 
 			<!-- /section:plugins/fuelux.wizard.steps -->
@@ -322,7 +327,7 @@
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-dark">
 							<?php $check_in_data = getService('Check In',$services); ?>
-							<input type="checkbox" name="services[]" id="check_in" value="<?php echo $check_in_data->service_id ?>" class="hide">
+							<input type="checkbox" data-price="<?php echo $check_in_data->service_price ?>" name="services[]" id="check_in" value="<?php echo $check_in_data->service_id ?>" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -347,7 +352,7 @@
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-orange">
 							<?php $check_out_data = getService('Check Out',$services) ?>
-							<input type="checkbox" name="services[]" id="check_out" value="<?php echo $check_out_data->service_id ?>" class="hide">
+							<input type="checkbox" data-price="<?php echo $check_out_data->service_price ?>" name="services[]" id="check_out" value="<?php echo $check_out_data->service_id ?>" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -372,7 +377,7 @@
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-blue">
 							<?php $cleaning = getService('Cleaning',$services) ?>
-							<input type="checkbox" name="services[]" id="cleaning" value="" class="hide">
+							<input type="checkbox" id="cleaning" value="" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -397,7 +402,7 @@
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-green">
 							<?php $loundry = getService('Loundry',$services) ?>
-							<input type="checkbox" name="services[]" id="loundry" value="<?php echo $loundry->service_id ?>" class="hide">
+							<input type="checkbox" data-price="<?php echo $loundry->service_price ?>" name="services[]" id="loundry" value="<?php echo $loundry->service_id ?>" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
@@ -436,7 +441,7 @@
 
 					foreach ($keepers as $key => $value) {?>
 					<div data-id="keeper-<?php echo $value->user_id ?>" class="keeper padding-10 col-xs-6 col-sm-3 center margin-bottom-10">
-						<input class="hide" type="radio" name="keeper_id" id="keeper-<?php echo $value->user_id ?>" value="<?php echo $value->user_id ?>">
+						<input class="hide" type="radio" data-fullname="<?php echo $value->user_fname.' '.$value->user_lname; ?>" name="keeper_id" id="keeper-<?php echo $value->user_id ?>" value="<?php echo $value->user_id ?>">
 						<span class="profile-picture">
 							<img id="avatar" class="editable img-responsive" alt="Alex's Avatar" src="<?php echo checkAvatar($value->avatar); ?>" />
 						</span>
@@ -614,6 +619,110 @@
 			</form>
 			</div>
 
+			<div class="step-pane active" data-step="6">
+			<form class="form-horizontal" id="key_set-form" method="get">
+				<h3 class="text-center blue"> Total </h3>
+				<p class="text-center col-sm-6 col-sm-offset-3"> </p>
+				
+				<div class="clearfix"></div>
+				<div class="space"></div>
+				
+				<div class="col-xs-12 col-md-8 col-md-offset-2">
+					<div class="profile-user-info profile-user-info-striped">
+						<div class="profile-info-row">
+							<div class="profile-info-name"> Address </div>
+
+							<div class="profile-info-value">
+								<span class="" id="info_address"><?php echo $address->address_formatted_address; ?></span>
+							</div>
+						</div>
+
+						<div class="profile-info-row">
+							<div class="profile-info-name"> Keeper </div>
+
+							<div class="profile-info-value">
+								<span id="info_keeper"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Check In </div>
+
+							<div class="profile-info-value">
+								<span id="info_check_in"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Check Out </div>
+
+							<div class="profile-info-value">
+								<span id="info_check_out"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Cleaning </div>
+
+							<div class="profile-info-value">
+								<span id="info_cleaning"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Loundry </div>
+
+							<div class="profile-info-value">
+								<span id="info_loundry"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Saturdays </div>
+
+							<div class="profile-info-value">
+								<span id="info_saturdays"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Sundays </div>
+
+							<div class="profile-info-value">
+								<span id="info_sundays"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Night Bookings </div>
+
+							<div class="profile-info-value">
+								<span id="info_night_bookings"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Last Minute Booking </div>
+
+							<div class="profile-info-value">
+								<span id="info_last_minute_booking"></span>
+							</div>
+						</div>
+
+						<div class="profile-info-row">
+							<div class="profile-info-name"> <strong>Total</strong> </div>
+
+							<div class="profile-info-value">
+								<span id="info_total"></span>
+							</div>
+						</div>
+
+						
+					</div>
+				</div>
+			</form>
+			</div>
+
 			
 		</div>
 
@@ -719,12 +828,13 @@
 
 <script type="text/javascript">
 	jQuery(function($) {
+		_currency = '$';
 		_address = Cookies.getJSON('address');
 		if( ! _address ){
 			window.location = 'site';
 		}
-
 		setPropertyValue($('#property_size').val());
+		console.log(_address);
 
 		$('#property_size').change(function(){
 			setPropertyValue($(this).val());
@@ -737,8 +847,8 @@
 				if( property_val == v.id )
 					res = v.value;
 			});
-			$('#cleaning_price').html('$'+res)
-			$('#property_size_value').val(res)
+			$('#cleaning_price').html(_currency+res);
+			$('#property_size_value').val(res);
 		}
 
 		$('#pick_up_date').datetimepicker().next().on(ace.click_event, function(){
@@ -807,6 +917,77 @@
 				if(!$('#keeper-form').valid()) e.preventDefault();
 			}else if(info.step == 4 && info.direction == 'next'){
 				if(!$('#more_info-form').valid()) e.preventDefault();
+			}else if(info.step == 5 && info.direction == 'next'){
+				var total = 0;
+
+				$('.prices').addClass('hide');
+
+				if( $('#check_in').is(":checked")  ){
+					$('#info_check_in').html( _currency+ $('#check_in').data('price') );
+					$('#info_check_in').closest('.profile-info-row').removeClass('hide');
+					total += parseFloat($('#check_in').data('price'));
+				}
+
+				if( $('#check_out').is(":checked")  ){
+					$('#info_check_out').html( _currency+ $('#check_out').data('price') );
+					$('#info_check_out').closest('.profile-info-row').removeClass('hide');
+					total +=  parseFloat($('#check_out').data('price'));
+				}
+
+				if( $('#cleaning').is(":checked")  ){
+					$('#info_cleaning').html( _currency+ $('#property_size_value').val() );
+					$('#info_cleaning').closest('.profile-info-row').removeClass('hide');
+					total +=  parseFloat($('#property_size_value').val());
+				}
+
+				if( $('#loundry').is(":checked")  ){
+					$('#info_loundry').html( _currency+ $('#loundry').data('price') );
+					$('#info_loundry').closest('.profile-info-row').removeClass('hide');
+					total +=  parseFloat($('#loundry').data('price'));
+				}
+
+				var pickup = new Date($('#pick_up_date').val());
+				var pickup_time = Math.abs(( pickup - new Date() ) / 36e5);
+
+				// Last minute Booking
+				if( pickup_time < 24 ){
+					var _last_minute_booking = <?php echo json_encode( getService('Last Minute Booking less than 24h',$services) ); ?>;
+					$('#info_last_minute_booking').html(_currency+_last_minute_booking.service_price);
+					$('#info_last_minute_booking').closest('.profile-info-row').removeClass('hide');
+					total +=  parseFloat(_last_minute_booking.service_price);
+				}else if( pickup_time < 72 ){
+					var _last_minute_booking = <?php echo json_encode( getService('Last Minute Booking less than 72h',$services) ); ?>;
+					$('#info_last_minute_booking').html(_currency+_last_minute_booking.service_price);
+					$('#info_last_minute_booking').closest('.profile-info-row').removeClass('hide');
+					total +=  parseFloat(_last_minute_booking.service_price);
+				}
+
+				// Weekend Booking
+				
+				if( pickup.getDay() == 0 ){ // Sunday
+					var _sundays = <?php echo json_encode( getService('Sundays',$services) ); ?>;
+					$('#info_sundays').html(_currency+_sundays.service_price);
+					$('#info_sundays').closest('.profile-info-row').removeClass('hide');
+					total +=  parseFloat(_sundays.service_price);
+				}else if( pickup.getDay() == 6 ){ // Saturday
+					var _saturdays = <?php echo json_encode( getService('Saturdays',$services) ); ?>;
+					$('#info_saturdays').html(_currency+_saturdays.service_price);
+					$('#info_saturdays').closest('.profile-info-row').removeClass('hide');
+					total +=  parseFloat(_saturdays.service_price);
+				}
+
+				// Night Booking
+				console.log(pickup.getHours());
+				if( pickup.getHours() > 6 || pickup.getHours() < 18  ){ //7:00am to 7:00pm
+					console.log('debug');
+					var _night_bookings = <?php echo json_encode( getService('Night Bookings',$services) ); ?>;
+					$('#info_night_bookings').html(_currency+_night_bookings.service_price);
+					$('#info_night_bookings').closest('.profile-info-row').removeClass('hide');
+					total +=  parseFloat(_night_bookings.service_price);
+				}
+				
+				$('#info_total').html(_currency+total);
+				$('#info_keeper').html($('input[name=keeper_id]:checked').data('fullname'));
 			}
 		})
 		.on('finished.fu.wizard', function(e) {

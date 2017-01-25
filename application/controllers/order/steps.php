@@ -30,6 +30,7 @@ class Steps extends CI_Controller {
 		$data['keepers'] = $this->getKeepers();
 		$data['properties'] = $this->getProperty();
 		$data['services'] = $this->getServices();
+		$data['address'] = $this->address;
 		if( $this->session->userdata('is_login') == true ){
 			$data['content'] = 'orders/steps_user_view';
 		}else{
