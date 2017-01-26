@@ -1,3 +1,4 @@
+<!-- <a href="payments"><img src="<?php echo base_url(); ?>assets/images/x-click-but01.gif" style="width: 70px;"></a> -->
 <div class="order-wrap margin-top-40">
 	<div id="fuelux-wizard-container">
 		<div>
