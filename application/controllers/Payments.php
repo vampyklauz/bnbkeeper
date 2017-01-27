@@ -7,6 +7,12 @@ class Payments extends CI_Controller
 	}
 
 	function index(){
+		$res_api = $this->input->post('api_url');
+		if( ! $res_api ){
+			redirect('site','refresh');
+		}
+		$order_info = json_decode($res_api);
+		//print_r($order_info);exit();
 		//Set variables for paypal form
 		$returnURL = base_url().'paypal/success'; //payment success url
 		$cancelURL = base_url().'paypal/cancel'; //payment cancel url
@@ -17,9 +23,10 @@ class Payments extends CI_Controller
 		$this->paypal_lib->add_field('return', $returnURL);
 		$this->paypal_lib->add_field('cancel_return', $cancelURL);
 		$this->paypal_lib->add_field('notify_url', $notifyURL);
-		$this->paypal_lib->add_field('item_name', 'item name here');
-		$this->paypal_lib->add_field('item_number',  'item number hre');
-		$this->paypal_lib->add_field('amount', 22);		
+		$this->paypal_lib->add_field('item_name', $order_info->item_name);
+		$this->paypal_lib->add_field('item_number', $order_info->item_id);
+		$this->paypal_lib->add_field('custom', $order_info->user_id);
+		$this->paypal_lib->add_field('amount', 12);		
 		$this->paypal_lib->image($logo);
 		
 		$this->paypal_lib->paypal_auto_form();

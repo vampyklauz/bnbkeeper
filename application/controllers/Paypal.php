@@ -21,23 +21,55 @@ class Paypal extends CI_Controller
 	 function cancel(){
         $this->load->view('paypal/cancel');
 	 }
+
+	 public function ipnd()
+	 {
+	 	$paypalInfo = $this->input->post();
+	 	$paypalURL = $this->paypal_lib->paypal_url;
+	 	$result	= $this->paypal_lib->curlPost($paypalURL,$paypalInfo);
+
+	 	if(preg_match("/VERIFIED/i",$result) && $paypalInfo['payer_status'] == 'verified' ){
+		 	$data = array(
+	 			'user_id'	=>	$paypalInfo['payer_id'],
+	 			'txn_id'	=>	$paypalInfo['txn_id'],
+	 			'payment_status' =>	$paypalInfo['payment_status'],
+	 			'payment_gross'	=>	$paypalInfo['mc_gross'],
+	 			'currency_code'	=>	$paypalInfo['mc_currency'],
+	 			'payer_email'	=>	$paypalInfo['payer_email'],
+	 			'payment_data'	=>	$result,
+	 		);
+	 		$this->db->trans_start();
+	 		$this->product->insertTransaction($data);
+	 		$this->db->trans_complete();
+	 	}
+	 }
 	 
 	 function ipn(){
-	 	print_r('debug');exit();
-	 	$this->db->insert('payments',array('user_id'=>1));
-		//paypal return transaction details array
-		//$paypalInfo	= $this->input->post();
-		/*$data['user_id'] = '123';
-		$data['txn_id']	= '333';
-		$data['payment_status']	= 'asda';
+	 	$paypalInfo = $this->input->post();
+	 	$paypalURL = $this->paypal_lib->paypal_url;
+	 	
+	 	$result	= $this->paypal_lib->curlPost($paypalURL,$paypalInfo);
 
-		//$paypalURL = $this->paypal_lib->paypal_url;		
-		//$result	= $this->paypal_lib->curlPost($paypalURL,$paypalInfo);
-		$this->product->insertTransaction($data);*/
-		/*//check whether the payment is verified
-		if(preg_match("/VERIFIED/i",$result)){
-		    //insert the transaction data into the database
-			$this->product->insertTransaction($data);
-		}*/
+	 	$exist = $this->helper_model->row_exist(array('txn_id'=>$paypalInfo['txn_id']),'payments');
+
+	 	if(preg_match("/VERIFIED/i",$result) && $paypalInfo['payer_status'] == 'verified' && ($exist == false) ){
+	 		$data = array(
+	 			'user_id'	=>	$paypalInfo['custom'],
+	 			'txn_id'	=>	$paypalInfo['txn_id'],
+	 			'payment_status' =>	$paypalInfo['payment_status'],
+	 			'payment_gross'	=>	$paypalInfo['mc_gross'],
+	 			'currency_code'	=>	$paypalInfo['mc_currency'],
+	 			'payer_email'	=>	$paypalInfo['payer_email'],
+	 			'payment_data'	=>	json_encode($paypalInfo),
+	 		);
+	 		$this->db->trans_start();
+	 		$this->product->insertTransaction($data);
+	 		$this->db->trans_complete();
+
+	 		if ( $this->db->trans_status() ){ // check if transaction is successfull.
+	 			$this->db->update('tbl_orders',array('status'=>0),array('order_id'=>$paypalInfo['item_number']));
+	 			$this->db->update('tbl_users',array('user_status'=>0),array('user_id'=>$paypalInfo['custom']));
+	 		}
+	 	}
     }
 }

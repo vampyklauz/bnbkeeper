@@ -63,11 +63,92 @@ class Steps extends CI_Controller {
 		return $this->helper_model->query_table('*','tbl_users',$where,'',$join);
 	}
 
-	public function addOrder(){
+	public function calculatePayment($client)
+	{
+		$total = 0;
+		$services = $this->getServices();
 
+		// Add Extra service if true
+		$pick_up_date = $client['pick_up_date'];
+		$service_ids = json_decode($client['services']);
+
+		// Services
+		foreach ($service_ids as $id) {
+			$price = $this->getServiceByID($id,$services);
+			if( $price != null )
+				$total += $price;
+		}
+
+		// Cleaning
+
+
+		// Last minute Booking
+		$pickup_time = (( strtotime($pick_up_date) - strtotime(date("Y-m-d H:i:s") )) / 36e5);
+		if( $pickup_time < 24 ){
+			$_last_minute_booking24 = $this->getService('Last Minute Booking less than 24h',$services);
+			if( isset($_last_minute_booking24) )
+				$total += $_last_minute_booking24;
+		}elseif( $pickup_time < 72 ){
+			$_last_minute_booking72 = $this->getService('Last Minute Booking less than 72h',$services);
+			if( isset($_last_minute_booking72) )
+				$total += $_last_minute_booking72;
+		}
+
+		// Weekend Booking
+		if( date('w',strtotime($pick_up_date)) == 0 ){ // Sunday
+			$_sundays = $this->getService('Sundays',$services);
+			if( isset($_sundays) )
+				$total += $_sundays;
+		}elseif( date('w',strtotime($pick_up_date)) == 6 ){ // Saturday
+			$_saturdays = $this->getService('Saturdays',$services);
+			if( isset($_saturdays) )
+				$total += $_saturdays;
+		}
+
+		// Night Booking
+		if( date('H',strtotime($pick_up_date)) > 6 || date('H',strtotime($pick_up_date)) < 18 ){
+			$_night_booking = $this->getService('Night Bookings',$services);
+			if( isset($_night_booking) )
+				$total += $_night_booking;
+		}
+
+			
+
+		return $total;
+	}
+
+	function getService($search,$services){
+		$item = null;
+		foreach($services as $service) {
+		    if ($search == $service->service_name) {
+		        $item = $service->service_price;
+		        break;
+		    }
+		}
+		return $item;
+	}
+
+	function getServiceByID($search,$services){
+		$item = null;
+		foreach($services as $service) {
+		    if ($search == $service->service_id) {
+		        $item = $service->service_price;
+		        break;
+		    }
+		}
+		return $item;
+	}
+
+	public function addOrder(){
 		$flag = true;
 		$res_msg = '';
 		$formData = normalizeFormArray($this->input->post(),'array');
+
+		$res = $this->calculatePayment($formData);
+
+		echo '<pre>';
+		print_r($res);
+		echo '</pre>';exit();
 
 		// Modify and filter inputs
 		$formData['pick_up_date'] = date('Y-m-d H:i:s',strtotime($formData['pick_up_date'])); // Convert string time to date time
@@ -127,7 +208,9 @@ class Steps extends CI_Controller {
 		$flag = ( $personal_res == 'success' ) ? true : false;
 
 		if( $flag ){
+			$formData['status'] = 4;
 			if( $this->db->insert('tbl_orders',$formData) ){
+				$order_id = $this->db->insert_id();
 				$res_msg = 'success';
 			}else{
 				$res_msg = 'Something went wrong! Please try again';
@@ -135,7 +218,18 @@ class Steps extends CI_Controller {
 		}else{
 			$res_msg = $personal_res;
 		}
-		echo $res_msg;
+		
+		if( $res_msg == 'success' ){
+			$result['success'] = true;
+			$result['data'] = array(
+				'user_id' => $last_id,
+				'item_id' => $order_id,
+				'item_name' => 'Order a Keeper',
+				);
+			echo json_encode($result);
+		}else{
+			echo $res_msg;
+		}
 	}
 
 	public function updateUserInfo($data){
@@ -191,6 +285,7 @@ class Steps extends CI_Controller {
 				'user_pass'		=> $password,
 				'user_salt'		=> $pass_salt,
 				'user_franchise'=> $franchise,
+				'user_status'	=> 4, // attempt
 				'user_access'	=> 4,
 				'user_level'	=> 4
 				);

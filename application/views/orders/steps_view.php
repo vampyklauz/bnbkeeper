@@ -1,4 +1,4 @@
-<!-- <a href="payments"><img src="<?php echo base_url(); ?>assets/images/x-click-but01.gif" style="width: 70px;"></a> -->
+
 <div class="order-wrap margin-top-40">
 	<div id="fuelux-wizard-container">
 		<div>
@@ -987,7 +987,7 @@
 					total +=  parseFloat(_night_bookings.service_price);
 				}
 				
-				$('#info_total').html(_currency+total);
+				$('#info_total').html(_currency+total.toFixed(2));
 				$('#info_keeper').html($('input[name=keeper_id]:checked').data('fullname'));
 			}
 		})
@@ -1007,32 +1007,39 @@
 
 				$key_set_date = $('#key_'+$key_set_val+'-form').serialize();
 				var form = $personal_info+'&'+$services+'&'+$keeper+'&'+$more_info+'&'+$key_set+'&'+$key_set_date+'&address='+$address;
-				$.post('order/steps/addOrder',form)
-				.done(function(data) {
-					if( data == 'success' ){
-						bootbox.dialog({
-							message: "Thank you! Your information was successfully saved!", 
-							buttons: {
-								"success" : {
-									"label" : "OK",
-									"className" : "btn-sm btn-primary"
+				//$('.btn-next').prop('disabled',true);
+				console.log('dd');
+				$.ajax({
+					url: 'order/steps/addOrder',
+					data: form,
+					dataType: 'json',
+					type: 'post',
+					success: function(res){
+						console.log(res);
+						throw 'test';
+						var payer_data = JSON.stringify(res['data']);
+						if( res['success'] ){
+							var url = 'payments';
+							var v_form = $('<form action="' + url + '" method="post">' +
+							  '<input type="text" name="api_url" value="" />' +
+							  '</form>');
+							$('body').append(v_form);
+							$('input[name=api_url]').val(payer_data);
+							v_form.submit();
+						}else{
+							bootbox.dialog({
+								message: res, 
+								buttons: {
+									"success" : {
+										"label" : "OK",
+										"className" : "btn-sm btn-primary"
+									}
 								}
-							}
-						});
-						Cookies.remove('address')
-						setTimeout(function(){ window.location.href = "site/#login"; }, 2000);
-					}else{
-						bootbox.dialog({
-							message: data, 
-							buttons: {
-								"success" : {
-									"label" : "OK",
-									"className" : "btn-sm btn-primary"
-								}
-							}
-						});
+							});
+							$('.btn-next').prop('disabled',false);
+						}
 					}
-				},'json');
+				});
 			}
 		}).on('stepclick.fu.wizard', function(e){
 			//e.preventDefault();//this will prevent clicking and selecting steps
