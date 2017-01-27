@@ -894,10 +894,6 @@
 			$(this).closest('form').validate().element($(this));
 		});
 
-		/*$('#email').on('change', function(){
-			console.log('debug');
-		});*/
-
 		$('#number_of_beds').ace_spinner({value:1,min:1,max:8,step:1, btn_up_class:'btn-info' , btn_down_class:'btn-info'})
 		.closest('.ace-spinner')
 		.on('changed.fu.spinbox', function(){
@@ -929,6 +925,7 @@
 			.done(function(data) {
 				console.log(data);
 			},'json');*/
+			console.log(info);
 			if(info.step == 1 && info.direction == 'next') {				
 				if(!$('#personal_info-form').valid()) e.preventDefault();
 			}else if(info.step == 2 && info.direction == 'next'){
@@ -939,7 +936,7 @@
 				if(!$('#more_info-form').valid()) e.preventDefault();
 			}else if(info.step == 5 && info.direction == 'next'){
 				var total = 0;
-
+				console.log('debug');
 				$('.prices').addClass('hide');
 
 				if( $('#check_in').is(":checked")  ){
@@ -997,9 +994,7 @@
 				}
 
 				// Night Booking
-				console.log(pickup.getHours());
 				if( pickup.getHours() > 6 || pickup.getHours() < 18  ){ //7:00am to 7:00pm
-					console.log('debug');
 					var _night_bookings = <?php echo json_encode( getService('Night Bookings',$services) ); ?>;
 					$('#info_night_bookings').html(_currency+_night_bookings.service_price);
 					$('#info_night_bookings').closest('.profile-info-row').removeClass('hide');
@@ -1129,7 +1124,7 @@
 			focusInvalid: false,
 			ignore: "",
 			rules: {
-				/*first_name: {
+				first_name: {
 					required: true
 				},
 				password: {
@@ -1164,7 +1159,7 @@
 				},
 				'amenities[]': {
 					required: true
-				}*/
+				}
 			},
 
 			messages: {
@@ -1345,7 +1340,7 @@
 			focusInvalid: false,
 			ignore: "",
 			rules: {
-				/*guest_first_name: {
+				guest_first_name: {
 					required: true
 				},
 				guest_surname: {
@@ -1369,7 +1364,7 @@
 				},
 				guest_info: {
 					required: true
-				},*/
+				},
 			},
 
 			messages: {

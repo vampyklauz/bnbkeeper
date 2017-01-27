@@ -135,6 +135,7 @@ class Steps extends CI_Controller {
 				'user_id' => $last_id,
 				'item_id' => $order_id,
 				'item_name' => 'Order a Keeper',
+				'total' => $server_total
 				);
 			echo json_encode($result);
 		}else{

@@ -26,7 +26,7 @@ class Payments extends CI_Controller
 		$this->paypal_lib->add_field('item_name', $order_info->item_name);
 		$this->paypal_lib->add_field('item_number', $order_info->item_id);
 		$this->paypal_lib->add_field('custom', $order_info->user_id);
-		$this->paypal_lib->add_field('amount', 12);		
+		$this->paypal_lib->add_field('amount', $order_info->total);		
 		$this->paypal_lib->image($logo);
 		
 		$this->paypal_lib->paypal_auto_form();
