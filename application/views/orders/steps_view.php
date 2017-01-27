@@ -1,4 +1,5 @@
 
+<?php //print_r($user_info);exit(); ?>
 <div class="order-wrap margin-top-40">
 	<div id="fuelux-wizard-container">
 		<div>
@@ -55,7 +56,11 @@
 
 							<div class="col-xs-12 col-sm-9">
 								<div class="clearfix">
+									<?php if( $user_info ) { ?>
+									<input type="text" class="col-xs-12 col-sm-6" disabled="disabled" value="<?php echo (isset($user_info->user_fname)) ? $user_info->user_fname : ''; ?>" />
+									<?php }else{ ?>
 									<input type="text" name="first_name" id="first_name" class="col-xs-12 col-sm-6" />
+									<?php } ?>
 								</div>
 								
 							</div>
@@ -66,7 +71,11 @@
 
 							<div class="col-xs-12 col-sm-9">
 								<div class="clearfix">
+									<?php if( $user_info ) { ?>
+									<input type="text" class="col-xs-12 col-sm-6" disabled="disabled" value="<?php echo (isset($user_info->user_lname)) ? $user_info->user_lname : ''; ?>" />
+									<?php }else{ ?>
 									<input type="text" name="surname" id="surname" class="col-xs-12 col-sm-6" />
+									<?php } ?>
 								</div>
 							</div>
 						</div>
@@ -80,7 +89,11 @@
 										<i class="ace-icon fa fa-phone"></i>
 									</span>
 
+									<?php if( $user_info ) { ?>
+									<input type="tel" class="col-xs-12 col-sm-4" disabled="disabled" value="<?php echo (isset($user_info->contact)) ? $user_info->contact : ''; ?>" />
+									<?php }else{ ?>
 									<input type="tel" id="phone" name="phone" />
+									<?php } ?>
 								</div>
 							</div>
 						</div>
@@ -90,11 +103,15 @@
 
 							<div class="col-xs-12 col-sm-9">
 								<div class="clearfix">
+									<?php if( $user_info ) { ?>
+									<input type="text" class="col-xs-12 col-sm-6" disabled="disabled" value="<?php echo (isset($user_info->user_email)) ? $user_info->user_email : ''; ?>" />
+									<?php }else{ ?>
 									<input type="email" name="email" id="email" class="col-xs-12 col-sm-6" />
+									<?php } ?>
 								</div>
 							</div>
 						</div>
-
+						<?php if( !$user_info ) { ?>
 						<div class="form-group">
 							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="email">Password</label>
 
@@ -114,6 +131,8 @@
 								</div>
 							</div>
 						</div>
+						<?php } ?>
+
 						<div class="hr hr-dotted"></div>
 						<div class="form-group">
 							<label class="control-label col-xs-12 col-sm-3 no-padding-right important-left" for="property_size">Size of the property</label>
@@ -988,6 +1007,7 @@
 				}
 				
 				$('#info_total').html(_currency+total.toFixed(2));
+				$('#info_total').data('total',total.toFixed(2));
 				$('#info_keeper').html($('input[name=keeper_id]:checked').data('fullname'));
 			}
 		})
@@ -1006,17 +1026,14 @@
 				
 
 				$key_set_date = $('#key_'+$key_set_val+'-form').serialize();
-				var form = $personal_info+'&'+$services+'&'+$keeper+'&'+$more_info+'&'+$key_set+'&'+$key_set_date+'&address='+$address;
+				var form = $personal_info+'&'+$services+'&'+$keeper+'&'+$more_info+'&'+$key_set+'&'+$key_set_date+'&address='+$address+'&total='+$('#info_total').data('total');
 				//$('.btn-next').prop('disabled',true);
-				console.log('dd');
 				$.ajax({
 					url: 'order/steps/addOrder',
 					data: form,
 					dataType: 'json',
 					type: 'post',
 					success: function(res){
-						console.log(res);
-						throw 'test';
 						var payer_data = JSON.stringify(res['data']);
 						if( res['success'] ){
 							var url = 'payments';

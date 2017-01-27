@@ -22,6 +22,11 @@
 					<span class="step">4</span>
 					<span class="title">Key Set</span>
 				</li>
+
+				<li data-step="6">
+					<span class="step">5</span>
+					<span class="title">Payment</span>
+				</li>
 			</ul>
 
 			<!-- /section:plugins/fuelux.wizard.steps -->
@@ -319,6 +324,110 @@
 								</div>
 							</div>
 						</div>
+					</div>
+				</div>
+			</form>
+			</div>
+
+			<div class="step-pane active" data-step="6">
+			<form class="form-horizontal" id="key_set-form" method="get">
+				<h3 class="text-center blue"> Total </h3>
+				<p class="text-center col-sm-6 col-sm-offset-3"> </p>
+				
+				<div class="clearfix"></div>
+				<div class="space"></div>
+				
+				<div class="col-xs-12 col-md-8 col-md-offset-2">
+					<div class="profile-user-info profile-user-info-striped">
+						<div class="profile-info-row">
+							<div class="profile-info-name"> Address </div>
+
+							<div class="profile-info-value">
+								<span class="" id="info_address"><?php echo $address->address_formatted_address; ?></span>
+							</div>
+						</div>
+
+						<div class="profile-info-row">
+							<div class="profile-info-name"> Keeper </div>
+
+							<div class="profile-info-value">
+								<span id="info_keeper"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Check In </div>
+
+							<div class="profile-info-value">
+								<span id="info_check_in"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Check Out </div>
+
+							<div class="profile-info-value">
+								<span id="info_check_out"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Cleaning </div>
+
+							<div class="profile-info-value">
+								<span id="info_cleaning"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Loundry </div>
+
+							<div class="profile-info-value">
+								<span id="info_loundry"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Saturdays </div>
+
+							<div class="profile-info-value">
+								<span id="info_saturdays"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Sundays </div>
+
+							<div class="profile-info-value">
+								<span id="info_sundays"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Night Bookings </div>
+
+							<div class="profile-info-value">
+								<span id="info_night_bookings"></span>
+							</div>
+						</div>
+
+						<div class="prices profile-info-row hide">
+							<div class="profile-info-name"> Last Minute Booking </div>
+
+							<div class="profile-info-value">
+								<span id="info_last_minute_booking"></span>
+							</div>
+						</div>
+
+						<div class="profile-info-row">
+							<div class="profile-info-name"> <strong>Total</strong> </div>
+
+							<div class="profile-info-value">
+								<span id="info_total"></span>
+							</div>
+						</div>
+
+						
 					</div>
 				</div>
 			</form>

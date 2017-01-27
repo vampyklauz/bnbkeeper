@@ -9,17 +9,13 @@ class Paypal extends CI_Controller
 	 }
 	 
 	 function success(){
-	 	$this->db->insert('payments',array('user_id'=>3));
-	    //get the transaction data
-		$paypalInfo = $this->input->post();
-		$data['item_number'] = $paypalInfo['item_number']; 
-		
-		//pass the transaction data to view
-        $this->load->view('paypal/success', $data);
+        $data['content'] = 'paypal/success';
+		$this->load->view('plain',$data);
 	 }
 	 
 	 function cancel(){
-        $this->load->view('paypal/cancel');
+        $data['content'] = 'paypal/cancel';
+		$this->load->view('plain',$data);
 	 }
 
 	 public function ipnd()

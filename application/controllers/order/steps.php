@@ -31,120 +31,17 @@ class Steps extends CI_Controller {
 		$data['properties'] = $this->getProperty();
 		$data['services'] = $this->getServices();
 		$data['address'] = $this->address;
-		if( $this->session->userdata('is_login') == true ){
-			$data['content'] = 'orders/steps_user_view';
-		}else{
-			$data['content'] = 'orders/steps_view';
-		}
+		$data['user_info'] = ( $this->session->userdata('is_login') ) ? $this->getUserInfo() : false;
+			
+		$data['content'] = 'orders/steps_view';
 		$this->load->view('plain',$data);
 	}
 
-	public function getServices()
+	public function getUserInfo()
 	{
-		$franchise = $this->address->franchise;
-		return $this->helper_model->query_table("service_id,service_name,service_price","req_services","WHERE franchise_id = '$franchise' AND service_status = 0");
-	}
-
-	public function getProperty()
-	{
-		
-		$franchise = $this->address->franchise;
-		$res = $this->helper_model->query_table("id,name,value","req_cleaning","WHERE franchise_id = '$franchise' AND status = 0 ORDER by sorting");
-		return $res;
-	}
-
-	public function getKeepers(){
-		
-		$code = $this->address->address_postal_code;
-		$join = ' LEFT JOIN tbl_user_infos ON tbl_user_infos.user_id = tbl_users.user_id
-			LEFT JOIN req_franchise_location ON req_franchise_location.id = tbl_user_infos.keeper_location
-			';
-		$where = array('user_access'=>3,'fl_code'=>$code);
-		return $this->helper_model->query_table('*','tbl_users',$where,'',$join);
-	}
-
-	public function calculatePayment($client)
-	{
-		$total = 0;
-		$services = $this->getServices();
-
-		// Add Extra service if true
-		$pick_up_date = $client['pick_up_date'];
-		$service_ids = json_decode($client['services']);
-
-		// Services
-		foreach ($service_ids as $id) {
-			$price = $this->getServiceByID($id,$services);
-			if( $price != null )
-				$total += $price;
-		}
-
-		// Cleaning
-		if( in_array('cleaning', $service_ids) ){
-
-			$cleaning = $this->getProperty();
-			print_r($cleaning);exit();
-			if( isset($cleaning) ){
-				$total += $cleaning;
-			}
-		}
-
-
-		// Last minute Booking
-		$pickup_time = (( strtotime($pick_up_date) - strtotime(date("Y-m-d H:i:s") )) / 36e5);
-		if( $pickup_time < 24 ){
-			$_last_minute_booking24 = $this->getService('Last Minute Booking less than 24h',$services);
-			if( isset($_last_minute_booking24) )
-				$total += $_last_minute_booking24;
-		}elseif( $pickup_time < 72 ){
-			$_last_minute_booking72 = $this->getService('Last Minute Booking less than 72h',$services);
-			if( isset($_last_minute_booking72) )
-				$total += $_last_minute_booking72;
-		}
-
-		// Weekend Booking
-		if( date('w',strtotime($pick_up_date)) == 0 ){ // Sunday
-			$_sundays = $this->getService('Sundays',$services);
-			if( isset($_sundays) )
-				$total += $_sundays;
-		}elseif( date('w',strtotime($pick_up_date)) == 6 ){ // Saturday
-			$_saturdays = $this->getService('Saturdays',$services);
-			if( isset($_saturdays) )
-				$total += $_saturdays;
-		}
-
-		// Night Booking
-		if( date('H',strtotime($pick_up_date)) > 6 || date('H',strtotime($pick_up_date)) < 18 ){
-			$_night_booking = $this->getService('Night Bookings',$services);
-			if( isset($_night_booking) )
-				$total += $_night_booking;
-		}
-
-			
-
-		return $total;
-	}
-
-	function getService($search,$services){
-		$item = null;
-		foreach($services as $service) {
-		    if ($search == $service->service_name) {
-		        $item = $service->service_price;
-		        break;
-		    }
-		}
-		return $item;
-	}
-
-	function getServiceByID($search,$services){
-		$item = null;
-		foreach($services as $service) {
-		    if ($search == $service->service_id) {
-		        $item = $service->service_price;
-		        break;
-		    }
-		}
-		return $item;
+		$id = $this->session->userdata('user_id');
+		$join = 'JOIN tbl_user_infos tui ON tui.user_id = tu.user_id';
+		return $this->helper_model->query_table("*","tbl_users tu","WHERE tu.user_id = '$id'",'row',$join);
 	}
 
 	public function addOrder(){
@@ -152,12 +49,17 @@ class Steps extends CI_Controller {
 		$res_msg = '';
 		$formData = normalizeFormArray($this->input->post(),'array');
 
-		$res = $this->calculatePayment($formData);
+		$server_total = $this->calculatePayment($formData);
+		if( (string)$server_total != (string)$formData['total'] ){
+			//print_r($server_total.' = '.$formData['total']);exit();
+			echo 'Services Unavailable, Please try again later.';
+			exit();
+		}else{
+			unset($formData['total']);
+		}
 
-		echo '<pre>';
-		print_r($res);
-		echo '</pre>';exit();
 
+		
 		// Modify and filter inputs
 		$formData['pick_up_date'] = date('Y-m-d H:i:s',strtotime($formData['pick_up_date'])); // Convert string time to date time
 		
@@ -238,6 +140,121 @@ class Steps extends CI_Controller {
 		}else{
 			echo $res_msg;
 		}
+	}
+
+	public function getServices()
+	{
+		$franchise = $this->address->franchise;
+		return $this->helper_model->query_table("service_id,service_name,service_price","req_services","WHERE franchise_id = '$franchise' AND service_status = 0");
+	}
+
+	public function getProperty()
+	{
+		
+		$franchise = $this->address->franchise;
+		$res = $this->helper_model->query_table("id,name,value","req_cleaning","WHERE franchise_id = '$franchise' AND status = 0 ORDER by sorting");
+		return $res;
+	}
+
+	public function getKeepers(){
+		
+		$code = $this->address->address_postal_code;
+		$join = ' LEFT JOIN tbl_user_infos ON tbl_user_infos.user_id = tbl_users.user_id
+			LEFT JOIN req_franchise_location ON req_franchise_location.id = tbl_user_infos.keeper_location
+			';
+		$where = array('user_access'=>3,'fl_code'=>$code);
+		return $this->helper_model->query_table('*','tbl_users',$where,'',$join);
+	}
+
+	public function calculatePayment($client)
+	{
+		$total = 0;
+		$services = $this->getServices();
+
+		// Add Extra service if true
+		$pick_up_date = $client['pick_up_date'];
+		$service_ids = json_decode($client['services']);
+
+		// Services
+		foreach ($service_ids as $id) {
+			$price = $this->getServiceByID($id,$services);
+			if( $price != null )
+				$total += $price;
+		}
+
+		// Cleaning
+		if( in_array('cleaning', $service_ids) ){
+			$cleaning_id = $client['property_size'];
+			$cleaning = $this->getProperty();
+			$cleaning_price = null;
+			foreach($cleaning as $clean) {
+			    if ($cleaning_id == $clean->id) {
+			        $cleaning_price = $clean->value;
+			        break;
+			    }
+			}
+			
+			if( isset($cleaning_price) ){
+				$total += $cleaning_price;
+			}
+		}
+
+
+		// Last minute Booking
+		$pickup_time = (( strtotime($pick_up_date) - strtotime(date("Y-m-d H:i:s") )) / 36e5);
+		if( $pickup_time < 24 ){
+			$_last_minute_booking24 = $this->getService('Last Minute Booking less than 24h',$services);
+			if( isset($_last_minute_booking24) )
+				$total += $_last_minute_booking24;
+		}elseif( $pickup_time < 72 ){
+			$_last_minute_booking72 = $this->getService('Last Minute Booking less than 72h',$services);
+			if( isset($_last_minute_booking72) )
+				$total += $_last_minute_booking72;
+		}
+
+		// Weekend Booking
+		if( date('w',strtotime($pick_up_date)) == 0 ){ // Sunday
+			$_sundays = $this->getService('Sundays',$services);
+			if( isset($_sundays) )
+				$total += $_sundays;
+		}elseif( date('w',strtotime($pick_up_date)) == 6 ){ // Saturday
+			$_saturdays = $this->getService('Saturdays',$services);
+			if( isset($_saturdays) )
+				$total += $_saturdays;
+		}
+
+		// Night Booking
+		if( date('H',strtotime($pick_up_date)) > 6 || date('H',strtotime($pick_up_date)) < 18 ){
+			$_night_booking = $this->getService('Night Bookings',$services);
+			if( isset($_night_booking) )
+				$total += $_night_booking;
+		}
+
+			
+
+		return $total;
+	}
+
+	function getService($search,$services){
+		$item = null;
+		foreach($services as $service) {
+		    if ($search == $service->service_name) {
+		        $item = $service->service_price;
+		        break;
+		    }
+		}
+		return $item;
+	}
+
+	function getServiceByID($search,$services){
+		$item = null;
+		foreach($services as $service) {
+		    if ($search == $service->service_id) {
+		        $item = $service->service_price;
+		        break;
+		    }
+		}
+		return $item;
 	}
 
 	public function updateUserInfo($data){
