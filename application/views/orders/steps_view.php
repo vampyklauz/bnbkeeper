@@ -1027,7 +1027,7 @@
 
 				$key_set_date = $('#key_'+$key_set_val+'-form').serialize();
 				var form = $personal_info+'&'+$services+'&'+$keeper+'&'+$more_info+'&'+$key_set+'&'+$key_set_date+'&address='+$address+'&total='+$('#info_total').data('total');
-				//$('.btn-next').prop('disabled',true);
+				$('.btn-next').prop('disabled',true);
 				$.ajax({
 					url: 'order/steps/addOrder',
 					data: form,
