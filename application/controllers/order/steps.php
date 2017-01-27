@@ -80,6 +80,14 @@ class Steps extends CI_Controller {
 		}
 
 		// Cleaning
+		if( in_array('cleaning', $service_ids) ){
+
+			$cleaning = $this->getProperty();
+			print_r($cleaning);exit();
+			if( isset($cleaning) ){
+				$total += $cleaning;
+			}
+		}
 
 
 		// Last minute Booking

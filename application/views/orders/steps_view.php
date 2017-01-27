@@ -378,7 +378,7 @@
 					<div class="col-xs-6 col-sm-3 pricing-box">
 						<div class="widget-box widget-color-blue">
 							<?php $cleaning = getService('Cleaning',$services) ?>
-							<input type="checkbox" id="cleaning" value="" class="hide">
+							<input type="checkbox" data-price="<?php echo $check_out_data->service_price ?>" name="services[]" id="cleaning" value="cleaning" class="hide">
 							<div class="widget-header">
 								<h5 class="widget-title bigger lighter">Basic Package</h5>
 							</div>
