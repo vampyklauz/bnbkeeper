@@ -1,4 +1,3 @@
-
 <?php //print_r($user_info);exit(); ?>
 <div class="order-wrap margin-top-40">
 	<div id="fuelux-wizard-container">
@@ -773,6 +772,7 @@
 			<div class="col-xs-12">
 				<label for="id-date-range-picker-1">Drop off time</label>
 				<div class="input-group no-padding-right">
+					<input type="text" style="width: 0; height: 0; top: -100px; position: absolute;"/>
 					<input id="key_drop_off_date" name="key_drop_off_date" type="text" class="form-control" />
 					<span class="input-group-addon">
 						<i class="fa fa-clock-o bigger-110"></i>
@@ -797,6 +797,7 @@
 			<label class="col-xs-12" for="id-date-range-picker-1">Date Range</label>
 			<div class="col-sm-6">
 				<div class="input-group">
+					<input type="text" style="width: 0; height: 0; top: -100px; position: absolute;"/>
 					<input id="key_pick_up_from" name="key_pick_up_from" type="text" class="form-control" />
 					<span class="input-group-addon">
 						<i class="fa fa-calendar bigger-110"></i>
@@ -831,6 +832,8 @@
 	}
 ?>
 
+
+
 <script src="assets/js/fuelux/fuelux.wizard.js"></script>
 <script src="assets/js/jquery.validate.js"></script>
 <script src="assets/js/additional-methods.js"></script>
@@ -839,14 +842,16 @@
 <script src="assets/js/select2.js"></script>
 <script src="assets/js/fuelux/fuelux.spinner.js"></script>
 <script src="assets/js/ace/elements.spinner.js"></script>
-<script src="assets/js/date-time/moment.js"></script>
+<script src="assets/bootstrap-daterangepicker/moment.js"></script>
+<script src="assets/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script src="assets/js/date-time/bootstrap-datetimepicker.js"></script>
-<script src="assets/js/date-time/daterangepicker.js"></script>
+<!-- <script src="assets/js/date-time/daterangepicker.js"></script> -->
 <script src="public/front_end/inc/cookiejs/js.cookie.js"></script>
 
 <script src="assets/js/ace/elements.wizard.js"></script>
 
 <script type="text/javascript">
+
 	jQuery(function($) {
 		_currency = '$';
 		_address = Cookies.getJSON('address');
@@ -871,21 +876,19 @@
 			$('#property_size_value').val(res);
 		}
 
-		$('#pick_up_date').datetimepicker().next().on(ace.click_event, function(){
+		$('#pick_up_date').datetimepicker({
+			minDate: moment().add(1, 'days')
+		}).next().on(ace.click_event, function(){
 			$(this).prev().focus();
 		});
 
-		$('#key_drop_off_date').datetimepicker().next().on(ace.click_event, function(){
+		$('#key_drop_off_date').datetimepicker({
+			minDate: moment().add(1, 'days')
+		}).next().on(ace.click_event, function(){
 			$(this).prev().focus();
 		});
 
-		$('#key_pick_up_from').datetimepicker().next().on(ace.click_event, function(){
-			$(this).prev().focus();
-		});
 
-		$('#key_pick_up_to').datetimepicker().next().on(ace.click_event, function(){
-			$(this).prev().focus();
-		});
 
 		$('[data-rel=tooltip]').tooltip();
 
@@ -931,12 +934,24 @@
 			}else if(info.step == 2 && info.direction == 'next'){
 				if(!$('#services-form').valid()) e.preventDefault();
 			}else if(info.step == 3 && info.direction == 'next'){
-				if(!$('#keeper-form').valid()) e.preventDefault();
+				//if( $('#keeper_id').val() ){
+					if(!$('#keeper-form').valid()) e.preventDefault();
+				/*}else{
+					e.preventDefault();
+					bootbox.dialog({
+						message: "We are sorry! No Keepers Available right Now.", 
+						buttons: {
+							"success" : {
+								"label" : "OK",
+								"className" : "btn-sm btn-primary"
+							}
+						}
+					});
+				}*/
 			}else if(info.step == 4 && info.direction == 'next'){
 				if(!$('#more_info-form').valid()) e.preventDefault();
 			}else if(info.step == 5 && info.direction == 'next'){
 				var total = 0;
-				console.log('debug');
 				$('.prices').addClass('hide');
 
 				if( $('#check_in').is(":checked")  ){
@@ -968,15 +983,15 @@
 
 				// Last minute Booking
 				if( pickup_time < 24 ){
-					var _last_minute_booking = <?php echo json_encode( getService('Last Minute Booking less than 24h',$services) ); ?>;
-					$('#info_last_minute_booking').html(_currency+_last_minute_booking.service_price);
+					var _last_minute_booking24 = <?php echo json_encode( getService('Last Minute Booking less than 24h',$services) ); ?>;
+					$('#info_last_minute_booking').html(_currency+_last_minute_booking24.service_price);
 					$('#info_last_minute_booking').closest('.profile-info-row').removeClass('hide');
-					total +=  parseFloat(_last_minute_booking.service_price);
+					total +=  parseFloat(_last_minute_booking24.service_price);
 				}else if( pickup_time < 72 ){
-					var _last_minute_booking = <?php echo json_encode( getService('Last Minute Booking less than 72h',$services) ); ?>;
-					$('#info_last_minute_booking').html(_currency+_last_minute_booking.service_price);
+					var _last_minute_booking72 = <?php echo json_encode( getService('Last Minute Booking less than 72h',$services) ); ?>;
+					$('#info_last_minute_booking').html(_currency+_last_minute_booking72.service_price);
 					$('#info_last_minute_booking').closest('.profile-info-row').removeClass('hide');
-					total +=  parseFloat(_last_minute_booking.service_price);
+					total +=  parseFloat(_last_minute_booking72.service_price);
 				}
 
 				// Weekend Booking
@@ -1029,6 +1044,7 @@
 					dataType: 'json',
 					type: 'post',
 					success: function(res){
+						console.log(res);
 						var payer_data = JSON.stringify(res['data']);
 						if( res['success'] ){
 							var url = 'payments';
@@ -1124,7 +1140,7 @@
 			focusInvalid: false,
 			ignore: "",
 			rules: {
-				first_name: {
+				/*first_name: {
 					required: true
 				},
 				password: {
@@ -1159,7 +1175,7 @@
 				},
 				'amenities[]': {
 					required: true
-				}
+				}*/
 			},
 
 			messages: {
@@ -1234,9 +1250,9 @@
 			focusInvalid: false,
 			ignore: "",
 			rules: {
-				'services[]': {
+				/*'services[]': {
 					required: true
-				},
+				},*/
 			},
 
 
@@ -1340,7 +1356,7 @@
 			focusInvalid: false,
 			ignore: "",
 			rules: {
-				guest_first_name: {
+				/*guest_first_name: {
 					required: true
 				},
 				guest_surname: {
@@ -1364,7 +1380,7 @@
 				},
 				guest_info: {
 					required: true
-				},
+				},*/
 			},
 
 			messages: {
@@ -1463,6 +1479,26 @@
 						]
 			});
 
+			$('#key_pick_up_from').datetimepicker({
+				minDate: moment().add(1, 'days')
+			}).next().on(ace.click_event, function(){
+				$(this).prev().focus();
+			});
+
+			$('#key_pick_up_to').datetimepicker({
+				minDate: moment().add(1, 'days')
+			}).next().on(ace.click_event, function(){
+				$(this).prev().focus();
+			});
+
+			/*$("#key_pick_up_to").on("dp.change", function (e) {
+	        	$('#key_pick_up_to').datetimepicker({
+					minDate: e.date
+				}).next().on(ace.click_event, function(){
+					$(this).prev().focus();
+				});
+	        });*/
+
 		});
 
 		$('#key_set-form').validate({
@@ -1471,9 +1507,9 @@
 			focusInvalid: false,
 			ignore: "",
 			rules: {
-				key_set: {
+				/*key_set: {
 					required: true
-				}
+				}*/
 			},
 
 			messages: {

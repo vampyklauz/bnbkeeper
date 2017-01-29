@@ -104,14 +104,6 @@
 												<span id="email"><?php echo isset($users['info']->user_email) ? $users['info']->user_email: ''; ?></span>
 											</div>
 										</div>
-
-										<div class="profile-info-row">
-											<div class="profile-info-name"> Availability </div>
-
-											<div class="profile-info-value">
-												<span id="availability"><?php echo isset($users['personal']->availability) ? $users['personal']->availability: ''; ?></span>
-											</div>
-										</div>
 									</div>
 
 									<div class="hr hr-8 dotted"></div>
@@ -129,7 +121,7 @@
 											<div class="profile-info-name"> About me </div>
 
 											<div class="profile-info-value padding-left-20">
-												<span><?php echo ( isset($users['personal']->about) && $users['personal']->about != '' ) ? arrayToList($users['personal']->about,'list',true): 'Say something'; ?></span>
+												<span id="introduction"><?php echo ( isset($users['personal']->introduction) && $users['personal']->introduction != '' ) ? $users['personal']->introduction: 'Say something'; ?></span>
 											</div>
 										</div>
 									</div>

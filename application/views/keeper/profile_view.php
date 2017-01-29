@@ -136,7 +136,7 @@
 											<div class="profile-info-name"> About me </div>
 
 											<div class="profile-info-value padding-left-20">
-												<span><?php echo ( isset($users['personal']->about) && $users['personal']->about != '' ) ? arrayToList($users['personal']->about,'list',true): ''; ?></span>
+												<span id="introduction"><?php echo ( isset($users['personal']->introduction) && $users['personal']->introduction != '' ) ? $users['personal']->introduction: 'Say something'; ?></span>
 											</div>
 										</div>
 
@@ -153,14 +153,6 @@
 
 											<div class="profile-info-value">
 												<span id="visa"><?php echo isset($users['personal']->visa_situation) ? $users['personal']->visa_situation: ''; ?></span>
-											</div>
-										</div>
-
-										<div class="profile-info-row">
-											<div class="profile-info-name"> Introduction </div>
-
-											<div class="profile-info-value">
-												<span id="introduction"><?php echo isset($users['personal']->introduction) ? $users['personal']->introduction: ''; ?></span>
 											</div>
 										</div>
 									</div>

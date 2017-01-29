@@ -195,6 +195,7 @@ function custom_dropDown( $menu_list, $name=null, $selected=null, $output='optio
 
 function user_info($id,$output=''){
 	$user = that()->helper_model->query_table( "*","tbl_users","WHERE tbl_users.user_id = $id","row","JOIN tbl_user_infos ON tbl_user_infos.user_id = tbl_users.user_id" );
+	$res = '';
 	if( $user ){
 		switch ($output) {
 			case 'full-name':
@@ -204,8 +205,6 @@ function user_info($id,$output=''){
 				$res = $user;
 				break;
 		}
-	}else{
-		$res = 'No info';
 	}
 	return $res;
 }

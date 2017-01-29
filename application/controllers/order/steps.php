@@ -50,9 +50,10 @@ class Steps extends CI_Controller {
 		$formData = normalizeFormArray($this->input->post(),'array');
 
 		$server_total = $this->calculatePayment($formData);
-		if( (string)$server_total != (string)$formData['total'] ){
+		$client_total = $formData['total'];
+		if( (float)$server_total != (float)$client_total ){
 			//print_r($server_total.' = '.$formData['total']);exit();
-			echo 'Services Unavailable, Please try again later.';
+			echo json_encode('Services Unavailable, Please try again later.');
 			exit();
 		}else{
 			unset($formData['total']);
@@ -96,8 +97,8 @@ class Steps extends CI_Controller {
 			$formData['key_pick_up_to'] = date('Y-m-d H:i:s',strtotime($formData['key_pick_up_to']));
 		}
 
-		if( isset($formData['key_drop_off_dat']) ){
-			$formData['key_drop_off_dat'] = date('Y-m-d H:i:s',strtotime($formData['key_drop_off_dat']));
+		if( isset($formData['key_drop_off_date']) ){
+			$formData['key_drop_off_date'] = date('Y-m-d H:i:s',strtotime($formData['key_drop_off_date']));
 		}
 
 		
@@ -199,10 +200,13 @@ class Steps extends CI_Controller {
 				$total += $cleaning_price;
 			}
 		}
-
-
 		// Last minute Booking
-		$pickup_time = (( strtotime($pick_up_date) - strtotime(date("Y-m-d H:i:s") )) / 36e5);
+		$date1 = new DateTime($pick_up_date);
+		$date2 = new DateTime(date("m/d/Y h:i A"));
+		$diff = $date2->diff($date1);
+		$pickup_time = $diff->h;
+		$pickup_time = $pickup_time + ($diff->days*24);
+		
 		if( $pickup_time < 24 ){
 			$_last_minute_booking24 = $this->getService('Last Minute Booking less than 24h',$services);
 			if( isset($_last_minute_booking24) )
@@ -212,7 +216,7 @@ class Steps extends CI_Controller {
 			if( isset($_last_minute_booking72) )
 				$total += $_last_minute_booking72;
 		}
-
+		$test = (strtotime($pick_up_date) - strtotime(date("m/d/Y H:i A")));
 		// Weekend Booking
 		if( date('w',strtotime($pick_up_date)) == 0 ){ // Sunday
 			$_sundays = $this->getService('Sundays',$services);

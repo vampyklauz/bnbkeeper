@@ -6,9 +6,6 @@ class Profile extends CI_Controller {
 
 		parent::__construct();
 		$this->load->driver('cache');
-		$access = $this->session->userdata('user_level');
-		if( ! hasAccess($access,[1,2,3]) )
-			redirect('No_access','refresh');
 	}
 
 	public function index($id = '')

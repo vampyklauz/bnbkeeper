@@ -217,7 +217,7 @@
 					<div class="footer-widget">
 						<h3 class="h3">We operate in</h3>
 						<ul>
-							<li><a href="site/au?page=#">Sydney</a></li>
+							<li><a href="site">Sydney</a></li>
                         </ul>
 					</div>
 				</div>
@@ -225,7 +225,7 @@
 					<div class="footer-widget">
 						<h3 class="h3">Career</h3>
 						<ul>
-							<li><a href="site/au?page=become-a-keeper.html">Become A Keeper</a></li>
+							<li><a href="keeper/application">Become A Keeper</a></li>
                         </ul>
 						
 					</div>

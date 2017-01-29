@@ -83,7 +83,12 @@ class JqGrid_ctrl extends CI_Controller {
 	}
 
 	public function getService($services){
-		$ids = implode(',', json_decode($services) );
+		$services = json_decode($services);
+		if (($key = array_search('cleaning', $services)) !== false) {
+		    unset($services[$key]);
+		}
+		$ids = implode(',', $services );
+
 		$result = $this->helper_model->query_table('*','req_services',"WHERE service_id IN($ids)");
 		$res = array();
 		foreach ($result as $service) {
