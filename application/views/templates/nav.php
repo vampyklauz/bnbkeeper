@@ -36,6 +36,13 @@
 		<!-- #section:basics/navbar.dropdown -->
 		<div class="navbar-buttons navbar-header pull-right" role="navigation">
 			<ul class="nav ace-nav">
+
+				<li class="green">
+					<a href="admin/messages">
+						<i class="ace-icon fa fa-envelope icon-animated-vertical"></i>
+						<span class="badge badge-success">5</span>
+					</a>
+				</li>
 				<!-- #section:basics/navbar.user_menu -->
 				<li class="light-blue">
 					<a data-toggle="dropdown" href="#" class="dropdown-toggle">
