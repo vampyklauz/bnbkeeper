@@ -608,5 +608,59 @@
 		$('.ui-dialog-content').dialog('close');
 	}
 
+	$.fn.displayEmailMessages = function(){
+		messages_body = $(this);
+		$.ajax({
+			url : 'admin/messages/displayMessages',
+			dataType : 'json',
+			type : 'post',
+			success : function(res){
+				var output = '';
+				if( res instanceof Array ) {
+					res.forEach(function(val){
+						var message_status = ( val.message_status == 'Unread') ? 'message-unread' : '';
+						var message_date = new Date(val.created_date);
+						var todaysDate = new Date();
+						if(message_date.setHours(0,0,0,0) == todaysDate.setHours(0,0,0,0)) {
+							message_time = message_date.getHours()+":"+(message_date.getMinutes()<10?'0':'') + message_date.getMinutes()+" "+((message_date.getHours() >= 12) ? "PM" : "AM");
+						}else{
+							var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+							  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+							];
+							var message_time = monthNames[message_date.getMonth()]+" "+message_date.getDay()
+						}
+
+
+						output += `<div class="message-item `+message_status+`">
+										<label class="inline">
+											<input type="checkbox" class="ace" value="`+val.message_id+`" />
+											<span class="lbl"></span>
+										</label>
+
+										<i class="message-star ace-icon fa fa-star orange2"></i>
+										<span class="sender" title="`+val.sender_fname+` `+val.sender_lname+`">`+val.sender_fname+` `+val.sender_lname+` </span>
+										<span class="time">`+message_time+`</span>
+
+										<span class="summary">
+											<span data-info='`+JSON.stringify(val)+`' class="message_content text">
+												`+val.subject+`
+											</span>
+										</span>
+									</div>`;
+					});
+
+
+				}else{
+					output = '<span class="text-center">You have 0 messages</span>';
+				}
+				messages_body.append(output);
+
+			},
+			error : function(res){
+				console.log('ERROR!');
+			}
+		});
+	}
+
 })(window.jQuery || window.Zepto, window, document);
 

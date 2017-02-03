@@ -418,7 +418,7 @@
 
 											<div class="messagebar-item-right">
 												<span class="inline btn-send-message">
-													<button type="button" class="btn btn-sm btn-primary no-border btn-white btn-round">
+													<button id="btn-send-message" type="button" class="btn btn-sm btn-primary no-border btn-white btn-round">
 														<span class="bigger-110">Send</span>
 
 														<i class="ace-icon fa fa-arrow-right icon-on-right"></i>
@@ -432,25 +432,6 @@
 									<div class="message-list-container">
 										<!-- #section:pages/inbox.message-list -->
 										<div class="message-list" id="message-list">
-											<!-- #section:pages/inbox.message-list.item -->
-											<div class="message-item message-unread">
-												<label class="inline">
-													<input type="checkbox" class="ace" />
-													<span class="lbl"></span>
-												</label>
-
-												<i class="message-star ace-icon fa fa-star orange2"></i>
-												<span class="sender" title="Alex John Red Smith">Alex John Red Smith </span>
-												<span class="time">1:33 pm</span>
-
-												<span class="summary">
-													<span class="text">
-														Click to open this message
-													</span>
-												</span>
-											</div>
-
-											<!-- /section:pages/inbox.message-list.item -->
 										</div>
 
 										<!-- /section:pages/inbox.message-list -->
@@ -539,7 +520,7 @@
 
 						<div class="col-sm-9">
 							<span class="input-icon">
-								<input type="email" name="recipient" id="form-field-recipient" data-value="alex@doe.com" value="alex@doe.com" placeholder="Recipient(s)" />
+								<input type="email" name="recipient" id="form-field-recipient" value="" placeholder="Recipient(s)" />
 								<i class="ace-icon fa fa-user"></i>
 							</span>
 						</div>
@@ -568,32 +549,10 @@
 
 						<!-- #section:plugins/editor.wysiwyg -->
 						<div class="col-sm-9">
-							<div class="wysiwyg-editor"></div>
+							<div id="email-message" class="wysiwyg-editor"></div>
 						</div>
 
 						<!-- /section:plugins/editor.wysiwyg -->
-					</div>
-
-					<div class="hr hr-18 dotted"></div>
-
-					<div class="form-group no-margin-bottom">
-						<label class="col-sm-3 control-label no-padding-right">Attachments:</label>
-
-						<div class="col-sm-9">
-							<div id="form-attachments">
-								<!-- #section:custom/file-input -->
-								<input type="file" name="attachment[]" />
-
-								<!-- /section:custom/file-input -->
-							</div>
-						</div>
-					</div>
-
-					<div class="align-right">
-						<button id="id-add-attachment" type="button" class="btn btn-sm btn-danger">
-							<i class="ace-icon fa fa-paperclip bigger-140"></i>
-							Add Attachment
-						</button>
 					</div>
 
 					<div class="space"></div>
@@ -604,145 +563,7 @@
 
 			<div class="hide message-content" id="id-message-content">
 				<!-- #section:pages/inbox.message-header -->
-				<div class="message-header clearfix">
-					<div class="pull-left">
-						<span class="blue bigger-125"> Clik to open this message </span>
-
-						<div class="space-4"></div>
-
-						<i class="ace-icon fa fa-star orange2"></i>
-
-						&nbsp;
-						<img class="middle" alt="John's Avatar" src="../assets/avatars/avatar.png" width="32" />
-						&nbsp;
-						<a href="#" class="sender">John Doe</a>
-
-						&nbsp;
-						<i class="ace-icon fa fa-clock-o bigger-110 orange middle"></i>
-						<span class="time grey">Today, 7:15 pm</span>
-					</div>
-
-					<div class="pull-right action-buttons">
-						<a href="#">
-							<i class="ace-icon fa fa-reply green icon-only bigger-130"></i>
-						</a>
-
-						<a href="#">
-							<i class="ace-icon fa fa-mail-forward blue icon-only bigger-130"></i>
-						</a>
-
-						<a href="#">
-							<i class="ace-icon fa fa-trash-o red icon-only bigger-130"></i>
-						</a>
-					</div>
-				</div>
-
-				<!-- /section:pages/inbox.message-header -->
-				<div class="hr hr-double"></div>
-
-				<!-- #section:pages/inbox.message-body -->
-				<div class="message-body">
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-					</p>
-
-					<p>
-						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-					</p>
-
-					<p>
-						Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-					</p>
-
-					<p>
-						Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-					</p>
-
-					<p>
-						Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-					</p>
-
-					<p>
-						Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-					</p>
-				</div>
-
-				<!-- /section:pages/inbox.message-body -->
-				<div class="hr hr-double"></div>
-
-				<!-- #section:pages/inbox.message-attachment -->
-				<div class="message-attachment clearfix">
-					<div class="attachment-title">
-						<span class="blue bolder bigger-110">Attachments</span>
-						&nbsp;
-						<span class="grey">(2 files, 4.5 MB)</span>
-
-						<div class="inline position-relative">
-							<a href="#" data-toggle="dropdown" class="dropdown-toggle">
-								&nbsp;
-								<i class="ace-icon fa fa-caret-down bigger-125 middle"></i>
-							</a>
-
-							<ul class="dropdown-menu dropdown-lighter">
-								<li>
-									<a href="#">Download all as zip</a>
-								</li>
-
-								<li>
-									<a href="#">Display in slideshow</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-
-					&nbsp;
-					<ul class="attachment-list pull-left list-unstyled">
-						<li>
-							<a href="#" class="attached-file">
-								<i class="ace-icon fa fa-file-o bigger-110"></i>
-								<span class="attached-name">Document1.pdf</span>
-							</a>
-
-							<span class="action-buttons">
-								<a href="#">
-									<i class="ace-icon fa fa-download bigger-125 blue"></i>
-								</a>
-
-								<a href="#">
-									<i class="ace-icon fa fa-trash-o bigger-125 red"></i>
-								</a>
-							</span>
-						</li>
-
-						<li>
-							<a href="#" class="attached-file">
-								<i class="ace-icon fa fa-film bigger-110"></i>
-								<span class="attached-name">Sample.mp4</span>
-							</a>
-
-							<span class="action-buttons">
-								<a href="#">
-									<i class="ace-icon fa fa-download bigger-125 blue"></i>
-								</a>
-
-								<a href="#">
-									<i class="ace-icon fa fa-trash-o bigger-125 red"></i>
-								</a>
-							</span>
-						</li>
-					</ul>
-
-					<div class="attachment-images pull-right">
-						<div class="vspace-4-sm"></div>
-
-						<div>
-							<img width="36" alt="image 4" src="../assets/images/gallery/thumb-4.jpg" />
-							<img width="36" alt="image 3" src="../assets/images/gallery/thumb-3.jpg" />
-							<img width="36" alt="image 2" src="../assets/images/gallery/thumb-2.jpg" />
-							<img width="36" alt="image 1" src="../assets/images/gallery/thumb-1.jpg" />
-						</div>
-					</div>
-				</div>
+				
 
 				<!-- /section:pages/inbox.message-attachment -->
 			</div><!-- /.message-content -->
@@ -755,10 +576,111 @@
 <script src="assets/js/bootstrap-tag.js"></script>
 <script src="assets/js/jquery.hotkeys.js"></script>
 <script src="assets/js/bootstrap-wysiwyg.js"></script>
+<script src="assets/js/jquery.validate.js"></script>
+
+<!-- ace scripts -->
+<script src="assets/js/ace/elements.scroller.js"></script>
+<script src="assets/js/ace/elements.colorpicker.js"></script>
+<script src="assets/js/ace/elements.fileinput.js"></script>
+<script src="assets/js/ace/elements.typeahead.js"></script>
+<script src="assets/js/ace/elements.wysiwyg.js"></script>
+<script src="assets/js/ace/elements.spinner.js"></script>
+<script src="assets/js/ace/elements.treeview.js"></script>
+<script src="assets/js/ace/elements.wizard.js"></script>
+<script src="assets/js/ace/elements.aside.js"></script>
+<script src="assets/js/ace/ace.js"></script>
+<script src="assets/js/ace/ace.ajax-content.js"></script>
+<script src="assets/js/ace/ace.touch-drag.js"></script>
+<script src="assets/js/ace/ace.sidebar.js"></script>
+<script src="assets/js/ace/ace.sidebar-scroll-1.js"></script>
+<script src="assets/js/ace/ace.submenu-hover.js"></script>
+<script src="assets/js/ace/ace.widget-box.js"></script>
+<script src="assets/js/ace/ace.settings.js"></script>
+<script src="assets/js/ace/ace.settings-rtl.js"></script>
+<script src="assets/js/ace/ace.settings-skin.js"></script>
+<script src="assets/js/ace/ace.widget-on-reload.js"></script>
+<script src="assets/js/ace/ace.searchbox-autocomplete.js"></script>
 
 <script type="text/javascript">
 			jQuery(function($){
-			
+
+				// Process functions
+				
+				//initialize messages
+				$('#message-list').displayEmailMessages();
+				
+				$('#btn-send-message').on('click',function(){
+					var form = $('#id-message-form');
+					var message = $('#email-message').html();
+					if( form.valid() ){
+						$.ajax({
+							url: 'admin/messages/sendEmail',
+							data: form.serialize()+'&message='+message,
+							dataType: 'json',
+							type: 'post',
+							success: function(res){
+								console.log(res);
+							}
+						})
+					}
+
+				});
+
+				$('#id-message-form').validate({
+					errorElement: 'div',
+					errorClass: 'help-block',
+					focusInvalid: false,
+					ignore: "",
+					rules: {
+						email: {
+							recipient: true,
+							email:true,
+							remote: {url: "order/steps/checkEmail", type : "post"}
+						}
+					},
+
+					messages: {
+						email: {
+							required: "Please provide a valid email.",
+							email: "Please provide a valid email.",
+							remote: "Email already in use!"
+						}
+					},
+
+
+					highlight: function (e) {
+						$(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+					},
+
+					success: function (e) {
+						$(e).closest('.form-group').removeClass('has-error');//.addClass('has-info');
+						$(e).remove();
+					},
+
+					errorPlacement: function (error, element) {
+						if(element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+							var controls = element.closest('div[class*="col-"]');
+							if(controls.find(':checkbox,:radio').length > 1) controls.append(error);
+							else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+						}
+						else if(element.is('.select2')) {
+							error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+						}
+						else if(element.is('.chosen-select')) {
+							error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+						}
+						else error.insertAfter(element.parent());
+					},
+
+					submitHandler: function (form) {
+					},
+					invalidHandler: function (form) {
+
+					}
+				});
+
+				// UI functions
+				
 				//handling tabs and loading/displaying relevant messages and forms
 				//not needed if using the alternative view, as described in docs
 				$('#inbox-tabs a[data-toggle="tab"]').on('show.bs.tab', function (e) {
@@ -819,7 +741,8 @@
 				/////////
 			
 				//display first message in a new area
-				$('.message-list .message-item:eq(0) .text').on('click', function() {
+				$('body').delegate('.message_content','click', function() {
+					var message_data = $(this).data('info');
 					//show the loading icon
 					$('.message-container').append('<div class="message-loading-overlay"><i class="fa-spin ace-icon fa fa-spinner orange2 bigger-160"></i></div>');
 					
@@ -847,9 +770,54 @@
 						//now show the alternative footer
 						$('.message-footer-style2').removeClass('hide');
 						
+						var message_date = new Date(message_data.created_date);
+						var message_time = message_date.getHours()+":"+(message_date.getMinutes()<10?'0':'') + message_date.getMinutes()+" "+((message_date.getHours() >= 12) ? "PM" : "AM");
+
+						
+						var content_message = `<div class="message-header clearfix">
+										<div class="pull-left">
+											<span class="blue bigger-125"> `+message_data.subject+` </span>
+
+											<div class="space-4"></div>
+
+											<i class="ace-icon fa fa-star orange2"></i>
+
+											&nbsp;
+											<img class="middle" alt="John's Avatar" src="assets/avatars/avatar.png" width="32" />
+											&nbsp;
+											<a href="#" class="sender">J`+message_data.sender_fname+` `+message_data.sender_lname+`</a>
+
+											&nbsp;
+											<i class="ace-icon fa fa-clock-o bigger-110 orange middle"></i>
+											<span class="time grey">`+message_time+`</span>
+										</div>
+
+										<div class="pull-right action-buttons">
+											<a href="#">
+												<i class="ace-icon fa fa-reply green icon-only bigger-130"></i>
+											</a>
+
+											<a href="#">
+												<i class="ace-icon fa fa-mail-forward blue icon-only bigger-130"></i>
+											</a>
+
+											<a href="#">
+												<i class="ace-icon fa fa-trash-o red icon-only bigger-130"></i>
+											</a>
+										</div>
+									</div>
+
+							<!-- /section:pages/inbox.message-header -->
+							<div class="hr hr-double"></div>
+
+							<!-- #section:pages/inbox.message-body -->
+							<div class="message-body">
+								`+message_data.message+`
+							</div>`;
+						
 						
 						//move .message-content next to .message-list and hide .message-list
-						$('.message-content').removeClass('hide').insertAfter(message_list.addClass('hide'));
+						$('#id-message-content').html(content_message).removeClass('hide').insertAfter(message_list.addClass('hide'));
 			
 						//add scrollbars to .message-body
 						$('.message-content .message-body').ace_scroll({
@@ -1052,35 +1020,6 @@
 						]
 					}).prev().addClass('wysiwyg-style1');
 			
-			
-			
-					//file input
-					$('.message-form input[type=file]').ace_file_input()
-					.closest('.ace-file-input')
-					.addClass('width-90 inline')
-					.wrap('<div class="form-group file-input-container"><div class="col-sm-7"></div></div>');
-			
-					//Add Attachment
-					//the button to add a new file input
-					$('#id-add-attachment')
-					.on('click', function(){
-						var file = $('<input type="file" name="attachment[]" />').appendTo('#form-attachments');
-						file.ace_file_input();
-						
-						file.closest('.ace-file-input')
-						.addClass('width-90 inline')
-						.wrap('<div class="form-group file-input-container"><div class="col-sm-7"></div></div>')
-						.parent().append('<div class="action-buttons pull-right col-xs-1">\
-							<a href="#" data-action="delete" class="middle">\
-								<i class="ace-icon fa fa-trash-o red bigger-130 middle"></i>\
-							</a>\
-						</div>')
-						.find('a[data-action=delete]').on('click', function(e){
-							//the button that removes the newly inserted file input
-							e.preventDefault();
-							$(this).closest('.file-input-container').hide(300, function(){ $(this).remove() });
-						});
-					});
 				}//initialize_form
 			
 				//turn the recipient field into a tag input field!
